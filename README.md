@@ -17,3 +17,7 @@ if you meet commit fail, try to add `--no-verify` in commit argues
 ```bash
 git commit -m "commit message" --no-verify
 ```
+
+## reference
+
+[offical manual](https://arco.design/vue/docs/pro/start)
