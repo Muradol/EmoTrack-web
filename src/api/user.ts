@@ -7,6 +7,16 @@ export interface LoginData {
   password: string;
 }
 
+export interface RegisterData {
+  username: string;
+  password: string;
+  phoneNumber: string;
+  birthday: Date;
+  gender: number;
+  role: number;
+  departmentNo: number;
+}
+
 export interface LoginRes {
   token: string;
 }
