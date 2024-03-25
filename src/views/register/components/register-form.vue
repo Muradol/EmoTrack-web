@@ -63,7 +63,7 @@
       </a-form-item>
       <a-form-item>
         <a-checkbox>{{ $t('login.form.autoLogin') }}</a-checkbox>
-      </a-form-item>      
+      </a-form-item>
       <a-space :size="16" direction="vertical">
         <div class="login-form-password-actions">
           <a-checkbox
