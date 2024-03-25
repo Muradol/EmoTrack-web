@@ -102,12 +102,26 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button type="primary">
+            <a-button type="primary" @click="handleCreateClick">
               <template #icon>
                 <icon-plus />
               </template>
               {{ $t('searchTable.operation.create') }}
             </a-button>
+            <a-modal
+              v-model:visible="createVisible"
+              title="add employee"
+              width="30%"
+              unmount-on-close
+              :on-before-ok="handleCreateBeforeOk"
+              @cancel="handleCreateCancel"
+            >
+              <a-form :model="createPolicy">
+                <a-form-item label="label">
+                  <a-input v-model="createPolicy.name" />
+                </a-form-item>
+              </a-form>
+            </a-modal>
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
@@ -235,10 +249,40 @@
           <span v-else class="circle pass"></span>
           {{ $t(`searchTable.form.status.${record.status}`) }}
         </template>
-        <template #operations>
-          <a-button v-permission="['admin']" type="text" size="small">
+        <template #operations="{ record }">
+          <a-button
+            v-permission="['admin']"
+            type="primary"
+            size="small"
+            @click="handleUpdateClick(0, record)"
+          >
             {{ $t('searchTable.columns.operations.view') }}
           </a-button>
+          <a-modal
+            v-model:visible="updateVisible"
+            :title="record.count"
+            width="30%"
+            unmount-on-close
+            :on-before-ok="handleUpdateBeforeOk"
+            @cancel="handleUpdateCancel"
+          >
+            <a-form :model="updatePolicy">
+              <a-form-item label="label">
+                <a-input v-model="updatePolicy.name" />
+              </a-form-item>
+            </a-form>
+          </a-modal>
+        </template>
+        <template #delete="{ record }">
+          <a-popconfirm
+            content="Are you sure to delete this task?"
+            type="warning"
+            @confirm="deleteTask(record)"
+          >
+            <a-button type="primary" status="danger" size="small">
+              delete
+            </a-button>
+          </a-popconfirm>
         </template>
       </a-table>
     </a-card>
@@ -343,6 +387,11 @@
       title: t('searchTable.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
+    },
+    {
+      title: 'delete',
+      dataIndex: 'delete',
+      slotName: 'delete',
     },
   ]);
   const contentTypeOptions = computed<SelectOptionData[]>(() => [
@@ -475,6 +524,62 @@
     },
     { deep: true, immediate: true }
   );
+
+  const updateVisible = ref(false);
+  const handleUpdateClick = (index: number, record: PolicyRecord) => {
+    updatePolicy.value = record;
+    updateVisible.value = true;
+  };
+
+  const handleUpdateBeforeOk = () => {
+    // return new Promise((resolve) => setTimeout(() => resolve(true), 3000));
+    return true;
+  };
+
+  const handleUpdateCancel = () => {
+    updateVisible.value = false;
+  };
+
+  const updatePolicy = ref<PolicyRecord>({
+    id: '',
+    number: 0,
+    name: '',
+    contentType: 'img',
+    filterType: 'rules',
+    count: 0,
+    createdTime: '',
+    status: 'online',
+  });
+
+  const createVisible = ref(false);
+
+  const handleCreateClick = () => {
+    createVisible.value = true;
+  };
+
+  const handleCreateBeforeOk = () => {
+    return true;
+  };
+
+  const handleCreateCancel = () => {
+    createVisible.value = false;
+  };
+
+  const createPolicy = ref<PolicyRecord>({
+    id: '',
+    number: 0,
+    name: '',
+    contentType: 'img',
+    filterType: 'rules',
+    count: 0,
+    createdTime: '',
+    status: 'online',
+  });
+
+  const deleteTask = async (record: PolicyRecord) => {
+    // await deletePolicy(record.id);
+    fetchData();
+  };
 </script>
 
 <script lang="ts">
