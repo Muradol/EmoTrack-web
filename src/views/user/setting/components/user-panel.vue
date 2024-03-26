@@ -35,16 +35,7 @@
         }"
       >
         <template #label="{ label }">{{ $t(label) }} :</template>
-        <template #value="{ value, data }">
-          <a-tag
-            v-if="data.label === 'userSetting.label.certification'"
-            color="green"
-            size="small"
-          >
-            已认证
-          </a-tag>
-          <span v-else>{{ value }}</span>
-        </template>
+
       </a-descriptions>
     </a-space>
   </a-card>
@@ -72,20 +63,12 @@
       value: userStore.name,
     },
     {
-      label: 'userSetting.label.certification',
-      value: userStore.certification,
-    },
-    {
       label: 'userSetting.label.accountId',
       value: userStore.accountId,
     },
     {
       label: 'userSetting.label.phone',
       value: userStore.phone,
-    },
-    {
-      label: 'userSetting.label.registrationDate',
-      value: userStore.registrationDate,
     },
   ] as DescData[];
   const fileList = ref<FileItem[]>([file]);

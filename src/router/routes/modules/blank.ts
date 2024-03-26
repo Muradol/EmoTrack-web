@@ -8,7 +8,7 @@ const BLANK: AppRouteRecordRaw = {
   meta: {
     locale: 'menu.blank',
     requiresAuth: true,
-    icon: 'icon-blank',
+    icon: 'icon-list',
     order: 3,
   },
   children: [
@@ -17,7 +17,7 @@ const BLANK: AppRouteRecordRaw = {
       name: 'Test',
       component: () => import('@/views/blank/test/index.vue'),
       meta: {
-        locale: 'menu.blank.test',
+        locale: 'menu.blank.searchTable',
         requiresAuth: true,
         roles: ['*'],
       },

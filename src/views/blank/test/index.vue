@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.list', 'menu.list.searchTable']" />
+    <Breadcrumb :items="['menu.blank', 'menu.blank.searchTable']" />
     <a-card class="general-card" :title="$t('menu.list.searchTable')">
       <a-row>
         <a-col :flex="1">
-          <a-form
+          <a-forms
             :model="formModel"
             :label-col-props="{ span: 6 }"
             :wrapper-col-props="{ span: 18 }"
@@ -78,7 +78,7 @@
                 </a-form-item>
               </a-col>
             </a-row>
-          </a-form>
+          </a-forms>
         </a-col>
         <a-divider style="height: 84px" direction="vertical" />
         <a-col :flex="'86px'" style="text-align: right">
