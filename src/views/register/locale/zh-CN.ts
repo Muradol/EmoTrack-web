@@ -3,7 +3,7 @@ export default {
   'register.form.userName.errMsg': '用户名不能为空',
   'register.form.password.errMsg': '密码不能为空',
   'register.form.login.errMsg': '登录出错，轻刷新重试',
-  'register.form.login.success': '欢迎使用',
+  'register.form.register.success': '注册成功',
   'register.form.userName.placeholder': '用户名：admin',
   'register.form.password.placeholder': '密码：admin',
   'register.form.rememberPassword': '记住密码',

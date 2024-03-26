@@ -139,7 +139,7 @@
       try {
         await register(values as RegisterData);
         router.push({ name: 'login' });
-        Message.success(t('register.form.login.success'));
+        Message.success(t('register.form.register.success'));
       } catch (err) {
         errorMessage.value = (err as Error).message;
       } finally {
