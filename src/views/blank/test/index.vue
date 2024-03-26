@@ -213,7 +213,7 @@
         <template #contentType="{ record }">
           <a-space>
             <a-avatar
-              v-if="record.contentType === 'img'"
+              v-if="record.contentType === 'blue'"
               :size="16"
               shape="square"
             >
@@ -223,7 +223,7 @@
               />
             </a-avatar>
             <a-avatar
-              v-else-if="record.contentType === 'horizontalVideo'"
+              v-else-if="record.contentType === 'happy'"
               :size="16"
               shape="square"
             >
@@ -293,7 +293,7 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryPolicyList, PolicyRecord, PolicyParams } from '@/api/list';
+  import {queryPolicyList, PolicyRecord, PolicyParams, EmployeeRecord} from '@/api/list';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -315,7 +315,7 @@
   };
   const { loading, setLoading } = useLoading(true);
   const { t } = useI18n();
-  const renderData = ref<PolicyRecord[]>([]);
+  const renderData = ref<EmployeeRecord[]>([]);
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
@@ -378,11 +378,11 @@
     //   title: t('employeeList.columns.createdTime'),
     //   dataIndex: 'createdTime',
     // },
-    {
-      title: t('employeeList.columns.status'),
-      dataIndex: 'status',
-      slotName: 'status',
-    },
+    // {
+    //   title: t('employeeList.columns.status'),
+    //   dataIndex: 'status',
+    //   slotName: 'status',
+    // },
     {
       title: t('employeeList.columns.operations'),
       dataIndex: 'operations',
@@ -396,16 +396,16 @@
   ]);
   const contentTypeOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('employeeList.form.contentType.img'),
-      value: 'img',
+      label: t('employeeList.form.contentType.blue'),
+      value: 'blue',
     },
     {
-      label: t('employeeList.form.contentType.horizontalVideo'),
-      value: 'horizontalVideo',
+      label: t('employeeList.form.contentType.happy'),
+      value: 'happy',
     },
     {
-      label: t('employeeList.form.contentType.verticalVideo'),
-      value: 'verticalVideo',
+      label: t('employeeList.form.contentType.sad'),
+      value: 'sad',
     },
   ]);
   const filterTypeOptions = computed<SelectOptionData[]>(() => [

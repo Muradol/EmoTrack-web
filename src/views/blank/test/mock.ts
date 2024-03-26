@@ -11,7 +11,7 @@ const data = Mock.mock({
       'id|8': /[A-Z][a-z][-][0-9]/,
       'number|2-3': /[0-9]/,
       'name|4-8': /[A-Z]/,
-      'contentType|1': ['img', 'horizontalVideo', 'verticalVideo'],
+      'contentType|1': ['blue', 'happy', 'sad'],
       'count|2-3': /[0-9]/,
       'status|1': ['online', 'offline'],
       'filterType|1': ['A', 'B'],
@@ -22,7 +22,7 @@ const data = Mock.mock({
 
 setupMock({
   setup() {
-    Mock.mock(new RegExp('/api/list/policy'), (params: GetParams) => {
+    Mock.mock(new RegExp('/api/list/employee'), (params: GetParams) => {
       const { current = 1, pageSize = 10 } = qs.parseUrl(params.url).query;
       const p = current as number;
       const ps = pageSize as number;

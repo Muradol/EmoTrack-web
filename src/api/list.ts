@@ -2,7 +2,7 @@ import axios from 'axios';
 import qs from 'query-string';
 import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 
-export interface PolicyRecord {
+export interface EmployeeRecord {
   id: string;
   number: number;
   name: string;
@@ -13,18 +13,18 @@ export interface PolicyRecord {
   createdTime: string;
 }
 
-export interface PolicyParams extends Partial<PolicyRecord> {
+export interface PolicyParams extends Partial<EmployeeRecord> {
   current: number;
   pageSize: number;
 }
 
 export interface PolicyListRes {
-  list: PolicyRecord[];
+  list: EmployeeRecord[];
   total: number;
 }
 
 export function queryPolicyList(params: PolicyParams) {
-  return axios.get<PolicyListRes>('/api/list/policy', {
+  return axios.get<PolicyListRes>('/api/list/employee', {
     params,
     paramsSerializer: (obj) => {
       return qs.stringify(obj);
