@@ -7,7 +7,7 @@ export interface PolicyRecord {
   number: number;
   name: string;
   contentType: 'img' | 'horizontalVideo' | 'verticalVideo';
-  filterType: 'artificial' | 'rules';
+  filterType: 'A' | 'B';
   count: number;
   status: 'online' | 'offline';
   createdTime: string;

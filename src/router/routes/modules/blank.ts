@@ -17,7 +17,7 @@ const BLANK: AppRouteRecordRaw = {
       name: 'Test',
       component: () => import('@/views/blank/test/index.vue'),
       meta: {
-        locale: 'menu.blank.searchTable',
+        locale: 'menu.blank.employeeList',
         requiresAuth: true,
         roles: ['*'],
       },

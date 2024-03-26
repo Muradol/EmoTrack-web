@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.blank', 'menu.blank.searchTable']" />
-    <a-card class="general-card" :title="$t('menu.list.searchTable')">
+    <Breadcrumb :items="['menu.blank', 'menu.blank.employeeList']" />
+    <a-card class="general-card" :title="$t('menu.list.employeeList')">
       <a-row>
         <a-col :flex="1">
           <a-forms
@@ -14,50 +14,50 @@
               <a-col :span="8">
                 <a-form-item
                   field="number"
-                  :label="$t('searchTable.form.number')"
+                  :label="$t('employeeList.form.number')"
                 >
                   <a-input
                     v-model="formModel.number"
-                    :placeholder="$t('searchTable.form.number.placeholder')"
+                    :placeholder="$t('employeeList.form.number.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="name" :label="$t('searchTable.form.name')">
+                <a-form-item field="name" :label="$t('employeeList.form.name')">
                   <a-input
                     v-model="formModel.name"
-                    :placeholder="$t('searchTable.form.name.placeholder')"
+                    :placeholder="$t('employeeList.form.name.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="contentType"
-                  :label="$t('searchTable.form.contentType')"
+                  :label="$t('employeeList.form.contentType')"
                 >
                   <a-select
                     v-model="formModel.contentType"
                     :options="contentTypeOptions"
-                    :placeholder="$t('searchTable.form.selectDefault')"
+                    :placeholder="$t('employeeList.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="filterType"
-                  :label="$t('searchTable.form.filterType')"
+                  :label="$t('employeeList.form.filterType')"
                 >
                   <a-select
                     v-model="formModel.filterType"
                     :options="filterTypeOptions"
-                    :placeholder="$t('searchTable.form.selectDefault')"
+                    :placeholder="$t('employeeList.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
                   field="createdTime"
-                  :label="$t('searchTable.form.createdTime')"
+                  :label="$t('employeeList.form.createdTime')"
                 >
                   <a-range-picker
                     v-model="formModel.createdTime"
@@ -68,12 +68,12 @@
               <a-col :span="8">
                 <a-form-item
                   field="status"
-                  :label="$t('searchTable.form.status')"
+                  :label="$t('employeeList.form.status')"
                 >
                   <a-select
                     v-model="formModel.status"
                     :options="statusOptions"
-                    :placeholder="$t('searchTable.form.selectDefault')"
+                    :placeholder="$t('employeeList.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col>
@@ -87,13 +87,13 @@
               <template #icon>
                 <icon-search />
               </template>
-              {{ $t('searchTable.form.search') }}
+              {{ $t('employeeList.form.search') }}
             </a-button>
             <a-button @click="reset">
               <template #icon>
                 <icon-refresh />
               </template>
-              {{ $t('searchTable.form.reset') }}
+              {{ $t('employeeList.form.reset') }}
             </a-button>
           </a-space>
         </a-col>
@@ -106,7 +106,7 @@
               <template #icon>
                 <icon-plus />
               </template>
-              {{ $t('searchTable.operation.create') }}
+              {{ $t('employeeList.operation.create') }}
             </a-button>
             <a-modal
               v-model:visible="createVisible"
@@ -125,7 +125,7 @@
             <a-upload action="/">
               <template #upload-button>
                 <a-button>
-                  {{ $t('searchTable.operation.import') }}
+                  {{ $t('employeeList.operation.import') }}
                 </a-button>
               </template>
             </a-upload>
@@ -139,15 +139,15 @@
             <template #icon>
               <icon-download />
             </template>
-            {{ $t('searchTable.operation.download') }}
+            {{ $t('employeeList.operation.download') }}
           </a-button>
-          <a-tooltip :content="$t('searchTable.actions.refresh')">
+          <a-tooltip :content="$t('employeeList.actions.refresh')">
             <div class="action-icon" @click="search"
               ><icon-refresh size="18"
             /></div>
           </a-tooltip>
           <a-dropdown @select="handleSelectDensity">
-            <a-tooltip :content="$t('searchTable.actions.density')">
+            <a-tooltip :content="$t('employeeList.actions.density')">
               <div class="action-icon"><icon-line-height size="18" /></div>
             </a-tooltip>
             <template #content>
@@ -161,7 +161,7 @@
               </a-doption>
             </template>
           </a-dropdown>
-          <a-tooltip :content="$t('searchTable.actions.columnSetting')">
+          <a-tooltip :content="$t('employeeList.actions.columnSetting')">
             <a-popover
               trigger="click"
               position="bl"
@@ -238,16 +238,16 @@
                 src="//p3-armor.byteimg.com/tos-cn-i-49unhts6dw/ea8b09190046da0ea7e070d83c5d1731.svg~tplv-49unhts6dw-image.image"
               />
             </a-avatar>
-            {{ $t(`searchTable.form.contentType.${record.contentType}`) }}
+            {{ $t(`employeeList.form.contentType.${record.contentType}`) }}
           </a-space>
         </template>
         <template #filterType="{ record }">
-          {{ $t(`searchTable.form.filterType.${record.filterType}`) }}
+          {{ $t(`employeeList.form.filterType.${record.filterType}`) }}
         </template>
         <template #status="{ record }">
           <span v-if="record.status === 'offline'" class="circle"></span>
           <span v-else class="circle pass"></span>
-          {{ $t(`searchTable.form.status.${record.status}`) }}
+          {{ $t(`employeeList.form.status.${record.status}`) }}
         </template>
         <template #operations="{ record }">
           <a-button
@@ -256,7 +256,7 @@
             size="small"
             @click="handleUpdateClick(0, record)"
           >
-            {{ $t('searchTable.columns.operations.view') }}
+            {{ $t('employeeList.columns.operations.view') }}
           </a-button>
           <a-modal
             v-model:visible="updateVisible"
@@ -331,100 +331,100 @@
   });
   const densityList = computed(() => [
     {
-      name: t('searchTable.size.mini'),
+      name: t('employeeList.size.mini'),
       value: 'mini',
     },
     {
-      name: t('searchTable.size.small'),
+      name: t('employeeList.size.small'),
       value: 'small',
     },
     {
-      name: t('searchTable.size.medium'),
+      name: t('employeeList.size.medium'),
       value: 'medium',
     },
     {
-      name: t('searchTable.size.large'),
+      name: t('employeeList.size.large'),
       value: 'large',
     },
   ]);
   const columns = computed<TableColumnData[]>(() => [
     {
-      title: t('searchTable.columns.index'),
+      title: t('employeeList.columns.index'),
       dataIndex: 'index',
       slotName: 'index',
     },
     {
-      title: t('searchTable.columns.number'),
+      title: t('employeeList.columns.number'),
       dataIndex: 'number',
     },
     {
-      title: t('searchTable.columns.name'),
+      title: t('employeeList.columns.name'),
       dataIndex: 'name',
     },
     {
-      title: t('searchTable.columns.contentType'),
+      title: t('employeeList.columns.contentType'),
       dataIndex: 'contentType',
       slotName: 'contentType',
     },
     {
-      title: t('searchTable.columns.filterType'),
+      title: t('employeeList.columns.filterType'),
       dataIndex: 'filterType',
     },
     {
-      title: t('searchTable.columns.count'),
+      title: t('employeeList.columns.count'),
       dataIndex: 'count',
     },
+    // {
+    //   title: t('employeeList.columns.createdTime'),
+    //   dataIndex: 'createdTime',
+    // },
     {
-      title: t('searchTable.columns.createdTime'),
-      dataIndex: 'createdTime',
-    },
-    {
-      title: t('searchTable.columns.status'),
+      title: t('employeeList.columns.status'),
       dataIndex: 'status',
       slotName: 'status',
     },
     {
-      title: t('searchTable.columns.operations'),
+      title: t('employeeList.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
     },
     {
-      title: 'delete',
+      title: t('employeeList.columns.delete'),
       dataIndex: 'delete',
       slotName: 'delete',
     },
   ]);
   const contentTypeOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('searchTable.form.contentType.img'),
+      label: t('employeeList.form.contentType.img'),
       value: 'img',
     },
     {
-      label: t('searchTable.form.contentType.horizontalVideo'),
+      label: t('employeeList.form.contentType.horizontalVideo'),
       value: 'horizontalVideo',
     },
     {
-      label: t('searchTable.form.contentType.verticalVideo'),
+      label: t('employeeList.form.contentType.verticalVideo'),
       value: 'verticalVideo',
     },
   ]);
   const filterTypeOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('searchTable.form.filterType.artificial'),
-      value: 'artificial',
+      label: t('employeeList.form.filterType.aDepartment'),
+      value: 'A',
     },
     {
-      label: t('searchTable.form.filterType.rules'),
-      value: 'rules',
+      label: t('employeeList.form.filterType.bDepartment'),
+      value: 'B',
     },
   ]);
   const statusOptions = computed<SelectOptionData[]>(() => [
     {
-      label: t('searchTable.form.status.online'),
+      label: t('employeeList.form.status.online'),
       value: 'online',
     },
     {
-      label: t('searchTable.form.status.offline'),
+      label: t('employeeList.form.status.offline'),
       value: 'offline',
     },
   ]);
@@ -545,7 +545,7 @@
     number: 0,
     name: '',
     contentType: 'img',
-    filterType: 'rules',
+    filterType: 'B',
     count: 0,
     createdTime: '',
     status: 'online',
@@ -570,7 +570,7 @@
     number: 0,
     name: '',
     contentType: 'img',
-    filterType: 'rules',
+    filterType: 'B',
     count: 0,
     createdTime: '',
     status: 'online',
