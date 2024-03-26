@@ -8,14 +8,12 @@
       :model="registerData"
       class="login-form"
       layout="horizontal"
+      :rules="rules"
       @submit="handleSubmit"
     >
       <a-form-item
         field="username"
         :label="$t('register.form.userName')"
-        :rules="[
-          { required: true, message: $t('register.form.userName.errMsg') },
-        ]"
         :validate-trigger="['change', 'blur']"
       >
         <a-input
@@ -25,9 +23,6 @@
       </a-form-item>
       <a-form-item
         field="password"
-        :rules="[
-          { required: true, message: $t('register.form.password.errMsg') },
-        ]"
         :validate-trigger="['change', 'blur']"
         :label="$t('register.form.password')"
       >
@@ -39,37 +34,28 @@
       </a-form-item>
       <a-form-item
         field="password1"
-        :rules="[
-          { required: true, message: $t('register.form.password.errMsg') },
-        ]"
         :validate-trigger="['change', 'blur']"
         :label="$t('register.form.confirmPassword')"
       >
         <a-input-password
-          v-model="registerData.password"
-          :placeholder="$t('register.form.password.placeholder')"
+          v-model="registerData.password1"
+          :placeholder="$t('register.form.password1.placeholder')"
           allow-clear
         />
       </a-form-item>
       <a-form-item
         field="phoneNumber"
         :label="$t('register.form.phoneNumber')"
-        :rules="[
-          { required: true, message: $t('register.form.userName.errMsg') },
-        ]"
         :validate-trigger="['change', 'blur']"
       >
         <a-input
-          v-model="registerData.username"
-          :placeholder="$t('register.form.userName.placeholder')"
+          v-model="registerData.phoneNumber"
+          :placeholder="$t('register.form.phoneNumber.placeholder')"
         />
       </a-form-item>
       <a-form-item
         field="birthDay"
         :label="$t('register.form.birthDay')"
-        :rules="[
-          { required: true, message: $t('register.form.userName.errMsg') },
-        ]"
         :validate-trigger="['change', 'blur']"
       >
         <a-date-picker v-model="registerData.birthday" />
@@ -77,35 +63,22 @@
       <a-form-item
         field="gender"
         :label="$t('register.form.gender')"
-        :rules="[
-          { required: true, message: $t('register.form.userName.errMsg') },
-        ]"
-        :validate-trigger="['change', 'blur']"
-      >
-        <a-select placeholder="register.form.gender">
-          <a-option> {{ $t('register.form.woman') }} </a-option>
-          <a-option> {{ $t('register.form.man') }} </a-option>
-        </a-select>
-      </a-form-item>
-      <!-- <a-form-item>
-        <a-input>
-          <template #prefix>
-            <icon-user />
-          </template>
-        </a-input>
-      </a-form-item> -->
-      <a-form-item
-        field="department"
-        :label="$t('register.form.department')"
-        :rules="[
-          { required: true, message: $t('register.form.userName.errMsg') },
-        ]"
         :validate-trigger="['change', 'blur']"
       >
         <a-select
-          v-model="registerData.departmentNo"
-          placeholder="register.form.department"
+          v-model="registerData.gender"
+          :placeholder="$t('register.form.gender.placeholder')"
         >
+          <a-option value="0"> {{ $t('register.form.woman') }} </a-option>
+          <a-option value="1"> {{ $t('register.form.man') }} </a-option>
+        </a-select>
+      </a-form-item>
+      <a-form-item
+        field="department"
+        :label="$t('register.form.department')"
+        :validate-trigger="['change', 'blur']"
+      >
+        <a-select v-model="registerData.departmentNo" placeholder="请选择部门">
           <a-option
             v-for="department in departments"
             :key="department.departmentName"
@@ -132,10 +105,8 @@
   import { Message } from '@arco-design/web-vue';
   import { ValidatedError } from '@arco-design/web-vue/es/form/interface';
   import { useI18n } from 'vue-i18n';
-  import { useStorage } from '@vueuse/core';
-  import { useUserStore } from '@/store';
   import useLoading from '@/hooks/loading';
-  import type { LoginData, RegisterData } from '@/api/user';
+  import { RegisterData, register } from '@/api/user';
   import { Department, getDepartmentList } from '@/api/department';
 
   // Todo: 未完成字段校验以及mock数据
@@ -143,23 +114,16 @@
   const { t } = useI18n();
   const errorMessage = ref('');
   const { loading, setLoading } = useLoading();
-  const userStore = useUserStore();
-
-  const loginConfig = useStorage('login-config', {
-    rememberPassword: true,
-    username: 'admin', // 演示默认值
-    password: 'admin', // demo default value
-  });
 
   const registerData = reactive({
     username: '',
     password: '',
     password1: '',
     phoneNumber: '',
-    birthday: new Date('2000-01-01'),
-    gender: 0,
-    role: 0,
-    departmentNo: 0,
+    birthday: undefined,
+    gender: undefined,
+    role: undefined,
+    departmentNo: undefined,
   });
 
   const handleSubmit = async ({
@@ -173,21 +137,9 @@
     if (!errors) {
       setLoading(true);
       try {
-        await userStore.login(values as LoginData);
-        const { redirect, ...othersQuery } = router.currentRoute.value.query;
-        router.push({
-          name: (redirect as string) || 'Workplace',
-          query: {
-            ...othersQuery,
-          },
-        });
+        await register(values as RegisterData);
+        router.push({ name: 'login' });
         Message.success(t('register.form.login.success'));
-        const { rememberPassword } = loginConfig.value;
-        const { username, password } = values;
-        // 实际生产环境需要进行加密存储。
-        // The actual production environment requires encrypted storage.
-        loginConfig.value.username = rememberPassword ? username : '';
-        loginConfig.value.password = rememberPassword ? password : '';
       } catch (err) {
         errorMessage.value = (err as Error).message;
       } finally {
@@ -196,19 +148,92 @@
     }
   };
 
-  const departments = ref<Department[]>([
-    { departmentNo: 0, departmentName: '技术部' },
-    { departmentNo: 1, departmentName: '产品部' },
-    { departmentNo: 2, departmentName: '市场部' },
-    { departmentNo: 3, departmentName: '运营部' },
-    { departmentNo: 4, departmentName: '人事部' },
-    { departmentNo: 5, departmentName: '财务部' },
-  ]);
+  const departments = ref<Department[]>();
   const getDepartment = async () => {
     const { data } = await getDepartmentList();
     departments.value = data;
   };
   getDepartment();
+
+  const rules = {
+    username: [
+      {
+        required: true,
+        message: t('register.form.userName.required'),
+      },
+    ],
+    password: [
+      {
+        required: true,
+        message: t('register.form.password.required'),
+      },
+    ],
+    password1: [
+      {
+        required: true,
+        message: t('register.form.password.required'),
+      },
+      {
+        validator: (value: string, cb: (error?: string) => void) => {
+          if (value !== registerData.password) {
+            cb('two passwords do not match');
+          } else {
+            cb();
+          }
+        },
+      },
+    ],
+    phoneNumber: [
+      {
+        required: true,
+        message: t('register.form.phoneNumber.required'),
+      },
+      {
+        validator: (phoneNumber: string, cb: (error?: string) => void) => {
+          const pattern = /^1[3-9]\d{9}$/; // 这是一个简单的中国手机号码的正则表达式
+          if (!pattern.test(phoneNumber)) {
+            cb(t('register.form.phoneNumber.formatError'));
+          } else {
+            cb();
+          }
+        },
+      },
+    ],
+    birthDay: [
+      {
+        message: t('register.form.birthDay.required'),
+      },
+      {
+        validator: (_: any, cb: (error?: string) => void) => {
+          if (registerData.birthday === undefined) {
+            cb(t('register.form.birthDay.required'));
+          } else {
+            cb();
+          }
+        },
+      },
+    ],
+    gender: [
+      {
+        required: true,
+        message: t('register.form.gender.required'),
+      },
+    ],
+    department: [
+      {
+        message: t('register.form.department.required'),
+      },
+      {
+        validator: (_: any, cb: (error?: string) => void) => {
+          if (registerData.departmentNo === undefined) {
+            cb(t('register.form.department.required'));
+          } else {
+            cb();
+          }
+        },
+      },
+    ],
+  };
 </script>
 
 <style lang="less" scoped>
