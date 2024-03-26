@@ -293,7 +293,7 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import {queryPolicyList, PolicyRecord, PolicyParams, EmployeeRecord} from '@/api/list';
+  import { queryPolicyList, PolicyParams, EmployeeRecord } from '@/api/list';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -526,7 +526,7 @@
   );
 
   const updateVisible = ref(false);
-  const handleUpdateClick = (index: number, record: PolicyRecord) => {
+  const handleUpdateClick = (index: number, record: EmployeeRecord) => {
     updatePolicy.value = record;
     updateVisible.value = true;
   };
@@ -540,7 +540,7 @@
     updateVisible.value = false;
   };
 
-  const updatePolicy = ref<PolicyRecord>({
+  const updatePolicy = ref<EmployeeRecord>({
     id: '',
     number: 0,
     name: '',
@@ -565,7 +565,7 @@
     createVisible.value = false;
   };
 
-  const createPolicy = ref<PolicyRecord>({
+  const createPolicy = ref<EmployeeRecord>({
     id: '',
     number: 0,
     name: '',
@@ -576,7 +576,7 @@
     status: 'online',
   });
 
-  const deleteTask = async (record: PolicyRecord) => {
+  const deleteTask = async (record: EmployeeRecord) => {
     // await deletePolicy(record.id);
     fetchData();
   };
