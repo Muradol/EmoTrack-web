@@ -101,5 +101,62 @@ setupMock({
       ];
       return successResponseWrap(menuList);
     });
+    // 获取部门信息
+    Mock.mock(new RegExp('/api/department/list'), () => {
+      const departmentList = [
+        {
+          departmentNo: 1,
+          departmentName: '技术部',
+        },
+        {
+          departmentNo: 2,
+          departmentName: '产品部',
+        },
+        {
+          departmentNo: 3,
+          departmentName: '市场部',
+        },
+        {
+          departmentNo: 4,
+          departmentName: '运营部',
+        },
+        {
+          departmentNo: 5,
+          departmentName: '设计部',
+        },
+      ];
+
+      return successResponseWrap(departmentList);
+    });
+    // 注册mock
+    Mock.mock(new RegExp('/api/user/register'), (params: MockParams) => {
+      const {
+        username,
+        password,
+        phoneNumber,
+        birthday,
+        gender,
+        departmentNo,
+      } = JSON.parse(params.body);
+      if (!username) {
+        return failResponseWrap(null, '用户名不能为空', 50000);
+      }
+      if (!password) {
+        return failResponseWrap(null, '密码不能为空', 50000);
+      }
+      if (!phoneNumber) {
+        return failResponseWrap(null, '手机号不能为空', 50000);
+      }
+      if (!birthday) {
+        return failResponseWrap(null, '生日不能为空', 50000);
+      }
+      if (!gender) {
+        return failResponseWrap(null, '性别不能为空', 50000);
+      }
+      if (!departmentNo) {
+        return failResponseWrap(null, '部门不能为空', 50000);
+      }
+      return successResponseWrap(null);
+    });
   },
 });

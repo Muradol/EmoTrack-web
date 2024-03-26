@@ -35,3 +35,7 @@ export function getUserInfo() {
 export function getMenuList() {
   return axios.post<RouteRecordNormalized[]>('/api/user/menu');
 }
+
+export function register(data: RegisterData) {
+  return axios.post('/api/user/register', data);
+}
