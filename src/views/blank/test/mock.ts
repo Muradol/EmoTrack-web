@@ -8,14 +8,13 @@ const { Random } = Mock;
 const data = Mock.mock({
   'list|55': [
     {
-      'id|8': /[A-Z][a-z][-][0-9]/,
-      'number|2-3': /[0-9]/,
+      'id|8': /[0-9]/,
       'name|4-8': /[A-Z]/,
       'contentType|1': ['blue', 'happy', 'sad'],
-      'count|2-3': /[0-9]/,
-      'status|1': ['online', 'offline'],
-      'filterType|1': ['A', 'B'],
-      'createdTime': Random.datetime(),
+      'phoneNumber|9': /[3-9]/,
+      'gender|1': [0, 1],
+      'birthDay': Random.date(),
+      'departmentName|1': ['技术部', '策划部', '宣传部', '行政'],
     },
   ],
 });

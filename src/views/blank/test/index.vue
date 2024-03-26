@@ -207,8 +207,17 @@
         :size="size"
         @page-change="onPageChange"
       >
-        <template #index="{ rowIndex }">
+        <!-- <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
+        </template> -->
+
+        <template #gender="{ record }">
+          <div v-if="record.gender === 0">
+            {{ $t('employeeList.columns.women') }}
+          </div>
+          <div v-else>
+            {{ $t('employeeList.columns.man') }}
+          </div>
         </template>
         <template #contentType="{ record }">
           <a-space>
@@ -266,9 +275,9 @@
             :on-before-ok="handleUpdateBeforeOk"
             @cancel="handleUpdateCancel"
           >
-            <a-form :model="updatePolicy">
+            <a-form :model="updateRecord">
               <a-form-item label="label">
-                <a-input v-model="updatePolicy.name" />
+                <a-input v-model="updateRecord.name" />
               </a-form-item>
             </a-form>
           </a-modal>
@@ -293,7 +302,11 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { queryPolicyList, PolicyParams, EmployeeRecord } from '@/api/list';
+  import {
+    queryPolicyList,
+    PolicyParams,
+    EmployeeRecord,
+  } from '@/api/employee';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
@@ -348,31 +361,36 @@
     },
   ]);
   const columns = computed<TableColumnData[]>(() => [
+    // {
+    //   title: t('employeeList.columns.index'),
+    //   dataIndex: 'index',
+    //   slotName: 'index',
+    // },
     {
-      title: t('employeeList.columns.index'),
-      dataIndex: 'index',
-      slotName: 'index',
-    },
-    {
-      title: t('employeeList.columns.number'),
-      dataIndex: 'number',
+      title: t('employeeList.columns.id'),
+      dataIndex: 'id',
     },
     {
       title: t('employeeList.columns.name'),
       dataIndex: 'name',
     },
     {
-      title: t('employeeList.columns.contentType'),
-      dataIndex: 'contentType',
-      slotName: 'contentType',
+      title: t('employeeList.columns.phoneNumber'),
+      dataIndex: 'phoneNumber',
+      // slotName: 'contentType',
     },
     {
-      title: t('employeeList.columns.filterType'),
-      dataIndex: 'filterType',
+      title: t('employeeList.columns.birthDay'),
+      dataIndex: 'birthDay',
     },
     {
-      title: t('employeeList.columns.count'),
-      dataIndex: 'count',
+      title: t('employeeList.columns.gender'),
+      dataIndex: 'gender',
+      slotName: 'gender',
+    },
+    {
+      title: t('employeeList.columns.departmentName'),
+      dataIndex: 'departmentName',
     },
     // {
     //   title: t('employeeList.columns.createdTime'),
@@ -527,7 +545,7 @@
 
   const updateVisible = ref(false);
   const handleUpdateClick = (index: number, record: EmployeeRecord) => {
-    updatePolicy.value = record;
+    updateRecord.value = record;
     updateVisible.value = true;
   };
 
@@ -540,15 +558,13 @@
     updateVisible.value = false;
   };
 
-  const updatePolicy = ref<EmployeeRecord>({
+  const updateRecord = ref<EmployeeRecord>({
     id: '',
-    number: 0,
     name: '',
-    contentType: 'img',
-    filterType: 'B',
-    count: 0,
-    createdTime: '',
-    status: 'online',
+    phoneNumber: 0,
+    birthDay: new Date('2001-01-05'),
+    gender: 0,
+    departmentName: '',
   });
 
   const createVisible = ref(false);
@@ -567,13 +583,11 @@
 
   const createPolicy = ref<EmployeeRecord>({
     id: '',
-    number: 0,
     name: '',
-    contentType: 'img',
-    filterType: 'B',
-    count: 0,
-    createdTime: '',
-    status: 'online',
+    phoneNumber: 0,
+    birthDay: new Date('2001-01-05'),
+    gender: 0,
+    departmentName: '',
   });
 
   const deleteTask = async (record: EmployeeRecord) => {
