@@ -280,7 +280,7 @@
             @confirm="deleteTask(record)"
           >
             <a-button type="primary" status="danger" size="small">
-              delete
+              {{ $t('employeeList.columns.operation.delete') }}
             </a-button>
           </a-popconfirm>
         </template>
