@@ -35,7 +35,6 @@
         }"
       >
         <template #label="{ label }">{{ $t(label) }} :</template>
-
       </a-descriptions>
     </a-space>
   </a-card>
