@@ -1,40 +1,4 @@
 export default {
-<<<<<<< HEAD
-    'menu.list.employeeList': '员工列表',
-    'employeeList.form.number': '员工号',
-    'employeeList.form.number.placeholder': '请输入员工号',
-    'employeeList.form.name': '员工姓名',
-    'employeeList.form.name.placeholder': '请输入员工姓名',
-    'employeeList.form.contentType': '心情状态',
-    'employeeList.form.contentType.blue': '忧郁',
-    'employeeList.form.contentType.happy': '高兴',
-    'employeeList.form.contentType.sad': '悲伤',
-    'employeeList.form.filterType': '所属部门',
-    'employeeList.form.filterType.aDepartment': 'A部门',
-    'employeeList.form.filterType.bDepartment': 'B部门',
-    'employeeList.form.createdTime': '登记时间',
-    'employeeList.form.status': '状态',
-    'employeeList.form.status.online': '已上线',
-    'employeeList.form.status.offline': '已下线',
-    'employeeList.form.search': '查询',
-    'employeeList.form.reset': '重置',
-    'employeeList.columns.delete':'删除',
-    'employeeList.form.selectDefault': '全部',
-    'employeeList.operation.create': '新建',
-    'employeeList.operation.import': '批量导入',
-    'employeeList.operation.download': '下载',
-    // columns
-    'employeeList.columns.index': '#',
-    'employeeList.columns.number': '员工编号',
-    'employeeList.columns.name': '员工姓名',
-    'employeeList.columns.contentType': 'TA的心情',
-    'employeeList.columns.filterType': '所属部门',
-    'employeeList.columns.count': '内容量',
-    'employeeList.columns.createdTime': '登记时间',
-    'employeeList.columns.status': '状态',
-    'employeeList.columns.operations': '操作',
-    'employeeList.columns.operations.view': '查看',
-=======
   'menu.list.employeeList': '员工列表',
   'employeeList.form.number': '员工号',
   'employeeList.form.number.placeholder': '请输入员工号',
@@ -58,6 +22,7 @@ export default {
   'employeeList.operation.create': '新建',
   'employeeList.operation.import': '批量导入',
   'employeeList.operation.download': '下载',
+  'employeeList.columns.operation.delete': '删除',
   // columns
   'employeeList.columns.index': '#',
   'employeeList.columns.number': '员工编号',
@@ -68,8 +33,7 @@ export default {
   'employeeList.columns.createdTime': '登记时间',
   'employeeList.columns.status': '状态',
   'employeeList.columns.operations': '操作',
-  'employeeList.columns.operations.view': '查看',
->>>>>>> 03d561817115e32269c3e7d03a3e50d033d49cdb
+  'employeeList.columns.operations.view': '更新',
 
   // size
   'employeeList.size.mini': '迷你',
