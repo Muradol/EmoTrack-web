@@ -10,11 +10,10 @@ export default {
   'login.form.forgetPassword': '忘记密码',
   'login.form.login': '登录',
   'login.form.register': '注册账号',
-  'login.banner.slogan1': '高效的员工情绪监测平台',
-  'login.banner.subSlogan1': 'EmoTrack，让情绪的管理变得简单而有力！',
-  // Todo: change slogan
-  'login.banner.slogan2': 'slogan2',
-  'login.banner.subSlogan2': 'subslogan2',
-  'login.banner.slogan3': 'slogan3',
-  'login.banner.subSlogan3': 'subslogan3',
+  'login.banner.slogan1': '管理您的部门',
+  'login.banner.subSlogan1': '工作效率低下？EmoTrack为您提高效率！',
+  'login.banner.slogan2': '关注您的员工',
+  'login.banner.subSlogan2': '他们心情好吗？EmoTrack带您快速了解！',
+  'login.banner.slogan3': '改善您的公司',
+  'login.banner.subSlogan3': '今天氛围好吗？EmoTrack教您改善环境！',
 };
