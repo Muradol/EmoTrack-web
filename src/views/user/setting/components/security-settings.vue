@@ -14,9 +14,9 @@
             </a-typography-paragraph>
           </div>
           <div class="operation">
-            <a-link>
+            <a-button type="text" @click="handleCreateClick">
               {{ $t('userSetting.SecuritySettings.button.update') }}
-            </a-link>
+            </a-button>
           </div>
         </template>
       </a-list-item-meta>
@@ -37,10 +37,49 @@
             </a-typography-paragraph>
           </div>
           <div class="operation">
-            <a-link>
+            <a-button type="text">
               {{ $t('userSetting.SecuritySettings.button.settings') }}
-            </a-link>
+            </a-button>
           </div>
+          <a-modal
+            v-model:visible="createVisible"
+            title="修改密码"
+            width="30%"
+            unmount-on-close
+            :on-before-ok="handleCreateBeforeOk"
+            @cancel="handleCreateCancel"
+          >
+            <a-form
+              ref="loginForm"
+              :model="changePassword"
+              class="login-form"
+              layout="horizontal"
+              :rules="rules"
+            >
+              <a-form-item
+                field="password"
+                :validate-trigger="['change', 'blur']"
+                :label="$t('register.form.password')"
+              >
+                <a-input-password
+                  v-model="changePassword.password"
+                  :placeholder="$t('register.form.password.placeholder')"
+                  allow-clear
+                />
+              </a-form-item>
+              <a-form-item
+                field="password1"
+                :validate-trigger="['change', 'blur']"
+                :label="$t('register.form.confirmPassword')"
+              >
+                <a-input-password
+                  v-model="changePassword.password1"
+                  :placeholder="$t('register.form.password1.placeholder')"
+                  allow-clear
+                />
+              </a-form-item>
+            </a-form>
+          </a-modal>
         </template>
       </a-list-item-meta>
     </a-list-item>
@@ -58,9 +97,9 @@
             </a-typography-paragraph>
           </div>
           <div class="operation">
-            <a-link>
+            <a-button type="text">
               {{ $t('userSetting.SecuritySettings.button.update') }}
-            </a-link>
+            </a-button>
           </div>
         </template>
       </a-list-item-meta>
@@ -79,9 +118,9 @@
             </a-typography-paragraph>
           </div>
           <div class="operation">
-            <a-link>
+            <a-button type="text">
               {{ $t('userSetting.SecuritySettings.button.update') }}
-            </a-link>
+            </a-button>
           </div>
         </template>
       </a-list-item-meta>
@@ -89,7 +128,55 @@
   </a-list>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+  import { ref, reactive } from 'vue';
+  import { useI18n } from 'vue-i18n';
+  import useLoading from '@/hooks/loading';
+
+  const { t } = useI18n();
+  const changePassword = reactive({
+    password: '',
+    password1: '',
+  });
+
+  const rules = {
+    password: [
+      {
+        required: true,
+        message: t('register.form.password.required'),
+      },
+    ],
+    password1: [
+      {
+        required: true,
+        message: t('register.form.password.required'),
+      },
+      {
+        validator: (value: string, cb: (error?: string) => void) => {
+          if (value !== changePassword.password) {
+            cb('two passwords do not match');
+          } else {
+            cb();
+          }
+        },
+      },
+    ],
+  };
+
+  const createVisible = ref(false);
+
+  const handleCreateClick = () => {
+    createVisible.value = true;
+  };
+
+  const handleCreateBeforeOk = () => {
+    return true;
+  };
+
+  const handleCreateCancel = () => {
+    createVisible.value = false;
+  };
+</script>
 
 <style scoped lang="less">
   :deep(.arco-list-item) {
