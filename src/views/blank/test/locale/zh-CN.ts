@@ -30,7 +30,7 @@ export default {
   'employeeList.columns.contentType': 'TA的心情',
   'employeeList.columns.departmentName': '所属部门',
   'employeeList.columns.count': '内容量',
-  'employeeList.columns.birthDay': '生日',
+  'employeeList.columns.birthday': '生日',
   'employeeList.columns.status': '状态',
   'employeeList.columns.gender': '性别',
   'employeeList.columns.phoneNumber': '电话号码',

@@ -269,16 +269,75 @@
           </a-button>
           <a-modal
             v-model:visible="updateVisible"
-            :title="record.count"
+            :title="record.name"
             width="30%"
             unmount-on-close
             :on-before-ok="handleUpdateBeforeOk"
             @cancel="handleUpdateCancel"
           >
-            <a-form :model="updateRecord">
-              <a-form-item label="label">
-                <a-input v-model="updateRecord.name" />
+            <a-form
+              ref="loginForm"
+              :model="updateRecord"
+              class="login-form"
+              layout="horizontal"
+            >
+              <a-form-item
+                field="username"
+                :label="$t('register.form.userName')"
+                :validate-trigger="['change', 'blur']"
+              >
+                <a-input
+                  v-model="updateRecord.name"
+                  :placeholder="$t('register.form.userName.placeholder')"
+                />
               </a-form-item>
+              <a-form-item
+                field="phoneNumber"
+                :label="$t('register.form.phoneNumber')"
+                :validate-trigger="['change', 'blur']"
+              >
+                <a-input
+                  v-model="updateRecord.phoneNumber"
+                  :placeholder="$t('register.form.phoneNumber.placeholder')"
+                />
+              </a-form-item>
+              <a-form-item
+                field="birthday"
+                :label="$t('register.form.birthday')"
+                :validate-trigger="['change', 'blur']"
+              >
+                <a-date-picker v-model="updateRecord.birthday" />
+              </a-form-item>
+              <a-form-item
+                field="gender"
+                :label="$t('register.form.gender')"
+                :validate-trigger="['change', 'blur']"
+              >
+                <a-select
+                  v-model="updateRecord.gender"
+                  :placeholder="$t('register.form.gender.placeholder')"
+                  :options="genderSelectOptions"
+                >
+                </a-select>
+              </a-form-item>
+              <!-- <a-form-item
+                field="department"
+                :label="$t('register.form.department')"
+                :validate-trigger="['change', 'blur']"
+              >
+                <a-select
+                  v-model="updateRecord.departmentNo"
+                  placeholder="请选择部门"
+                >
+                  <a-option
+                    v-for="department in departments"
+                    :key="department.departmentName"
+                    :value="department.departmentNo"
+                  >
+                    {{ department.departmentName }}
+                  </a-option>
+                </a-select>
+              </a-form-item> -->
             </a-form>
           </a-modal>
         </template>
@@ -380,8 +439,8 @@
       // slotName: 'contentType',
     },
     {
-      title: t('employeeList.columns.birthDay'),
-      dataIndex: 'birthDay',
+      title: t('employeeList.columns.birthday'),
+      dataIndex: 'birthday',
     },
     {
       title: t('employeeList.columns.gender'),
@@ -561,8 +620,8 @@
   const updateRecord = ref<EmployeeRecord>({
     id: '',
     name: '',
-    phoneNumber: 0,
-    birthDay: new Date('2001-01-05'),
+    phoneNumber: '',
+    birthday: new Date('2001-01-05'),
     gender: 0,
     departmentName: '',
   });
@@ -584,8 +643,8 @@
   const createPolicy = ref<EmployeeRecord>({
     id: '',
     name: '',
-    phoneNumber: 0,
-    birthDay: new Date('2001-01-05'),
+    phoneNumber: '',
+    birthday: new Date('2001-01-05'),
     gender: 0,
     departmentName: '',
   });
@@ -594,6 +653,17 @@
     // await deletePolicy(record.id);
     fetchData();
   };
+
+  const genderSelectOptions = reactive([
+    {
+      label: '女',
+      value: 0,
+    },
+    {
+      label: '男',
+      value: 1,
+    },
+  ]);
 </script>
 
 <script lang="ts">

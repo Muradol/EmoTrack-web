@@ -13,7 +13,7 @@ const data = Mock.mock({
       'contentType|1': ['blue', 'happy', 'sad'],
       'phoneNumber|9': /[3-9]/,
       'gender|1': [0, 1],
-      'birthDay': Random.date(),
+      'birthday': Random.date(),
       'departmentName|1': ['技术部', '策划部', '宣传部', '行政'],
     },
   ],

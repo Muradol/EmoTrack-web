@@ -54,8 +54,8 @@
         />
       </a-form-item>
       <a-form-item
-        field="birthDay"
-        :label="$t('register.form.birthDay')"
+        field="birthday"
+        :label="$t('register.form.birthday')"
         :validate-trigger="['change', 'blur']"
       >
         <a-date-picker v-model="registerData.birthday" />
@@ -199,14 +199,14 @@
         },
       },
     ],
-    birthDay: [
+    birthday: [
       {
-        message: t('register.form.birthDay.required'),
+        message: t('register.form.birthday.required'),
       },
       {
         validator: (_: any, cb: (error?: string) => void) => {
           if (registerData.birthday === undefined) {
-            cb(t('register.form.birthDay.required'));
+            cb(t('register.form.birthday.required'));
           } else {
             cb();
           }

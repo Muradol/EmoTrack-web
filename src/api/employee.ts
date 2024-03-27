@@ -4,8 +4,8 @@ import qs from 'query-string';
 export interface EmployeeRecord {
   id: string;
   name: string;
-  phoneNumber: number;
-  birthDay: Date;
+  phoneNumber: string;
+  birthday: Date;
   gender: number;
   departmentName: string;
 }
