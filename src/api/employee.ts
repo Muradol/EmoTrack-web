@@ -7,7 +7,7 @@ export interface EmployeeRecord {
   phoneNumber: string;
   birthday: Date;
   gender: number;
-  departmentName: string;
+  departmentNo: number;
 }
 
 export interface EmployeeFilter {

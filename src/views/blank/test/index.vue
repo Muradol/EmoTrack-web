@@ -102,7 +102,11 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button type="primary" @click="handleCreateClick">
+            <a-button
+              v-permission="['admin']"
+              type="primary"
+              @click="handleCreateClick"
+            >
               <template #icon>
                 <icon-plus />
               </template>
@@ -116,15 +120,104 @@
               :on-before-ok="handleCreateBeforeOk"
               @cancel="handleCreateCancel"
             >
-              <a-form :model="createPolicy">
-                <a-form-item label="label">
-                  <a-input v-model="createPolicy.name" />
+              <a-form
+                ref="loginForm"
+                :model="registerData"
+                class="login-form"
+                layout="horizontal"
+                :rules="rules"
+              >
+                <a-form-item
+                  field="username"
+                  :label="$t('register.form.userName')"
+                  :validate-trigger="['change', 'blur']"
+                >
+                  <a-input
+                    v-model="registerData.username"
+                    :placeholder="$t('register.form.userName.placeholder')"
+                  />
+                </a-form-item>
+                <a-form-item
+                  field="password"
+                  :validate-trigger="['change', 'blur']"
+                  :label="$t('register.form.password')"
+                >
+                  <a-input-password
+                    v-model="registerData.password"
+                    :placeholder="$t('register.form.password.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+                <a-form-item
+                  field="password1"
+                  :validate-trigger="['change', 'blur']"
+                  :label="$t('register.form.confirmPassword')"
+                >
+                  <a-input-password
+                    v-model="registerData.password1"
+                    :placeholder="$t('register.form.password1.placeholder')"
+                    allow-clear
+                  />
+                </a-form-item>
+                <a-form-item
+                  field="phoneNumber"
+                  :label="$t('register.form.phoneNumber')"
+                  :validate-trigger="['change', 'blur']"
+                >
+                  <a-input
+                    v-model="registerData.phoneNumber"
+                    :placeholder="$t('register.form.phoneNumber.placeholder')"
+                  />
+                </a-form-item>
+                <a-form-item
+                  field="birthday"
+                  :label="$t('register.form.birthday')"
+                  :validate-trigger="['change', 'blur']"
+                >
+                  <a-date-picker v-model="registerData.birthday" />
+                </a-form-item>
+                <a-form-item
+                  field="gender"
+                  :label="$t('register.form.gender')"
+                  :validate-trigger="['change', 'blur']"
+                >
+                  <a-select
+                    v-model="registerData.gender"
+                    :placeholder="$t('register.form.gender.placeholder')"
+                  >
+                    <a-option value="0">
+                      {{ $t('register.form.woman') }}
+                    </a-option>
+                    <a-option value="1">
+                      {{ $t('register.form.man') }}
+                    </a-option>
+                  </a-select>
+                </a-form-item>
+                <a-form-item
+                  field="department"
+                  :label="$t('register.form.department')"
+                  :validate-trigger="['change', 'blur']"
+                >
+                  <a-select
+                    v-model="registerData.departmentNo"
+                    placeholder="请选择部门"
+                    :field-names="departmentFieldName"
+                    :options="departments"
+                  >
+                    <a-option
+                      v-for="department in departments"
+                      :key="department.departmentName"
+                      :value="department.departmentNo"
+                    >
+                      {{ department.departmentName }}
+                    </a-option>
+                  </a-select>
                 </a-form-item>
               </a-form>
             </a-modal>
             <a-upload action="/">
               <template #upload-button>
-                <a-button>
+                <a-button v-permission="['admin']">
                   {{ $t('employeeList.operation.import') }}
                 </a-button>
               </template>
@@ -135,7 +228,7 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button>
+          <a-button v-permission="['admin']">
             <template #icon>
               <icon-download />
             </template>
@@ -320,7 +413,7 @@
                 >
                 </a-select>
               </a-form-item>
-              <!-- <a-form-item
+              <a-form-item
                 field="department"
                 :label="$t('register.form.department')"
                 :validate-trigger="['change', 'blur']"
@@ -337,7 +430,7 @@
                     {{ department.departmentName }}
                   </a-option>
                 </a-select>
-              </a-form-item> -->
+              </a-form-item>
             </a-form>
           </a-modal>
         </template>
@@ -347,7 +440,12 @@
             type="warning"
             @confirm="deleteTask(record)"
           >
-            <a-button type="primary" status="danger" size="small">
+            <a-button
+              v-permission="['admin']"
+              type="primary"
+              status="danger"
+              size="small"
+            >
               {{ $t('employeeList.columns.operation.delete') }}
             </a-button>
           </a-popconfirm>
@@ -371,6 +469,7 @@
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
+  import { Department, getDepartmentList } from '@/api/department';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -450,6 +549,7 @@
     {
       title: t('employeeList.columns.departmentName'),
       dataIndex: 'departmentName',
+      soltName: 'departmentName',
     },
     // {
     //   title: t('employeeList.columns.createdTime'),
@@ -623,7 +723,7 @@
     phoneNumber: '',
     birthday: new Date('2001-01-05'),
     gender: 0,
-    departmentName: '',
+    departmentNo: 0,
   });
 
   const createVisible = ref(false);
@@ -646,7 +746,7 @@
     phoneNumber: '',
     birthday: new Date('2001-01-05'),
     gender: 0,
-    departmentName: '',
+    departmentNo: 0,
   });
 
   const deleteTask = async (record: EmployeeRecord) => {
@@ -664,6 +764,90 @@
       value: 1,
     },
   ]);
+
+  const departmentFieldName = {
+    value: 'departmentNo',
+    label: 'departmentName',
+  };
+
+  const registerData = reactive({
+    username: '',
+    password: '',
+    password1: '',
+    phoneNumber: '',
+    birthday: undefined,
+    gender: undefined,
+    role: undefined,
+    departmentNo: undefined,
+  });
+  const departments = ref<Department[]>();
+  const getDepartment = async () => {
+    const { data } = await getDepartmentList();
+    departments.value = data;
+  };
+
+  getDepartment();
+
+  const rules = {
+    username: [
+      {
+        required: true,
+        message: t('register.form.userName.required'),
+      },
+    ],
+    phoneNumber: [
+      {
+        required: true,
+        message: t('register.form.phoneNumber.required'),
+      },
+      {
+        validator: (phoneNumber: string, cb: (error?: string) => void) => {
+          const pattern = /^1[3-9]\d{9}$/; // 这是一个简单的中国手机号码的正则表达式
+          if (!pattern.test(phoneNumber)) {
+            cb(t('register.form.phoneNumber.formatError'));
+          } else {
+            cb();
+          }
+        },
+      },
+    ],
+    birthday: [
+      {
+        message: t('register.form.birthday.required'),
+      },
+      {
+        validator: (_: any, cb: (error?: string) => void) => {
+          if (registerData.birthday === undefined) {
+            cb(t('register.form.birthday.required'));
+          } else {
+            cb();
+          }
+        },
+      },
+    ],
+    gender: [
+      {
+        required: true,
+        message: t('register.form.gender.required'),
+      },
+    ],
+    department: [
+      {
+        message: t('register.form.department.required'),
+      },
+      {
+        validator: (_: any, cb: (error?: string) => void) => {
+          if (registerData.departmentNo === undefined) {
+            cb(t('register.form.department.required'));
+          } else {
+            cb();
+          }
+        },
+      },
+    ],
+  };
+
+  // Todo: 未完成修改表单与删除表单，未完成api的编写
 </script>
 
 <script lang="ts">
