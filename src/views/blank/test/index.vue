@@ -114,7 +114,7 @@
             </a-button>
             <a-modal
               v-model:visible="createVisible"
-              title="add employee"
+              :title="$t('employeeList.operation.create.title')"
               width="30%"
               unmount-on-close
               :on-before-ok="handleCreateBeforeOk"
@@ -362,7 +362,7 @@
           </a-button>
           <a-modal
             v-model:visible="updateVisible"
-            :title="record.name"
+            :title="$t('employeeList.operation.update.information')"
             width="30%"
             unmount-on-close
             :on-before-ok="handleUpdateBeforeOk"
@@ -436,7 +436,7 @@
         </template>
         <template #delete="{ record }">
           <a-popconfirm
-            content="Are you sure to delete this task?"
+            :content="$t('employeeList.columns.operation.delete.warning')"
             type="warning"
             @confirm="deleteTask(record)"
           >

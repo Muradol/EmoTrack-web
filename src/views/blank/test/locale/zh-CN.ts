@@ -23,6 +23,9 @@ export default {
   'employeeList.operation.import': '批量导入',
   'employeeList.operation.download': '下载',
   'employeeList.columns.operation.delete': '删除',
+  'employeeList.columns.operation.delete.warning': '确定删除该员工吗？',
+  'employeeList.operation.update.information': '更新员工信息',
+  'employeeList.operation.create.title': '新建员工',
   // columns
   'employeeList.columns.index': '#',
   'employeeList.columns.id': '员工编号',
