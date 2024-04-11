@@ -356,10 +356,26 @@
             v-permission="['admin']"
             type="primary"
             size="small"
+            style="margin-right: 10px"
             @click="handleUpdateClick(0, record)"
           >
             {{ $t('employeeList.columns.operations.view') }}
           </a-button>
+          <!-- delete button -->
+          <a-popconfirm
+            :content="$t('employeeList.columns.operation.delete.warning')"
+            type="warning"
+            @confirm="deleteTask(record)"
+          >
+            <a-button
+              v-permission="['admin']"
+              type="primary"
+              status="danger"
+              size="small"
+            >
+              {{ $t('employeeList.columns.operation.delete') }}
+            </a-button>
+          </a-popconfirm>
           <a-modal
             v-model:visible="updateVisible"
             :title="$t('employeeList.operation.update.information')"
@@ -524,10 +540,10 @@
     //   dataIndex: 'index',
     //   slotName: 'index',
     // },
-    {
-      title: t('employeeList.columns.id'),
-      dataIndex: 'id',
-    },
+    // {
+    //   title: t('employeeList.columns.id'),
+    //   dataIndex: 'id',
+    // },
     {
       title: t('employeeList.columns.name'),
       dataIndex: 'name',
@@ -565,11 +581,11 @@
       dataIndex: 'operations',
       slotName: 'operations',
     },
-    {
-      title: t('employeeList.columns.delete'),
-      dataIndex: 'delete',
-      slotName: 'delete',
-    },
+    // {
+    //   title: t('employeeList.columns.delete'),
+    //   dataIndex: 'delete',
+    //   slotName: 'delete',
+    // },
   ]);
   const contentTypeOptions = computed<SelectOptionData[]>(() => [
     {

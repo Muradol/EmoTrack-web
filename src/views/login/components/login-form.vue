@@ -21,7 +21,7 @@
           :placeholder="$t('login.form.userName.placeholder')"
         >
           <template #prefix>
-            <icon-user />
+            <icon-phone />
           </template>
         </a-input>
       </a-form-item>
