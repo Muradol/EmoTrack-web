@@ -17,7 +17,7 @@
                   :label="$t('employeeList.form.number')"
                 >
                   <a-input
-                    v-model="formModel.number"
+                    v-model="formModel.phoneNumber"
                     :placeholder="$t('employeeList.form.number.placeholder')"
                   />
                 </a-form-item>
@@ -31,49 +31,55 @@
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="contentType"
-                  :label="$t('employeeList.form.contentType')"
-                >
+                <a-form-item field="gender" :label="$t('register.form.gender')">
                   <a-select
-                    v-model="formModel.contentType"
-                    :options="contentTypeOptions"
-                    :placeholder="$t('employeeList.form.selectDefault')"
-                  />
+                    v-model="formModel.gender"
+                    :placeholder="$t('register.form.gender.placeholder')"
+                  >
+                    <a-option value="0">
+                      {{ $t('register.form.woman') }}
+                    </a-option>
+                    <a-option value="1">
+                      {{ $t('register.form.man') }}
+                    </a-option>
+                  </a-select>
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="filterType"
+                  field="departmentNo"
                   :label="$t('employeeList.form.filterType')"
                 >
                   <a-select
-                    v-model="formModel.filterType"
-                    :options="filterTypeOptions"
+                    v-model="formModel.departmentNo"
+                    :field-names="departmentFieldName"
+                    :options="departments"
                     :placeholder="$t('employeeList.form.selectDefault')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <a-form-item
-                  field="createdTime"
-                  :label="$t('employeeList.form.createdTime')"
+                  field="birthday"
+                  :label="$t('employeeList.form.birthday')"
                 >
                   <a-range-picker
-                    v-model="formModel.createdTime"
+                    v-model="formModel.birthday"
                     style="width: 100%"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item
-                  field="status"
-                  :label="$t('employeeList.form.status')"
-                >
-                  <a-select
-                    v-model="formModel.status"
+                <!-- Todo: discuss that it should be a select or input -->
+                <a-form-item field="role" :label="$t('employeeList.form.role')">
+                  <!-- <a-select
+                    v-model="formModel.role"
                     :options="statusOptions"
                     :placeholder="$t('employeeList.form.selectDefault')"
+                  /> -->
+                  <a-input
+                    v-model="formModel.role"
+                    :placeholder="$t('employeeList.form.role.placeholder')"
                   />
                 </a-form-item>
               </a-col>
@@ -102,7 +108,7 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <a-button
+            <!-- <a-button
               v-permission="['admin']"
               type="primary"
               @click="handleCreateClick"
@@ -214,7 +220,7 @@
                   </a-select>
                 </a-form-item>
               </a-form>
-            </a-modal>
+            </a-modal> -->
             <a-upload action="/">
               <template #upload-button>
                 <a-button v-permission="['admin']">
@@ -300,9 +306,9 @@
         :size="size"
         @page-change="onPageChange"
       >
-        <!-- <template #index="{ rowIndex }">
+        <template #index="{ rowIndex }">
           {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
-        </template> -->
+        </template>
 
         <template #gender="{ record }">
           <div v-if="record.gender === 0">
@@ -361,6 +367,36 @@
           >
             {{ $t('employeeList.columns.operations.view') }}
           </a-button>
+
+          <!-- Todo: should change the @click funtion -->
+          <a-button
+            v-permission="['admin']"
+            type="primary"
+            size="small"
+            style="margin-right: 10px"
+            @click="handleUpdateClick(0, record)"
+          >
+            {{ $t('employeeList.columns.operations.checkEmotion') }}
+          </a-button>
+
+          <!-- reset password -->
+          <!-- Todo: should change the confirm function to reset password -->
+          <a-popconfirm
+            :content="$t('employeeList.columns.operation.delete.warning')"
+            type="warning"
+            @confirm="deleteTask(record)"
+          >
+            <a-button
+              v-permission="['admin']"
+              type="primary"
+              status="danger"
+              size="small"
+              style="margin-right: 10px"
+            >
+              {{ $t('employeeList.columns.operation.resetPassword') }}
+            </a-button>
+          </a-popconfirm>
+
           <!-- delete button -->
           <a-popconfirm
             :content="$t('employeeList.columns.operation.delete.warning')"
@@ -372,10 +408,12 @@
               type="primary"
               status="danger"
               size="small"
+              style="margin-right: 10px"
             >
               {{ $t('employeeList.columns.operation.delete') }}
             </a-button>
           </a-popconfirm>
+
           <a-modal
             v-model:visible="updateVisible"
             :title="$t('employeeList.operation.update.information')"
@@ -434,18 +472,13 @@
                 :label="$t('register.form.department')"
                 :validate-trigger="['change', 'blur']"
               >
+                <!-- Todo: should fix the problem that just show the departmentNumber instead of name -->
                 <a-select
                   v-model="updateRecord.departmentNo"
                   placeholder="请选择部门"
-                >
-                  <a-option
-                    v-for="department in departments"
-                    :key="department.departmentName"
-                    :value="department.departmentNo"
-                  >
-                    {{ department.departmentName }}
-                  </a-option>
-                </a-select>
+                  :field-names="departmentFieldName"
+                  :options="departments"
+                />
               </a-form-item>
             </a-form>
           </a-modal>
@@ -492,12 +525,12 @@
 
   const generateFormModel = () => {
     return {
-      number: '',
+      role: '',
       name: '',
-      contentType: '',
-      filterType: '',
-      createdTime: [],
-      status: '',
+      phoneNumber: '',
+      gender: '',
+      birthday: [],
+      departmentNo: '',
     };
   };
   const { loading, setLoading } = useLoading(true);
@@ -535,11 +568,11 @@
     },
   ]);
   const columns = computed<TableColumnData[]>(() => [
-    // {
-    //   title: t('employeeList.columns.index'),
-    //   dataIndex: 'index',
-    //   slotName: 'index',
-    // },
+    {
+      title: t('employeeList.columns.index'),
+      dataIndex: 'index',
+      slotName: 'index',
+    },
     // {
     //   title: t('employeeList.columns.id'),
     //   dataIndex: 'id',
@@ -563,6 +596,10 @@
       slotName: 'gender',
     },
     {
+      title: t('employeeList.columns.role'),
+      dataIndex: 'role',
+    },
+    {
       title: t('employeeList.columns.departmentName'),
       dataIndex: 'departmentName',
       soltName: 'departmentName',
@@ -580,6 +617,7 @@
       title: t('employeeList.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
+      width: 400,
     },
     // {
     //   title: t('employeeList.columns.delete'),
@@ -719,8 +757,8 @@
   );
 
   const updateVisible = ref(false);
-  const handleUpdateClick = (index: number, record: EmployeeRecord) => {
-    updateRecord.value = record;
+  const handleUpdateClick = async (index: number, record: EmployeeRecord) => {
+    updateRecord.value = cloneDeep(record);
     updateVisible.value = true;
   };
 
@@ -738,8 +776,9 @@
     name: '',
     phoneNumber: '',
     birthday: new Date('2001-01-05'),
+    role: '',
     gender: 0,
-    departmentNo: 0,
+    departmentNo: 2,
   });
 
   const createVisible = ref(false);
@@ -760,6 +799,7 @@
     id: '',
     name: '',
     phoneNumber: '',
+    role: '',
     birthday: new Date('2001-01-05'),
     gender: 0,
     departmentNo: 0,
