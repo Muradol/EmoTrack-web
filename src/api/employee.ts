@@ -12,14 +12,12 @@ export interface EmployeeRecord {
 }
 
 export interface EmployeeFilter {
-  id: string;
-  number: number;
   name: string;
-  contentType: 'img' | 'horizontalVideo' | 'verticalVideo';
-  filterType: 'A' | 'B';
-  count: number;
-  status: 'online' | 'offline';
-  createdTime: string;
+  role: string;
+  departmentNo: number;
+  phoneNumber: string;
+  gender: number;
+  birthday: string;
 }
 
 export interface PolicyParams extends Partial<EmployeeFilter> {
