@@ -35,4 +35,7 @@ export default {
   'register.form.gender.required': '请选择性别',
   'register.form.department.required': '请选择部门',
   'register.form.phoneNumber.formatError': '手机号格式错误',
+  'register.form.name.required': '请输入姓名',
+  'register.form.name': '姓名',
+  'register.form.name.placeholder': '请输入姓名',
 };
