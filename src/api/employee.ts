@@ -7,6 +7,7 @@ export interface EmployeeRecord {
   phoneNumber: string;
   birthday: Date;
   gender: number;
+  role: string;
   departmentNo: number;
 }
 

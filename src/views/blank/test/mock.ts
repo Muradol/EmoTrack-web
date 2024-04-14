@@ -15,6 +15,7 @@ const data = Mock.mock({
       'gender|1': [0, 1],
       'birthday': Random.date(),
       'departmentName|1': ['技术部', '策划部', '宣传部', '行政'],
+      'role|1': ['员工', '主管', '经理', '总监'],
       'departmentNo|1': /[0-5]/,
     },
   ],

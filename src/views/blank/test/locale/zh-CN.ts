@@ -1,7 +1,7 @@
 export default {
   'menu.list.employeeList': '员工列表',
-  'employeeList.form.number': '员工号',
-  'employeeList.form.number.placeholder': '请输入员工号',
+  'employeeList.form.number': '员工手机号',
+  'employeeList.form.number.placeholder': '请输入员工手机号',
   'employeeList.form.name': '员工姓名',
   'employeeList.form.name.placeholder': '请输入员工姓名',
   'employeeList.form.contentType': '心情状态',
@@ -11,8 +11,9 @@ export default {
   'employeeList.form.filterType': '所属部门',
   'employeeList.form.filterType.aDepartment': 'A部门',
   'employeeList.form.filterType.bDepartment': 'B部门',
-  'employeeList.form.createdTime': '登记时间',
-  'employeeList.form.status': '状态',
+  'employeeList.form.birthday': '生日',
+  'employeeList.form.role': '职位',
+  'employeeList.form.role.placeholder': '请输入职位',
   'employeeList.form.status.online': '已上线',
   'employeeList.form.status.offline': '已下线',
   'employeeList.form.search': '查询',
@@ -40,7 +41,10 @@ export default {
   'employeeList.columns.man': '男',
   'employeeList.columns.women': '女',
   'employeeList.columns.operations': '操作',
+  'employeeList.columns.role': '职位',
   'employeeList.columns.operations.view': '更新',
+  'employeeList.columns.operations.checkEmotion': '查看报告',
+  'employeeList.columns.operation.resetPassword': '重置密码',
 
   // size
   'employeeList.size.mini': '迷你',
