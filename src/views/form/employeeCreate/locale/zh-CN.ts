@@ -1,7 +1,7 @@
 export default {
   'menu.form.step': '分步表单',
   'stepForm.step.title': '新增员工',
-  'stepForm.step.title.baseInfo': '选择员工基本信息',
+  'stepForm.step.title.baseInfo': '输入员工基本信息',
   'stepForm.step.subTitle.baseInfo': '输入基本信息',
   'stepForm.step.title.channel': '输入工作信息',
   'stepForm.step.subTitle.channel': '输入工作信息',

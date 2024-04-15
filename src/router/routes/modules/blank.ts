@@ -22,6 +22,16 @@ const BLANK: AppRouteRecordRaw = {
         roles: ['*'],
       },
     },
+    {
+      path: 'department',
+      name: 'Department',
+      component: () => import('@/views/blank/department/index.vue'),
+      meta: {
+        locale: 'menu.blank.departmentList',
+        requiresAuth: true,
+        roles: ['*'],
+      },
+    },
   ],
 };
 

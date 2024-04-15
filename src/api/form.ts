@@ -38,4 +38,3 @@ export type UnitEmployeeModel = EmployeeBaseInfoModel & EmployeeWorkInfoModel;
 export function submitEmployeeForm(data: UnitEmployeeModel) {
   return axios.post('/api/channel-form/submit', { data });
 }
-
