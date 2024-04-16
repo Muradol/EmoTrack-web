@@ -36,7 +36,7 @@
             :label="$t('department.create.form.managerPhone')"
           >
             <a-input
-              v-model="newDepartment.managePhone"
+              v-model="newDepartment.managerPhone"
               :placeholder="
                 $t('department.create.form.managerPhone.placeholder')
               "
