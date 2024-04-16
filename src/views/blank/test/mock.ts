@@ -2,14 +2,17 @@ import Mock from 'mockjs';
 import qs from 'query-string';
 import setupMock, { successResponseWrap } from '@/utils/setup-mock';
 import { GetParams } from '@/types/global';
-
+// 姓氏池
+const surnamePool = ['张', '李', '王', '刘', '陈', '杨', '赵', '黄', '周', '吴'];
+// 名字池
+const namePool = ['伟', '芳', '娜', '敏', '静', '秀英', '丽', '强', '磊', '军'];
 const { Random } = Mock;
 
 const data = Mock.mock({
   'list|55': [
     {
       'id|8': /[0-9]/,
-      'name|4-8': /[A-Z]/,
+      'name': ()=>Random.pick(surnamePool) + Random.pick(namePool),
       'contentType|1': ['blue', 'happy', 'sad'],
       'phoneNumber|9': /[3-9]/,
       'gender|1': [0, 1],

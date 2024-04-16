@@ -4,11 +4,14 @@ import setupMock, { successResponseWrap } from '@/utils/setup-mock';
 import { GetParams } from '@/types/global';
 
 const { Random } = Mock;
-
+// 姓氏池
+const surnamePool = ['张', '李', '王', '刘', '陈', '杨', '赵', '黄', '周', '吴'];
+// 名字池
+const namePool = ['伟', '芳', '娜', '静', '睿', '强', '磊', '军'];
 const data = Mock.mock({
   'list|55': [
     {
-      'manager|4-8': /[A-Z]/,
+      'manager': ()=>Random.pick(surnamePool) + Random.pick(namePool),
       'managerPhone|9': /[3-9]/,
       'departmentName|1': ['技术部', '策划部', '宣传部', '行政'],
       'peopleNum|1-100': 1,

@@ -2,7 +2,7 @@ export default {
   'menu.list.departmentList': '部门列表',
   'departmentList.form.number': '员工手机号',
   'departmentList.form.number.placeholder': '请输入员工手机号',
-  'departmentList.form.name': '员工姓名',
+  'departmentList.form.name': '部门',
   'departmentList.form.name.placeholder': '请输入员工姓名',
   'departmentList.form.contentType': '心情状态',
   'departmentList.form.contentType.blue': '忧郁',
@@ -30,7 +30,7 @@ export default {
   // columns
   'departmentList.columns.index': '#',
   'departmentList.columns.id': '员工编号',
-  'departmentList.columns.name': '员工姓名',
+  'departmentList.columns.name': '部门',
   'departmentList.columns.contentType': 'TA的心情',
   'departmentList.columns.departmentName': '所属部门',
   'departmentList.columns.count': '内容量',
