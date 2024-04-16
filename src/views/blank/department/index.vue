@@ -379,24 +379,6 @@
             {{ $t('departmentList.columns.operations.checkEmotion') }}
           </a-button>
 
-          <!-- reset password -->
-          <!-- Todo: should change the confirm function to reset password -->
-          <a-popconfirm
-            :content="$t('departmentList.columns.operation.delete.warning')"
-            type="warning"
-            @confirm="deleteTask(record)"
-          >
-            <a-button
-              v-permission="['admin']"
-              type="primary"
-              status="danger"
-              size="small"
-              style="margin-right: 10px"
-            >
-              {{ $t('departmentList.columns.operation.resetPassword') }}
-            </a-button>
-          </a-popconfirm>
-
           <!-- delete button -->
           <a-popconfirm
             :content="$t('departmentList.columns.operation.delete.warning')"

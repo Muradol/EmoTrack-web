@@ -25,7 +25,7 @@ const FORM: AppRouteRecordRaw = {
     {
       path: 'group',
       name: 'Group',
-      component: () => import('@/views/form/step/index.vue'),
+      component: () => import('@/views/form/departmentCreate/index.vue'),
       meta: {
         locale: 'menu.form.group',
         requiresAuth: true,

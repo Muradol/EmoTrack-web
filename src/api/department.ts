@@ -17,7 +17,7 @@ export interface DepartmentInfo {
   peopleNum: number;
 }
 
-export interface DepartmentParams extends Partial<DepartmentInfo>{
+export interface DepartmentParams extends Partial<DepartmentInfo> {
   current: number;
   pageSize: number;
 }
@@ -34,4 +34,15 @@ export function queryDepartmentList(params: DepartmentParams) {
       return qs.stringify(obj);
     },
   });
+}
+
+export interface DepartmentCreateForm {
+  departmentName: string;
+  manager: string;
+  managerPhone: string;
+}
+
+// Todo: api should be change
+export function createDepartment(data: DepartmentCreateForm) {
+  return axios.post('/api/department/create', data);
 }
