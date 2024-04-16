@@ -13,76 +13,39 @@
             <a-row :gutter="16">
               <a-col :span="8">
                 <a-form-item
-                  field="number"
-                  :label="$t('departmentList.form.number')"
+                  field="name"
+                  :label="$t('departmentList.form.name')"
                 >
                   <a-input
-                    v-model="formModel.phoneNumber"
-                    :placeholder="$t('departmentList.form.number.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item field="name" :label="$t('departmentList.form.name')">
-                  <a-input
-                    v-model="formModel.name"
+                    v-model="formModel.departmentName"
                     :placeholder="$t('departmentList.form.name.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
-                <a-form-item field="gender" :label="$t('register.form.gender')">
-                  <a-select
-                    v-model="formModel.gender"
-                    :placeholder="$t('register.form.gender.placeholder')"
-                  >
-                    <a-option value="0">
-                      {{ $t('register.form.woman') }}
-                    </a-option>
-                    <a-option value="1">
-                      {{ $t('register.form.man') }}
-                    </a-option>
-                  </a-select>
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
                 <a-form-item
-                  field="departmentNo"
-                  :label="$t('departmentList.form.filterType')"
+                  field="phone"
+                  :label="$t('departmentList.form.phone')"
                 >
-                  <a-select
-                    v-model="formModel.departmentNo"
-                    :field-names="departmentFieldName"
-                    :options="departments"
-                    :placeholder="$t('departmentList.form.selectDefault')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="birthday"
-                  :label="$t('departmentList.form.birthday')"
-                >
-                  <a-range-picker
-                    v-model="formModel.birthday"
-                    style="width: 100%"
+                  <a-input
+                    v-model="formModel.phoneNumber"
+                    :placeholder="$t('departmentList.form.phone.placeholder')"
                   />
                 </a-form-item>
               </a-col>
               <a-col :span="8">
                 <!-- Todo: discuss that it should be a select or input -->
-                <a-form-item field="role" :label="$t('departmentList.form.role')">
-                  <!-- <a-select
-                    v-model="formModel.role"
-                    :options="statusOptions"
-                    :placeholder="$t('departmentList.form.selectDefault')"
-                  /> -->
+                <a-form-item
+                  field="manager"
+                  :label="$t('departmentList.form.manager')"
+                >
                   <a-input
-                    v-model="formModel.role"
-                    :placeholder="$t('departmentList.form.role.placeholder')"
+                    v-model="formModel.manager"
+                    :placeholder="$t('departmentList.form.manager.placeholder')"
                   />
                 </a-form-item>
               </a-col>
+              <!-- Todo: maybe add range picker -->
             </a-row>
           </a-forms>
         </a-col>
@@ -405,7 +368,7 @@
             @cancel="handleUpdateCancel"
           >
             <a-form
-              ref="loginForm"
+              ref="departmentUpdateForm"
               :model="updateRecord"
               class="login-form"
               layout="horizontal"
@@ -416,7 +379,7 @@
                 :validate-trigger="['change', 'blur']"
               >
                 <a-input
-                  v-model="updateRecord.name"
+                  v-model="updateRecord.departmentName"
                   :placeholder="$t('register.form.userName.placeholder')"
                 />
               </a-form-item>
@@ -426,7 +389,7 @@
                 :validate-trigger="['change', 'blur']"
               >
                 <a-input
-                  v-model="updateRecord.phoneNumber"
+                  v-model="updateRecord.managerPhone"
                   :placeholder="$t('register.form.phoneNumber.placeholder')"
                 />
               </a-form-item>
@@ -435,31 +398,9 @@
                 :label="$t('register.form.birthday')"
                 :validate-trigger="['change', 'blur']"
               >
-                <a-date-picker v-model="updateRecord.birthday" />
-              </a-form-item>
-              <a-form-item
-                field="gender"
-                :label="$t('register.form.gender')"
-                :validate-trigger="['change', 'blur']"
-              >
-                <a-select
-                  v-model="updateRecord.gender"
-                  :placeholder="$t('register.form.gender.placeholder')"
-                  :options="genderSelectOptions"
-                >
-                </a-select>
-              </a-form-item>
-              <a-form-item
-                field="department"
-                :label="$t('register.form.department')"
-                :validate-trigger="['change', 'blur']"
-              >
-                <!-- Todo: should fix the problem that just show the departmentNumber instead of name -->
-                <a-select
-                  v-model="updateRecord.departmentNo"
-                  placeholder="请选择部门"
-                  :field-names="departmentFieldName"
-                  :options="departments"
+                <a-input
+                  v-model="updateRecord.manager"
+                  :placeholder="$t('register.form.phoneNumber.placeholder')"
                 />
               </a-form-item>
             </a-form>
@@ -503,6 +444,7 @@
   import {
     Department,
     DepartmentInfo,
+    DepartmentUpdateForm,
     getDepartmentList,
     queryDepartmentList,
   } from '@/api/department';
@@ -512,7 +454,7 @@
 
   const generateFormModel = () => {
     return {
-      departmentNo: '',
+      departmentName: '',
       phoneNumber: '',
       manager: '',
     };
@@ -688,7 +630,7 @@
   );
 
   const updateVisible = ref(false);
-  const handleUpdateClick = async (index: number, record: EmployeeRecord) => {
+  const handleUpdateClick = async (index: number, record: DepartmentInfo) => {
     updateRecord.value = cloneDeep(record);
     updateVisible.value = true;
   };
@@ -702,14 +644,11 @@
     updateVisible.value = false;
   };
 
-  const updateRecord = ref<EmployeeRecord>({
-    id: '',
-    name: '',
-    phoneNumber: '',
-    birthday: new Date('2001-01-05'),
-    role: '',
-    gender: 0,
-    departmentNo: 2,
+  const updateRecord = ref<DepartmentUpdateForm>({
+    departmentNo: 0,
+    departmentName: '',
+    manager: '',
+    managerPhone: '',
   });
 
   const deleteTask = async (record: EmployeeRecord) => {

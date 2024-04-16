@@ -771,7 +771,7 @@
     updateVisible.value = false;
   };
 
-  const updateRecord = ref<EmployeeRecord>({
+  const updateRecord = reactive<EmployeeRecord>({
     id: '',
     name: '',
     phoneNumber: '',

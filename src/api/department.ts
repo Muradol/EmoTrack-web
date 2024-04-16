@@ -11,6 +11,7 @@ export function getDepartmentList() {
 }
 
 export interface DepartmentInfo {
+  departmentNo: number;
   departmentName: string;
   manager: string;
   managerPhone: string;
@@ -45,4 +46,16 @@ export interface DepartmentCreateForm {
 // Todo: api should be change
 export function createDepartment(data: DepartmentCreateForm) {
   return axios.post('/api/department/create', data);
+}
+
+export interface DepartmentUpdateForm {
+  departmentNo: number;
+  departmentName: string;
+  manager: string;
+  managerPhone: string;
+}
+
+// Todo: api should be change
+export function updateDepartment(data: DepartmentUpdateForm) {
+  return axios.post('/api/department/update', data);
 }
