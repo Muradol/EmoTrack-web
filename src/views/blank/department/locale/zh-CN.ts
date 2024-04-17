@@ -26,7 +26,7 @@ export default {
   'departmentList.operation.import': '批量导入',
   'departmentList.operation.download': '下载',
   'departmentList.columns.operation.delete': '删除',
-  'departmentList.columns.operation.delete.warning': '确定删除该员工吗？',
+  'departmentList.columns.operation.delete.warning': '确定删除该部门吗？',
   'departmentList.operation.update.information': '更新部门信息',
   'departmentList.operation.create.title': '新建员工',
   'departmentList.update.form.name': '部门名',

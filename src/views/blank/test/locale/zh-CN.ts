@@ -45,6 +45,8 @@ export default {
   'employeeList.columns.operations.view': '更新',
   'employeeList.columns.operations.checkEmotion': '查看报告',
   'employeeList.columns.operation.resetPassword': '重置密码',
+  'employeeList.columns.operation.resetPassword.warning':
+    '确定重置该员工密码吗？',
 
   // size
   'employeeList.size.mini': '迷你',

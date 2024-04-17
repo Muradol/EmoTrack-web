@@ -6,9 +6,9 @@
       :subtitle="$t('stepForm.success.subTitle')"
     />
     <a-space :size="16">
-      <a-button key="view" type="primary">
+      <!-- <a-button key="view" type="primary">
         {{ $t('stepForm.button.view') }}
-      </a-button>
+      </a-button> -->
       <a-button key="again" type="secondary" @click="oneMore">
         {{ $t('stepForm.button.again') }}
       </a-button>

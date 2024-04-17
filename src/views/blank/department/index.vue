@@ -337,7 +337,7 @@
             type="primary"
             size="small"
             style="margin-right: 10px"
-            @click="handleUpdateClick(0, record)"
+            @click="showReport"
           >
             {{ $t('departmentList.columns.operations.checkEmotion') }}
           </a-button>
@@ -762,6 +762,8 @@
     // get phone from departmentCreateForm and fill the departmentCreateForm.manager
   };
   // Todo: 未完成修改表单与删除表单，未完成api的编写
+  const showReport = async () => {
+  };
 </script>
 
 <script lang="ts">

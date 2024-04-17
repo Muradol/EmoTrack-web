@@ -374,7 +374,7 @@
             type="primary"
             size="small"
             style="margin-right: 10px"
-            @click="handleUpdateClick(0, record)"
+            @click="showReport"
           >
             {{ $t('employeeList.columns.operations.checkEmotion') }}
           </a-button>
@@ -382,7 +382,7 @@
           <!-- reset password -->
           <!-- Todo: should change the confirm function to reset password -->
           <a-popconfirm
-            :content="$t('employeeList.columns.operation.delete.warning')"
+            :content="$t('employeeList.columns.operation.resetPassword.warning')"
             type="warning"
             @confirm="deleteTask(record)"
           >
@@ -846,6 +846,9 @@
   };
 
   // Todo: 未完成修改表单与删除表单，未完成api的编写
+  const showReport = async () => {
+
+  };
 </script>
 
 <script lang="ts">
