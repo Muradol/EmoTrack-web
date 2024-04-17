@@ -30,12 +30,22 @@ export interface PolicyListRes {
   total: number;
 }
 
-export function queryPolicyList(params: PolicyParams) {
+export function queryPolicyList(params: EmployeeFilter) {
   return axios.get<PolicyListRes>('/api/list/employee', {
     params,
     paramsSerializer: (obj) => {
       return qs.stringify(obj);
     },
+  });
+}
+
+export interface getEmployeeInfoReq {
+  phone: string;
+}
+
+export function getEmployeeInfo(params: getEmployeeInfoReq) {
+  return axios.get<EmployeeRecord>('/api/employee/info', {
+    params,
   });
 }
 

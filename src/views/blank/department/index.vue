@@ -444,6 +444,7 @@
     queryPolicyList,
     PolicyParams,
     EmployeeRecord,
+    getEmployeeInfo,
   } from '@/api/employee';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -760,10 +761,13 @@
   const findEmployee = async () => {
     // 查询员工
     // get phone from departmentCreateForm and fill the departmentCreateForm.manager
+    const res = await getEmployeeInfo({
+      phone: updateRecord.value.managerPhone,
+    });
+    updateRecord.value.manager = res.data.name;
   };
   // Todo: 未完成修改表单与删除表单，未完成api的编写
-  const showReport = async () => {
-  };
+  const showReport = async () => {};
 </script>
 
 <script lang="ts">

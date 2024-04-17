@@ -73,6 +73,7 @@
     createDepartment,
     getDepartmentList,
   } from '@/api/department';
+  import { getEmployeeInfo } from '@/api/employee';
 
   const { loading, setLoading } = useLoading(false);
   const { t } = useI18n();
@@ -123,6 +124,10 @@
   const findEmployee = async () => {
     // 查询员工
     // get phone from departmentCreateForm and fill the departmentCreateForm.manager
+    const res = await getEmployeeInfo({
+      phone: newDepartment.value.managerPhone,
+    });
+    newDepartment.value.manager = res.data.name;
   };
 </script>
 

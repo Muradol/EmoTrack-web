@@ -5,6 +5,7 @@ import setupMock, {
 } from '@/utils/setup-mock';
 
 import { MockParams } from '@/types/mock';
+import qs from 'query-string';
 import { isLogin } from '@/utils/auth';
 
 setupMock({
@@ -224,6 +225,25 @@ setupMock({
         return failResponseWrap(null, '部门不能为空', 50000);
       }
       return successResponseWrap(null);
+    });
+    Mock.mock(new RegExp('/api/employee/info'), (params: MockParams) => {
+      const { phone } = qs.parseUrl(params.url).query;
+      console.log(params.url);
+    
+      if (phone === '12345678910') {
+        return successResponseWrap({
+          id: '1',
+          name: '王立群',
+          phoneNumber: '12345678910',
+          birthday: '1999-01-01',
+        });
+      }
+      return successResponseWrap({
+        id: '1',
+        name: '王小美',
+        phoneNumber: '15012345678',
+        birthday: '1999-01-01',
+      });
     });
   },
 });
