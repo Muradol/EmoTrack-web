@@ -430,7 +430,7 @@ const data = Mock.mock({
         }
         return date;
       },
-      'departmentName': ()=>Random.pick(departmentNames),
+      'departmentName': () => Random.pick(departmentNames),
       'role|1': ['员工', '主管', '经理', '总监'],
       'departmentNo|1': /[0-5]/,
     },
