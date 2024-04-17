@@ -29,6 +29,7 @@
             <a-input
               v-model="newDepartment.manager"
               :placeholder="$t('department.create.form.manager.placeholder')"
+              disabled
             />
           </a-form-item>
           <a-form-item
@@ -40,7 +41,9 @@
               :placeholder="
                 $t('department.create.form.managerPhone.placeholder')
               "
+              style="margin-right: 10px"
             />
+            <a-button type="primary" @click="findEmployee"> 查询 </a-button>
           </a-form-item>
           <a-form-item>
             <a-space :size="16" direction="vertical">
@@ -64,7 +67,12 @@
   import { computed, ref, reactive, watch, nextTick } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
-  import { Department, DepartmentCreateForm, createDepartment, getDepartmentList } from '@/api/department';
+  import {
+    Department,
+    DepartmentCreateForm,
+    createDepartment,
+    getDepartmentList,
+  } from '@/api/department';
 
   const { loading, setLoading } = useLoading(false);
   const { t } = useI18n();
@@ -110,6 +118,11 @@
         message: t('department.create.form.manager.placeholder'),
       },
     ],
+  };
+
+  const findEmployee = async () => {
+    // 查询员工
+    // get phone from departmentCreateForm and fill the departmentCreateForm.manager
   };
 </script>
 

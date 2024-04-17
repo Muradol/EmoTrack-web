@@ -59,6 +59,12 @@ setupMock({
           token: '54321',
         });
       }
+      if (username === 'manager' && password === 'manager') {
+        window.localStorage.setItem('userRole', 'manager');
+        return successResponseWrap({
+          token: '67890',
+        });
+      }
       return failResponseWrap(null, '账号或者密码错误', 50000);
     });
 
