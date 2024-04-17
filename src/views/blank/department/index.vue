@@ -395,6 +395,7 @@
                   :placeholder="
                     $t('departmentList.update.form.manager.placeholder')
                   "
+                  disabled
                 />
               </a-form-item>
               <a-form-item
@@ -407,7 +408,9 @@
                   :placeholder="
                     $t('departmentList.update.form.phone.placeholder')
                   "
+                  style="margin-right: 10px"
                 />
+                <a-button type="primary" @click="findEmployee"> 查询 </a-button>
               </a-form-item>
             </a-form>
           </a-modal>
@@ -754,7 +757,10 @@
       },
     ],
   };
-
+  const findEmployee = async () => {
+    // 查询员工
+    // get phone from departmentCreateForm and fill the departmentCreateForm.manager
+  };
   // Todo: 未完成修改表单与删除表单，未完成api的编写
 </script>
 

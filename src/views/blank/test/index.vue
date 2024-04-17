@@ -223,7 +223,7 @@
             </a-modal> -->
             <a-upload action="/">
               <template #upload-button>
-                <a-button v-permission="['admin']">
+                <a-button v-permission="['admin', 'manager']">
                   {{ $t('employeeList.operation.import') }}
                 </a-button>
               </template>
@@ -234,7 +234,7 @@
           :span="12"
           style="display: flex; align-items: center; justify-content: end"
         >
-          <a-button v-permission="['admin']">
+          <a-button v-permission="['admin', 'manager']">
             <template #icon>
               <icon-download />
             </template>
@@ -359,7 +359,7 @@
         </template>
         <template #operations="{ record }">
           <a-button
-            v-permission="['admin']"
+            v-permission="['admin', 'manager']"
             type="primary"
             size="small"
             style="margin-right: 10px"
@@ -370,7 +370,7 @@
 
           <!-- Todo: should change the @click funtion -->
           <a-button
-            v-permission="['admin']"
+            v-permission="['admin', 'manager']"
             type="primary"
             size="small"
             style="margin-right: 10px"
@@ -387,7 +387,7 @@
             @confirm="deleteTask(record)"
           >
             <a-button
-              v-permission="['admin']"
+              v-permission="['admin', 'manager']"
               type="primary"
               status="danger"
               size="small"
@@ -404,7 +404,7 @@
             @confirm="deleteTask(record)"
           >
             <a-button
-              v-permission="['admin']"
+              v-permission="['admin', 'manager']"
               type="primary"
               status="danger"
               size="small"
@@ -490,7 +490,7 @@
             @confirm="deleteTask(record)"
           >
             <a-button
-              v-permission="['admin']"
+              v-permission="['admin', 'manager']"
               type="primary"
               status="danger"
               size="small"
@@ -625,40 +625,6 @@
     //   slotName: 'delete',
     // },
   ]);
-  const contentTypeOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('employeeList.form.contentType.blue'),
-      value: 'blue',
-    },
-    {
-      label: t('employeeList.form.contentType.happy'),
-      value: 'happy',
-    },
-    {
-      label: t('employeeList.form.contentType.sad'),
-      value: 'sad',
-    },
-  ]);
-  const filterTypeOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('employeeList.form.filterType.aDepartment'),
-      value: 'A',
-    },
-    {
-      label: t('employeeList.form.filterType.bDepartment'),
-      value: 'B',
-    },
-  ]);
-  const statusOptions = computed<SelectOptionData[]>(() => [
-    {
-      label: t('employeeList.form.status.online'),
-      value: 'online',
-    },
-    {
-      label: t('employeeList.form.status.offline'),
-      value: 'offline',
-    },
-  ]);
   const fetchData = async (
     params: PolicyParams = { current: 1, pageSize: 20 }
   ) => {
@@ -771,7 +737,7 @@
     updateVisible.value = false;
   };
 
-  const updateRecord = reactive<EmployeeRecord>({
+  const updateRecord = ref<EmployeeRecord>({
     id: '',
     name: '',
     phoneNumber: '',
@@ -779,30 +745,6 @@
     role: '',
     gender: 0,
     departmentNo: 2,
-  });
-
-  const createVisible = ref(false);
-
-  const handleCreateClick = () => {
-    createVisible.value = true;
-  };
-
-  const handleCreateBeforeOk = () => {
-    return true;
-  };
-
-  const handleCreateCancel = () => {
-    createVisible.value = false;
-  };
-
-  const createPolicy = ref<EmployeeRecord>({
-    id: '',
-    name: '',
-    phoneNumber: '',
-    role: '',
-    birthday: new Date('2001-01-05'),
-    gender: 0,
-    departmentNo: 0,
   });
 
   const deleteTask = async (record: EmployeeRecord) => {
