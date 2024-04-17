@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <Breadcrumb :items="['menu.form', 'menu.form.group']" />
-    <a-card class="general-card" :title="$t('menu.list.employeeList')">
+    <a-card class="general-card" :title="$t('department.create.form.title')">
       <div class="wrapper">
         <a-form
           ref="loginForm"

@@ -420,7 +420,7 @@ const data = Mock.mock({
   'list|55': [
     {
       'manager': () => Random.pick(surnamePool) + Random.pick(namePool),
-      'managerPhone|9': /[3-9]/,
+      'managerPhone': () => Number(['1'] + Random.pick([3, 5, 8, 7]) + Random.string('number', 9)),
       'departmentName|1': ['技术部', '策划部', '宣传部', '行政'],
       'peopleNum|1-100': 1,
     },

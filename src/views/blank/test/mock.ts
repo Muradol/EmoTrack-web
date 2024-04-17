@@ -421,9 +421,15 @@ const data = Mock.mock({
       'id|8': /[0-9]/,
       'name': () => Random.pick(surnamePool) + Random.pick(namePool),
       'contentType|1': ['blue', 'happy', 'sad'],
-      'phoneNumber|9': /[3-9]/,
+      'phoneNumber': () => Number(['1'] + Random.pick([3, 5, 8, 7]) + Random.string('number', 9)),
       'gender|1': [0, 1],
-      'birthday': () => Random.date(),
+      'birthday': () => {
+        let date = Random.date('yyyy-MM-dd');
+        while (new Date(date) > new Date('2003-12-31')) {
+          date = Random.date('yyyy-MM-dd');
+        }
+        return date;
+      },
       'departmentName|1': ['技术部', '策划部', '宣传部', '行政'],
       'role|1': ['员工', '主管', '经理', '总监'],
       'departmentNo|1': /[0-5]/,
