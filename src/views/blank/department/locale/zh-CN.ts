@@ -27,8 +27,15 @@ export default {
   'departmentList.operation.download': '下载',
   'departmentList.columns.operation.delete': '删除',
   'departmentList.columns.operation.delete.warning': '确定删除该员工吗？',
-  'departmentList.operation.update.information': '更新员工信息',
+  'departmentList.operation.update.information': '更新部门信息',
   'departmentList.operation.create.title': '新建员工',
+  'departmentList.update.form.name': '部门名',
+  'departmentList.update.form.name.placeholder': '请输入部门名',
+  'departmentList.update.form.phone': '负责人联系方式',
+  'departmentList.update.form.phone.placeholder': '请输入负责人联系方式',
+  'departmentList.update.form.manager': '负责人',
+  'departmentList.update.form.manager.placeholder': '请输入负责人姓名',
+
   // columns
   'departmentList.columns.index': '#',
   'departmentList.columns.id': '员工编号',

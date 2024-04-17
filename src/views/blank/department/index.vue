@@ -14,7 +14,7 @@
               <a-col :span="8">
                 <a-form-item
                   field="name"
-                  :label="$t('departmentList.form.name')"
+                  :label="$t('departmentList.update.form.name')"
                 >
                   <a-input
                     v-model="formModel.departmentName"
@@ -362,7 +362,7 @@
           <a-modal
             v-model:visible="updateVisible"
             :title="$t('departmentList.operation.update.information')"
-            width="30%"
+            width="40%"
             unmount-on-close
             :on-before-ok="handleUpdateBeforeOk"
             @cancel="handleUpdateCancel"
@@ -374,33 +374,39 @@
               layout="horizontal"
             >
               <a-form-item
-                field="username"
-                :label="$t('register.form.userName')"
+                field="departmentName"
+                :label="$t('departmentList.update.form.name')"
                 :validate-trigger="['change', 'blur']"
               >
                 <a-input
                   v-model="updateRecord.departmentName"
-                  :placeholder="$t('register.form.userName.placeholder')"
+                  :placeholder="
+                    $t('departmentList.update.form.name.placeholder')
+                  "
                 />
               </a-form-item>
               <a-form-item
-                field="phoneNumber"
-                :label="$t('register.form.phoneNumber')"
-                :validate-trigger="['change', 'blur']"
-              >
-                <a-input
-                  v-model="updateRecord.managerPhone"
-                  :placeholder="$t('register.form.phoneNumber.placeholder')"
-                />
-              </a-form-item>
-              <a-form-item
-                field="birthday"
-                :label="$t('register.form.birthday')"
+                field="manager"
+                :label="$t('departmentList.update.form.manager')"
                 :validate-trigger="['change', 'blur']"
               >
                 <a-input
                   v-model="updateRecord.manager"
-                  :placeholder="$t('register.form.phoneNumber.placeholder')"
+                  :placeholder="
+                    $t('departmentList.update.form.manager.placeholder')
+                  "
+                />
+              </a-form-item>
+              <a-form-item
+                field="phoneNumber"
+                :label="$t('departmentList.update.form.phone')"
+                :validate-trigger="['change', 'blur']"
+              >
+                <a-input
+                  v-model="updateRecord.managerPhone"
+                  :placeholder="
+                    $t('departmentList.update.form.phone.placeholder')
+                  "
                 />
               </a-form-item>
             </a-form>
@@ -523,7 +529,7 @@
       title: t('departmentList.columns.operations'),
       dataIndex: 'operations',
       slotName: 'operations',
-      width: 400,
+      width: 300,
     },
     // {
     //   title: t('departmentList.columns.delete'),
