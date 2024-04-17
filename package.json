@@ -6,6 +6,7 @@
   "author": "ArcoDesign Team",
   "license": "MIT",
   "scripts": {
+    "lint": "eslint . --ext js,jsx,ts,tsx --fix",
     "dev": "vite --config ./config/vite.config.dev.ts",
     "build": "vue-tsc --noEmit && vite build --config ./config/vite.config.prod.ts",
     "report": "cross-env REPORT=true npm run build",

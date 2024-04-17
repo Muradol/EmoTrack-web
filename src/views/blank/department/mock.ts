@@ -415,15 +415,39 @@ const namePool = [
   '冠玉',
   '军',
 ];
-let departmentNames = ['技术部', '策划部', '宣传部', '行政部', '开发部', '产品部', '设计部', '财务部', '人力资源部', '销售部', '市场部', '客户服务部', '采购部', '物流部', '研发部', '运营部', '法务部', '公关部', 'IT部', '安全部'];
+let departmentNames = [
+  '技术部',
+  '策划部',
+  '宣传部',
+  '行政部',
+  '开发部',
+  '产品部',
+  '设计部',
+  '财务部',
+  '人力资源部',
+  '销售部',
+  '市场部',
+  '客户服务部',
+  '采购部',
+  '物流部',
+  '研发部',
+  '运营部',
+  '法务部',
+  '公关部',
+  'IT部',
+  '安全部',
+];
 const data = Mock.mock({
   'list|20': [
     {
       'manager': () => Random.pick(surnamePool) + Random.pick(namePool),
-      'managerPhone': () => Number(['1'] + Random.pick([3, 5, 8, 7]) + Random.string('number', 9)),
+      'managerPhone': () =>
+        Number(['1'] + Random.pick([3, 5, 8, 7]) + Random.string('number', 9)),
       'departmentName': () => {
         const departmentName = Random.pick(departmentNames);
-        departmentNames = departmentNames.filter(name => name !== departmentName);
+        departmentNames = departmentNames.filter(
+          (name) => name !== departmentName
+        );
         return departmentName;
       },
       'peopleNum|1-100': 1,

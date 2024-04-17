@@ -44,7 +44,7 @@ export default {
   'menu.list': '列表页',
   'menu.result': '结果页',
   'menu.exception': '异常页',
-  'menu.form': '创建',
+  'menu.form': '创建页面',
   'menu.profile': '详情页',
   'menu.visualization': '数据可视化',
   'menu.user': '个人中心',

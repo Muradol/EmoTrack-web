@@ -102,8 +102,13 @@ setupMock({
       return successResponseWrap(menuList);
     });
     // 获取部门信息
+    // departmentNo 0 is NECESSARY
     Mock.mock(new RegExp('/api/department/list'), () => {
       const departmentList = [
+        {
+          departmentNo: 0,
+          departmentName: '安全部',
+        },
         {
           departmentNo: 1,
           departmentName: '技术部',
@@ -123,6 +128,62 @@ setupMock({
         {
           departmentNo: 5,
           departmentName: '设计部',
+        },
+        {
+          departmentNo: 6,
+          departmentName: '策划部',
+        },
+        {
+          departmentNo: 7,
+          departmentName: '宣传部',
+        },
+        {
+          departmentNo: 8,
+          departmentName: '行政部',
+        },
+        {
+          departmentNo: 9,
+          departmentName: '开发部',
+        },
+        {
+          departmentNo: 10,
+          departmentName: '财务部',
+        },
+        {
+          departmentNo: 11,
+          departmentName: '人力资源部',
+        },
+        {
+          departmentNo: 12,
+          departmentName: '销售部',
+        },
+        {
+          departmentNo: 13,
+          departmentName: '客户服务部',
+        },
+        {
+          departmentNo: 14,
+          departmentName: '采购部',
+        },
+        {
+          departmentNo: 15,
+          departmentName: '物流部',
+        },
+        {
+          departmentNo: 16,
+          departmentName: '研发部',
+        },
+        {
+          departmentNo: 17,
+          departmentName: '法务部',
+        },
+        {
+          departmentNo: 18,
+          departmentName: '公关部',
+        },
+        {
+          departmentNo: 19,
+          departmentName: 'IT部',
         },
       ];
 

@@ -414,14 +414,36 @@ const namePool = [
   '军',
 ];
 const { Random } = Mock;
-const departmentNames = ['技术部', '策划部', '宣传部', '行政部', '开发部', '产品部', '设计部', '财务部', '人力资源部', '销售部', '市场部', '客户服务部', '采购部', '物流部', '研发部', '运营部', '法务部', '公关部', 'IT部', '安全部'];
+const departmentNames = [
+  '技术部',
+  '策划部',
+  '宣传部',
+  '行政部',
+  '开发部',
+  '产品部',
+  '设计部',
+  '财务部',
+  '人力资源部',
+  '销售部',
+  '市场部',
+  '客户服务部',
+  '采购部',
+  '物流部',
+  '研发部',
+  '运营部',
+  '法务部',
+  '公关部',
+  'IT部',
+  '安全部',
+];
 const data = Mock.mock({
   'list|55': [
     {
       'id|8': /[0-9]/,
       'name': () => Random.pick(surnamePool) + Random.pick(namePool),
       'contentType|1': ['blue', 'happy', 'sad'],
-      'phoneNumber': () => Number(['1'] + Random.pick([3, 5, 8, 7]) + Random.string('number', 9)),
+      'phoneNumber': () =>
+        Number(['1'] + Random.pick([3, 5, 8, 7]) + Random.string('number', 9)),
       'gender|1': [0, 1],
       'birthday': () => {
         let date = Random.date('yyyy-MM-dd');
