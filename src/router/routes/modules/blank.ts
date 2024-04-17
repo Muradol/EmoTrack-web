@@ -19,7 +19,7 @@ const BLANK: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.blank.employeeList',
         requiresAuth: true,
-        roles: ['adimn', 'manager'],
+        roles: ['admin', 'manager'],
       },
     },
     {
