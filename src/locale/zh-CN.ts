@@ -20,6 +20,7 @@ import localeBasicProfile from '@/views/profile/basic/locale/zh-CN';
 
 import localeDataAnalysis from '@/views/visualization/data-analysis/locale/zh-CN';
 import localeMultiDAnalysis from '@/views/visualization/multi-dimension-data-analysis/locale/zh-CN';
+import localeEmotionAnalysis from '@/views/visualization/emotion-analysis/locale/zh-CN';
 
 import localeSuccess from '@/views/result/success/locale/zh-CN';
 import localeError from '@/views/result/error/locale/zh-CN';
@@ -68,6 +69,7 @@ export default {
   ...localeBasicProfile,
   ...localeDataAnalysis,
   ...localeMultiDAnalysis,
+  ...localeEmotionAnalysis,
   ...localeSuccess,
   ...localeError,
   ...locale403,

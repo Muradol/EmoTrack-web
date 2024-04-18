@@ -1,0 +1,15 @@
+export default {
+  'menu.visualization.multiDimensionDataAnalysis': '多维数据分析',
+  'emotionAnalysis.card.title.dataOverview': '数据总览',
+  'emotionAnalysis.dataOverview.contentProduction': '今日检测人数',
+  'emotionAnalysis.dataOverview.contentClick': '今日检测量',
+  'emotionAnalysis.dataOverview.contentExposure': '情绪正常总数',
+  'emotionAnalysis.dataOverview.activeUsers': '今日异常人数',
+  'emotionAnalysis.card.title.userActions': '部门检测情况',
+  'emotionAnalysis.card.title.contentTypeDistribution': '情绪分布',
+  'emotionAnalysis.card.title.retentionTrends': '检测量',
+  'emotionAnalysis.card.title.userRetention': '正常情绪',
+  'emotionAnalysis.card.title.contentConsumptionTrends': '检测人数',
+  'emotionAnalysis.card.title.contentConsumption': '异常情绪',
+  'emotionAnalysis.card.title.contentPublishingSource': '部门情绪占比',
+};
