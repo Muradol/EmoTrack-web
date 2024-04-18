@@ -512,9 +512,11 @@
     queryPolicyList,
     PolicyParams,
     EmployeeRecord,
+    queryPolicyList1,
   } from '@/api/employee';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
+  import { useUserStore } from '@/store';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
@@ -541,6 +543,8 @@
   const showColumns = ref<Column[]>([]);
 
   const size = ref<SizeProps>('medium');
+
+  const userStore = useUserStore();
 
   const basePagination: Pagination = {
     current: 1,
@@ -629,6 +633,15 @@
     params: PolicyParams = { current: 1, pageSize: 20 }
   ) => {
     setLoading(true);
+    if (userStore.role === 'manager') {
+      const { data } = await queryPolicyList1(params);
+      renderData.value = data.list;
+      pagination.current = params.current;
+      pagination.total = data.total;
+      setLoading(false);
+      return;
+    }
+
     try {
       const { data } = await queryPolicyList(params);
       renderData.value = data.list;

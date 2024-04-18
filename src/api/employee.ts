@@ -39,6 +39,15 @@ export function queryPolicyList(params: EmployeeFilter) {
   });
 }
 
+export function queryPolicyList1(params: EmployeeFilter) {
+  return axios.get<PolicyListRes>('/api/list/mock', {
+    params,
+    paramsSerializer: (obj) => {
+      return qs.stringify(obj);
+    },
+  });
+}
+
 export interface getEmployeeInfoReq {
   phone: string;
 }

@@ -459,6 +459,29 @@ const data = Mock.mock({
   ],
 });
 
+const data1 = Mock.mock({
+  'list|55': [
+    {
+      'id|8': /[0-9]/,
+      'name': () => Random.pick(surnamePool) + Random.pick(namePool),
+      'contentType|1': ['blue', 'happy', 'sad'],
+      'phoneNumber': () =>
+        Number(['1'] + Random.pick([3, 5, 8, 7]) + Random.string('number', 9)),
+      'gender|1': [0, 1],
+      'birthday': () => {
+        let date = Random.date('yyyy-MM-dd');
+        while (new Date(date) > new Date('2003-12-31')) {
+          date = Random.date('yyyy-MM-dd');
+        }
+        return date;
+      },
+      'departmentName': departmentNames[0],
+      'role|1': ['员工', '主管', '经理', '总监'],
+      'departmentNo|1': 1,
+    },
+  ],
+});
+
 setupMock({
   setup() {
     Mock.mock(new RegExp('/api/list/employee'), (params: GetParams) => {
@@ -467,6 +490,16 @@ setupMock({
       const ps = pageSize as number;
       return successResponseWrap({
         list: data.list.slice((p - 1) * ps, p * ps),
+        total: 55,
+      });
+    });
+    Mock.mock(new RegExp('/api/list/mock'), (param: GetParams) => {
+      const { current = 1, pageSize = 10 } = qs.parseUrl(param.url).query;
+      const p = current as number;
+      const ps = pageSize as number;
+      // check token
+      return successResponseWrap({
+        list: data1.list.slice((p - 1) * ps, p * ps),
         total: 55,
       });
     });
