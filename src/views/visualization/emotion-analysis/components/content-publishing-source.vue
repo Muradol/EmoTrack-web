@@ -136,28 +136,28 @@
           data: [
             {
               value: [148564],
-              name: 'UGC原创',
+              name: '开心',
               itemStyle: {
                 color: '#249EFF',
               },
             },
             {
               value: [334271],
-              name: '国外网站',
+              name: '愤怒',
               itemStyle: {
                 color: '#846BCE',
               },
             },
             {
               value: [445694],
-              name: '转载文章',
+              name: '悲伤',
               itemStyle: {
                 color: '#21CCFF',
               },
             },
             {
               value: [445694],
-              name: '行业报告',
+              name: '忧郁',
               itemStyle: {
                 color: '#0E42D2',
               },
@@ -186,28 +186,28 @@
           data: [
             {
               value: [148564],
-              name: 'UGC原创',
+              name: '开心',
               itemStyle: {
                 color: '#249EFF',
               },
             },
             {
               value: [334271],
-              name: '国外网站',
+              name: '愤怒',
               itemStyle: {
                 color: '#846BCE',
               },
             },
             {
               value: [445694],
-              name: '转载文章',
+              name: '悲伤',
               itemStyle: {
                 color: '#21CCFF',
               },
             },
             {
               value: [445694],
-              name: '行业报告',
+              name: '忧郁',
               itemStyle: {
                 color: '#0E42D2',
               },

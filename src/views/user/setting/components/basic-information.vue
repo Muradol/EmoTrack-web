@@ -36,7 +36,7 @@
         :placeholder="$t('userSetting.basicInfo.placeholder.nickname')"
       />
     </a-form-item>
-    <a-form-item
+    <!-- <a-form-item
       field="profile"
       :label="$t('userSetting.basicInfo.form.label.profile')"
       :rules="[
@@ -51,7 +51,7 @@
         v-model="formData.profile"
         :placeholder="$t('userSetting.basicInfo.placeholder.profile')"
       />
-    </a-form-item>
+    </a-form-item> -->
     <a-form-item>
       <a-space>
         <a-button type="primary" @click="validate">

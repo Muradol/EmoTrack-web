@@ -234,25 +234,25 @@
       },
       series: [
         generateSeries(
-          '内容生产量',
+          '今日检测人数',
           '#722ED1',
           '#F5E8FF',
           contentProductionData.value
         ),
         generateSeries(
-          '内容点击量',
+          '今日检测量',
           '#F77234',
           '#FFE4BA',
           contentClickData.value
         ),
         generateSeries(
-          '内容曝光量',
+          '情绪正常总数',
           '#33D1C9',
           '#E8FFFB',
           contentExposureData.value
         ),
         generateSeries(
-          '活跃用户数',
+          '今日异常人数',
           '#3469FF',
           '#E8F3FF',
           activeUsersData.value
