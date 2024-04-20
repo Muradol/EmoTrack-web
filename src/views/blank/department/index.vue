@@ -49,23 +49,22 @@
             </a-row>
           </a-forms>
         </a-col>
-        <a-divider style="height: 84px" direction="vertical" />
-        <a-col :flex="'86px'" style="text-align: right">
-          <a-space direction="vertical" :size="18">
-            <a-button type="primary" @click="search">
-              <template #icon>
-                <icon-search />
-              </template>
-              {{ $t('departmentList.form.search') }}
-            </a-button>
-            <a-button @click="reset">
-              <template #icon>
-                <icon-refresh />
-              </template>
-              {{ $t('departmentList.form.reset') }}
-            </a-button>
-          </a-space>
-        </a-col>
+        <a-button
+          type="primary"
+          style="margin-left: 20px; margin-right: 20px"
+          @click="search"
+        >
+          <template #icon>
+            <icon-search />
+          </template>
+          {{ $t('departmentList.form.search') }}
+        </a-button>
+        <a-button @click="reset">
+          <template #icon>
+            <icon-refresh />
+          </template>
+          {{ $t('departmentList.form.reset') }}
+        </a-button>
       </a-row>
       <a-divider style="margin-top: 0" />
       <a-row style="margin-bottom: 16px">
