@@ -39,11 +39,15 @@
       :label="$t('register.form.gender')"
       :validate-trigger="['change', 'blur']"
     >
-      <a-select
+      <!-- <a-select
         v-model="formData.gender"
         :placeholder="$t('register.form.gender.placeholder')"
         :options="genderSelectOptions"
-      />
+      /> -->
+      <a-radio-group v-model="formData.gender">
+        <a-radio :value="0">女</a-radio>
+        <a-radio :value="1">男</a-radio>
+      </a-radio-group>
     </a-form-item>
     <a-form-item>
       <a-button type="primary" @click="onNextClick">
