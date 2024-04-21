@@ -33,6 +33,16 @@ const VISUALIZATION: AppRouteRecordRaw = {
         roles: ['admin'],
       },
     },
+    {
+      path: 'check',
+      name: 'check',
+      component: () => import('@/views/blank/upload/index.vue'),
+      meta: {
+        locale: 'menu.visualization.multiDimensionDataAnalysis',
+        requiresAuth: true,
+        roles: ['admin'],
+      },
+    },
   ],
 };
 
