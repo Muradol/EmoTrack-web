@@ -18,23 +18,6 @@
       />
     </a-form-item>
     <a-form-item
-      field="phoneNumber"
-      :label="$t('register.form.phoneNumber')"
-      :validate-trigger="['change', 'blur']"
-    >
-      <a-input
-        v-model="formData.phoneNumber"
-        :placeholder="$t('register.form.phoneNumber.placeholder')"
-      />
-    </a-form-item>
-    <a-form-item
-      field="birthday"
-      :label="$t('register.form.birthday')"
-      :validate-trigger="['change', 'blur']"
-    >
-      <a-date-picker v-model="formData.birthday" />
-    </a-form-item>
-    <a-form-item
       field="gender"
       :label="$t('register.form.gender')"
       :validate-trigger="['change', 'blur']"
@@ -49,6 +32,24 @@
         <a-radio :value="1">男</a-radio>
       </a-radio-group>
     </a-form-item>
+    <a-form-item
+      field="birthday"
+      :label="$t('register.form.birthday')"
+      :validate-trigger="['change', 'blur']"
+    >
+      <a-date-picker v-model="formData.birthday" />
+    </a-form-item>
+    <a-form-item
+      field="phoneNumber"
+      :label="$t('register.form.phoneNumber')"
+      :validate-trigger="['change', 'blur']"
+    >
+      <a-input
+        v-model="formData.phoneNumber"
+        :placeholder="$t('register.form.phoneNumber.placeholder')"
+      />
+    </a-form-item>
+
     <a-form-item>
       <a-button type="primary" @click="onNextClick">
         {{ $t('stepForm.button.next') }}

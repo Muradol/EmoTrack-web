@@ -12,17 +12,6 @@
           >
             <a-row :gutter="16">
               <a-col :span="8">
-                <a-form-item
-                  field="number"
-                  :label="$t('employeeList.form.number')"
-                >
-                  <a-input
-                    v-model="formModel.phoneNumber"
-                    :placeholder="$t('employeeList.form.number.placeholder')"
-                  />
-                </a-form-item>
-              </a-col>
-              <a-col :span="8">
                 <a-form-item field="name" :label="$t('employeeList.form.name')">
                   <a-input
                     v-model="formModel.name"
@@ -47,6 +36,29 @@
               </a-col>
               <a-col :span="8">
                 <a-form-item
+                  field="birthday"
+                  :label="$t('employeeList.form.birthday')"
+                >
+                  <a-range-picker
+                    v-model="formModel.birthday"
+                    style="width: 100%"
+                  />
+                </a-form-item>
+              </a-col>
+              <a-col :span="8">
+                <a-form-item
+                  field="number"
+                  :label="$t('employeeList.form.number')"
+                >
+                  <a-input
+                    v-model="formModel.phoneNumber"
+                    :placeholder="$t('employeeList.form.number.placeholder')"
+                  />
+                </a-form-item>
+              </a-col>
+
+              <a-col :span="8">
+                <a-form-item
                   field="departmentNo"
                   :label="$t('employeeList.form.filterType')"
                 >
@@ -58,17 +70,7 @@
                   />
                 </a-form-item>
               </a-col>
-              <a-col :span="8">
-                <a-form-item
-                  field="birthday"
-                  :label="$t('employeeList.form.birthday')"
-                >
-                  <a-range-picker
-                    v-model="formModel.birthday"
-                    style="width: 100%"
-                  />
-                </a-form-item>
-              </a-col>
+
               <a-col :span="8">
                 <!-- Todo: discuss that it should be a select or input -->
                 <a-form-item field="role" :label="$t('employeeList.form.role')">
@@ -382,7 +384,9 @@
           <!-- reset password -->
           <!-- Todo: should change the confirm function to reset password -->
           <a-popconfirm
-            :content="$t('employeeList.columns.operation.resetPassword.warning')"
+            :content="
+              $t('employeeList.columns.operation.resetPassword.warning')
+            "
             type="warning"
             @confirm="deleteTask(record)"
           >
@@ -586,28 +590,29 @@
       dataIndex: 'name',
     },
     {
-      title: t('employeeList.columns.phoneNumber'),
-      dataIndex: 'phoneNumber',
-      // slotName: 'contentType',
+      title: t('employeeList.columns.gender'),
+      dataIndex: 'gender',
+      slotName: 'gender',
     },
     {
       title: t('employeeList.columns.birthday'),
       dataIndex: 'birthday',
     },
     {
-      title: t('employeeList.columns.gender'),
-      dataIndex: 'gender',
-      slotName: 'gender',
-    },
-    {
-      title: t('employeeList.columns.role'),
-      dataIndex: 'role',
+      title: t('employeeList.columns.phoneNumber'),
+      dataIndex: 'phoneNumber',
+      // slotName: 'contentType',
     },
     {
       title: t('employeeList.columns.departmentName'),
       dataIndex: 'departmentName',
       soltName: 'departmentName',
     },
+    {
+      title: t('employeeList.columns.role'),
+      dataIndex: 'role',
+    },
+
     // {
     //   title: t('employeeList.columns.createdTime'),
     //   dataIndex: 'createdTime',
@@ -859,9 +864,7 @@
   };
 
   // Todo: 未完成修改表单与删除表单，未完成api的编写
-  const showReport = async () => {
-
-  };
+  const showReport = async () => {};
 </script>
 
 <script lang="ts">
