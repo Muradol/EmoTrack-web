@@ -30,7 +30,7 @@ export interface PolicyListRes {
   total: number;
 }
 
-export function queryPolicyList(params: EmployeeFilter) {
+export function queryPolicyList(params: PolicyParams) {
   return axios.get<PolicyListRes>('/api/list/employee', {
     params,
     paramsSerializer: (obj) => {
@@ -39,7 +39,7 @@ export function queryPolicyList(params: EmployeeFilter) {
   });
 }
 
-export function queryPolicyList1(params: EmployeeFilter) {
+export function queryPolicyList1(params: PolicyParams) {
   return axios.get<PolicyListRes>('/api/list/mock', {
     params,
     paramsSerializer: (obj) => {
