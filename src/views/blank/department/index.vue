@@ -13,12 +13,15 @@
             <a-row :gutter="16">
               <a-col :span="8">
                 <a-form-item
-                  field="name"
+                  field="departmentNo"
                   :label="$t('departmentList.update.form.name')"
                 >
-                  <a-input
-                    v-model="formModel.departmentName"
+                  <a-select
+                    v-model="formModel.departmentNo"
+                    :field-names="departmentFieldName"
+                    :options="departments"
                     :placeholder="$t('departmentList.form.name.placeholder')"
+                    allow-search
                   />
                 </a-form-item>
               </a-col>
@@ -463,7 +466,7 @@
 
   const generateFormModel = () => {
     return {
-      departmentName: '',
+      departmentNo: '',
       phoneNumber: '',
       manager: '',
     };

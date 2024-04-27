@@ -67,6 +67,7 @@
                     :field-names="departmentFieldName"
                     :options="departments"
                     :placeholder="$t('employeeList.form.selectDefault')"
+                    allow-search
                   />
                 </a-form-item>
               </a-col>
