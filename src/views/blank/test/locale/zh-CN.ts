@@ -8,7 +8,7 @@ export default {
   'employeeList.form.contentType.blue': '忧郁',
   'employeeList.form.contentType.happy': '高兴',
   'employeeList.form.contentType.sad': '悲伤',
-  'employeeList.form.filterType': '所属部门',
+  'employeeList.form.filterType': '部门',
   'employeeList.form.filterType.aDepartment': 'A部门',
   'employeeList.form.filterType.bDepartment': 'B部门',
   'employeeList.form.birthday': '生日',
