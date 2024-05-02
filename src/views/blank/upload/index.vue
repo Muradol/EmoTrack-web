@@ -2,7 +2,7 @@
   <div class="container">
     <Breadcrumb :items="['menu.form', 'menu.form.group']" />
     <a-card class="general-card" :title="$t('department.create.form.title')">
-      <div>
+      <div class="wrapper">
         <!-- <div v-if="image">
           <video ref="video" autoplay></video>
           <button @click="capture">Capture</button>
@@ -10,7 +10,109 @@
         <div v-else>
           <canvas ref="canvas">abc</canvas>
         </div> -->
-        <div v-if="!photoTaken">
+        <div
+          style="
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* height: 100%; */
+            height: 300px;
+            width: 900px;
+            border: 1px solid #000; /* 添加边框样式 */
+          "
+        >
+          <a-col :flex="1">
+            <a-upload
+              action="/"
+              :file-list="file ? [file] : []"
+              :show-file-list="false"
+              style="
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 500px;
+                width: 900px;
+                transform: scale(3);
+              "
+              @change="onChange"
+              @progress="onProgress"
+            >
+              <template #upload-button>
+                <div
+                  :class="`arco-upload-list-item${
+                    file && file.status === 'error'
+                      ? ' arco-upload-list-item-error'
+                      : ''
+                  }`"
+                >
+                  <div
+                    v-if="file && file.url"
+                    class="arco-upload-list-picture custom-upload-avatar"
+                  >
+                    <img :src="file.url" />
+                    <div class="arco-upload-list-picture-mask">
+                      <IconEdit />
+                    </div>
+                    <a-progress
+                      v-if="file.status === 'uploading' && file.percent < 100"
+                      :percent="file.percent"
+                      type="circle"
+                      size="mini"
+                      :style="{
+                        position: 'absolute',
+                        left: '50%',
+                        top: '50%',
+                        transform: 'translateX(-50%) translateY(-50%)',
+                      }"
+                    />
+                  </div>
+                  <div v-else class="arco-upload-picture-card">
+                    <div class="arco-upload-picture-card-text">
+                      <IconPlus />
+                      <div style="margin-top: 10px; font-weight: 600"
+                        >Upload</div
+                      >
+                    </div>
+                  </div>
+                </div>
+              </template>
+            </a-upload>
+
+            <!-- <a-upload action="/">
+              <template #upload-button>
+                <div
+                  style="
+                    background-color: var(--color-fill-2);
+                    color: var(--color-text-1);
+                    border: 1px dashed var(--color-fill-4);
+                    height: 300px;
+                    width: 900px;
+                    border-radius: 2;
+                    line-height: 158px;
+                    text-align: center;
+                  "
+                >
+                  <div>
+                    Drag the file here or
+                    <span style="color: #3370ff"> Click to upload</span>
+                  </div>
+                </div>
+              </template>
+            </a-upload> -->
+
+            <a-space :size="16" direction="vertical" />
+            <a-row justify="space-around">
+              <a-col :span="4">
+                <a-button long> abc </a-button>
+              </a-col>
+              <a-col :span="4">
+                <a-button long> efg </a-button>
+              </a-col>
+            </a-row>
+          </a-col>
+        </div>
+        <!-- <div v-if="!photoTaken">
           <div class="video-wrapper">
             <video id="video" ref="video" autoplay></video>
           </div>
@@ -20,7 +122,7 @@
         <div v-else>
           <img id="photo" :src="photo" />
           <a-button @click="retakePhoto">重新拍照</a-button>
-        </div>
+        </div> -->
       </div>
     </a-card>
   </div>
@@ -28,6 +130,8 @@
 
 <script lang="ts" setup>
   import { ref, onMounted, onBeforeUnmount } from 'vue';
+  import { IconEdit, IconPlus } from '@arco-design/web-vue/es/icon';
+  import { FileItem } from '@arco-design/web-vue';
 
   const video = ref();
   const canvas = ref();
@@ -96,6 +200,17 @@
   onBeforeUnmount(() => {
     stopStream();
   });
+
+  const file = ref();
+  const onChange = (_: FileItem[], currentFile: FileItem) => {
+    file.value = {
+      ...currentFile,
+      // url: URL.createObjectURL(currentFile.file),
+    };
+  };
+  const onProgress = (currentFile: any) => {
+    file.value = currentFile;
+  };
 </script>
 
 <script lang="ts">
@@ -126,6 +241,7 @@
     flex-direction: column;
     align-items: center;
     padding: 64px 0;
+    min-height: 600px;
     background-color: var(--color-bg-2);
     :deep(.arco-form) {
       .arco-form-item {

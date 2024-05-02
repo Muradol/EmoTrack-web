@@ -1,37 +1,37 @@
 <template>
-  <div class="container">
+  <!-- <div class="container">
     <Breadcrumb :items="['menu.form', 'menu.form.step']" />
     <a-spin :loading="loading" style="width: 100%">
-      <a-card class="general-card">
-        <template #title>
-          {{ $t('stepForm.step.title') }}
-        </template>
-        <div class="wrapper">
-          <a-steps
-            v-model:current="step"
-            style="width: 580px"
-            line-less
-            class="steps"
-          >
-            <a-step :description="$t('stepForm.step.subTitle.baseInfo')">
-              {{ $t('stepForm.step.title.baseInfo') }}
-            </a-step>
-            <a-step :description="$t('stepForm.step.subTitle.channel')">
-              {{ $t('stepForm.step.title.channel') }}
-            </a-step>
-            <a-step :description="$t('stepForm.step.subTitle.finish')">
-              {{ $t('stepForm.step.title.finish') }}
-            </a-step>
-          </a-steps>
-          <keep-alive>
-            <BaseInfo v-if="step === 1" @change-step="changeStep" />
-            <ChannelInfo v-else-if="step === 2" @change-step="changeStep" />
-            <Success v-else-if="step === 3" @change-step="changeStep" />
-          </keep-alive>
-        </div>
-      </a-card>
-    </a-spin>
+      <a-card class="general-card"> -->
+  <template>
+    {{ $t('stepForm.step.title') }}
+  </template>
+  <div class="wrapper">
+    <a-steps
+      v-model:current="step"
+      style="width: 580px"
+      line-less
+      class="steps"
+    >
+      <a-step :description="$t('stepForm.step.subTitle.baseInfo')">
+        {{ $t('stepForm.step.title.baseInfo') }}
+      </a-step>
+      <a-step :description="$t('stepForm.step.subTitle.channel')">
+        {{ $t('stepForm.step.title.channel') }}
+      </a-step>
+      <a-step :description="$t('stepForm.step.subTitle.finish')">
+        {{ $t('stepForm.step.title.finish') }}
+      </a-step>
+    </a-steps>
+    <keep-alive>
+      <BaseInfo v-if="step === 1" @change-step="changeStep" />
+      <ChannelInfo v-else-if="step === 2" @change-step="changeStep" />
+      <Success v-else-if="step === 3" @change-step="changeStep" />
+    </keep-alive>
   </div>
+  <!-- </a-card>
+    </a-spin>
+  </div> -->
 </template>
 
 <script lang="ts" setup>
@@ -47,6 +47,8 @@
   import ChannelInfo from './components/channel-info.vue';
   import Success from './components/success.vue';
 
+  const emits = defineEmits(['handleCreateEmployee']);
+
   const { loading, setLoading } = useLoading(false);
   const step = ref(1);
   const submitModel = ref<UnitEmployeeModel>({} as UnitEmployeeModel);
@@ -61,6 +63,7 @@
     } finally {
       setLoading(false);
     }
+    emits('handleCreateEmployee', { ...submitModel.value });
   };
   const changeStep = (
     direction: string | number,

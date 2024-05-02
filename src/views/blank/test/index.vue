@@ -111,7 +111,7 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <!-- <a-button
+            <a-button
               v-permission="['admin']"
               type="primary"
               @click="handleCreateClick"
@@ -124,12 +124,15 @@
             <a-modal
               v-model:visible="createVisible"
               :title="$t('employeeList.operation.create.title')"
-              width="30%"
+              width="60%"
               unmount-on-close
               :on-before-ok="handleCreateBeforeOk"
               @cancel="handleCreateCancel"
             >
-              <a-form
+              <CreateEmployeeForm
+                @handle-create-employee="handleCreateEmployee"
+              />
+              <!-- <a-form
                 ref="loginForm"
                 :model="registerData"
                 class="login-form"
@@ -222,8 +225,8 @@
                     </a-option>
                   </a-select>
                 </a-form-item>
-              </a-form>
-            </a-modal> -->
+              </a-form> -->
+            </a-modal>
             <a-upload action="/">
               <template #upload-button>
                 <a-button v-permission="['admin', 'manager']">
@@ -526,6 +529,9 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { Department, getDepartmentList } from '@/api/department';
+
+  import { UnitEmployeeModel, submitEmployeeForm } from '@/api/form';
+  import CreateEmployeeForm from '../../form/employeeCreate/index.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -866,6 +872,34 @@
 
   // Todo: 未完成修改表单与删除表单，未完成api的编写
   const showReport = async () => {};
+  const createVisible = ref(false);
+
+  const handleCreateClick = () => {
+    createVisible.value = true;
+  };
+
+  const handleCreateBeforeOk = () => {
+    setLoading(true);
+    // subimitCreate();
+    setLoading(false);
+    return true;
+  };
+
+  const handleCreateCancel = () => {
+    createVisible.value = false;
+  };
+  const submitModel = ref<UnitEmployeeModel>({} as UnitEmployeeModel);
+
+  const handleCreateEmployee = async (model: UnitEmployeeModel) => {
+    submitModel.value = model;
+    // createVisible.value = false;
+    try {
+      await submitEmployeeForm(submitModel.value); // The mock api default success
+      submitModel.value = {} as UnitEmployeeModel; // init
+    } catch (err) {
+      // you can report use errorHandler or other
+    }
+  };
 </script>
 
 <script lang="ts">
