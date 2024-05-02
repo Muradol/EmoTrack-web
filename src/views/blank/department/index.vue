@@ -73,7 +73,7 @@
       <a-row style="margin-bottom: 16px">
         <a-col :span="12">
           <a-space>
-            <!-- <a-button
+            <a-button
               v-permission="['admin']"
               type="primary"
               @click="handleCreateClick"
@@ -86,106 +86,59 @@
             <a-modal
               v-model:visible="createVisible"
               :title="$t('departmentList.operation.create.title')"
-              width="30%"
+              width="40%"
               unmount-on-close
               :on-before-ok="handleCreateBeforeOk"
               @cancel="handleCreateCancel"
             >
               <a-form
                 ref="loginForm"
-                :model="registerData"
-                class="login-form"
+                :model="newDepartment"
+                class="step"
                 layout="horizontal"
                 :rules="rules"
+                style="width: 580px; margin: 0 auto"
               >
                 <a-form-item
-                  field="username"
-                  :label="$t('register.form.userName')"
-                  :validate-trigger="['change', 'blur']"
+                  field="departmentName"
+                  :label="$t('department.create.form.departmentName')"
                 >
                   <a-input
-                    v-model="registerData.username"
-                    :placeholder="$t('register.form.userName.placeholder')"
+                    v-model="newDepartment.departmentName"
+                    :placeholder="
+                      $t('department.create.form.departmentName.placeholder')
+                    "
                   />
                 </a-form-item>
                 <a-form-item
-                  field="password"
-                  :validate-trigger="['change', 'blur']"
-                  :label="$t('register.form.password')"
-                >
-                  <a-input-password
-                    v-model="registerData.password"
-                    :placeholder="$t('register.form.password.placeholder')"
-                    allow-clear
-                  />
-                </a-form-item>
-                <a-form-item
-                  field="password1"
-                  :validate-trigger="['change', 'blur']"
-                  :label="$t('register.form.confirmPassword')"
-                >
-                  <a-input-password
-                    v-model="registerData.password1"
-                    :placeholder="$t('register.form.password1.placeholder')"
-                    allow-clear
-                  />
-                </a-form-item>
-                <a-form-item
-                  field="phoneNumber"
-                  :label="$t('register.form.phoneNumber')"
-                  :validate-trigger="['change', 'blur']"
+                  field="manager"
+                  :label="$t('department.create.form.manager')"
                 >
                   <a-input
-                    v-model="registerData.phoneNumber"
-                    :placeholder="$t('register.form.phoneNumber.placeholder')"
+                    v-model="newDepartment.manager"
+                    :placeholder="
+                      $t('department.create.form.manager.placeholder')
+                    "
+                    disabled
                   />
                 </a-form-item>
                 <a-form-item
-                  field="birthday"
-                  :label="$t('register.form.birthday')"
-                  :validate-trigger="['change', 'blur']"
+                  field="managerPhone"
+                  :label="$t('department.create.form.managerPhone')"
                 >
-                  <a-date-picker v-model="registerData.birthday" />
-                </a-form-item>
-                <a-form-item
-                  field="gender"
-                  :label="$t('register.form.gender')"
-                  :validate-trigger="['change', 'blur']"
-                >
-                  <a-select
-                    v-model="registerData.gender"
-                    :placeholder="$t('register.form.gender.placeholder')"
-                  >
-                    <a-option value="0">
-                      {{ $t('register.form.woman') }}
-                    </a-option>
-                    <a-option value="1">
-                      {{ $t('register.form.man') }}
-                    </a-option>
-                  </a-select>
-                </a-form-item>
-                <a-form-item
-                  field="department"
-                  :label="$t('register.form.department')"
-                  :validate-trigger="['change', 'blur']"
-                >
-                  <a-select
-                    v-model="registerData.departmentNo"
-                    placeholder="请选择部门"
-                    :field-names="departmentFieldName"
-                    :options="departments"
-                  >
-                    <a-option
-                      v-for="department in departments"
-                      :key="department.departmentName"
-                      :value="department.departmentNo"
-                    >
-                      {{ department.departmentName }}
-                    </a-option>
-                  </a-select>
+                  <a-input
+                    v-model="newDepartment.managerPhone"
+                    :placeholder="
+                      $t('department.create.form.managerPhone.placeholder')
+                    "
+                    style="margin-right: 10px"
+                  />
+                  <a-button type="primary" @click="findEmployee">
+                    查询
+                  </a-button>
                 </a-form-item>
               </a-form>
-            </a-modal> -->
+            </a-modal>
             <a-upload action="/">
               <template #upload-button>
                 <a-button v-permission="['admin']">
@@ -455,11 +408,14 @@
   import Sortable from 'sortablejs';
   import {
     Department,
+    DepartmentCreateForm,
+    createDepartment,
     DepartmentInfo,
     DepartmentUpdateForm,
     getDepartmentList,
     queryDepartmentList,
   } from '@/api/department';
+  import { set } from 'nprogress';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -702,17 +658,57 @@
 
   getDepartment();
 
+  const findEmployee = async () => {
+    // 查询员工
+    // get phone from departmentCreateForm and fill the departmentCreateForm.manager
+    const res = await getEmployeeInfo({
+      phone: newDepartment.value.managerPhone,
+    });
+    newDepartment.value.manager = res.data.name;
+  };
+  // Todo: 未完成修改表单与删除表单，未完成api的编写
+  const showReport = async () => {};
+
+  const createVisible = ref(false);
+
+  const handleCreateClick = () => {
+    createVisible.value = true;
+  };
+
+  const handleCreateBeforeOk = () => {
+    setLoading(true);
+    subimitCreate();
+    setLoading(false);
+    return true;
+  };
+
+  const handleCreateCancel = () => {
+    createVisible.value = false;
+  };
+
+  const newDepartment = ref<DepartmentCreateForm>({
+    departmentName: '',
+    manager: '',
+    managerPhone: '',
+  });
+
+  const subimitCreate = async () => {
+    setLoading(true);
+    await createDepartment(newDepartment.value);
+    setLoading(false);
+  };
+
   const rules = {
-    username: [
+    departmentName: [
       {
         required: true,
-        message: t('register.form.userName.required'),
+        message: t('department.create.form.departmentName.required'),
       },
     ],
-    phoneNumber: [
+    managerPhone: [
       {
         required: true,
-        message: t('register.form.phoneNumber.required'),
+        message: t('department.create.form.managerPhone.placeholder'),
       },
       {
         validator: (phoneNumber: string, cb: (error?: string) => void) => {
@@ -725,51 +721,13 @@
         },
       },
     ],
-    birthday: [
-      {
-        message: t('register.form.birthday.required'),
-      },
-      {
-        validator: (_: any, cb: (error?: string) => void) => {
-          if (registerData.birthday === undefined) {
-            cb(t('register.form.birthday.required'));
-          } else {
-            cb();
-          }
-        },
-      },
-    ],
-    gender: [
+    manager: [
       {
         required: true,
-        message: t('register.form.gender.required'),
-      },
-    ],
-    department: [
-      {
-        message: t('register.form.department.required'),
-      },
-      {
-        validator: (_: any, cb: (error?: string) => void) => {
-          if (registerData.departmentNo === undefined) {
-            cb(t('register.form.department.required'));
-          } else {
-            cb();
-          }
-        },
+        message: t('department.create.form.manager.placeholder'),
       },
     ],
   };
-  const findEmployee = async () => {
-    // 查询员工
-    // get phone from departmentCreateForm and fill the departmentCreateForm.manager
-    const res = await getEmployeeInfo({
-      phone: updateRecord.value.managerPhone,
-    });
-    updateRecord.value.manager = res.data.name;
-  };
-  // Todo: 未完成修改表单与删除表单，未完成api的编写
-  const showReport = async () => {};
 </script>
 
 <script lang="ts">
