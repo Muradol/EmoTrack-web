@@ -3,26 +3,104 @@
     <Breadcrumb :items="['menu.form', 'menu.form.group']" />
     <a-card class="general-card" :title="$t('department.create.form.title')">
       <div class="wrapper">
-        <!-- <div v-if="image">
-          <video ref="video" autoplay></video>
-          <button @click="capture">Capture</button>
+        <div v-if="photoType == 1">
+          <div>
+            <video
+              id="video"
+              ref="video"
+              autoplay
+              style="
+                height: 450px;
+                width: 600px;
+                object-fit: fill;
+                margin-bottom: 32px;
+              "
+            ></video>
+          </div>
+
+          <a-row justify="space-around">
+            <a-col :span="4">
+              <a-button long @click="photoType = 0">退出拍照</a-button>
+            </a-col>
+            <a-col :span="4">
+              <a-button long @click="capture">Capture</a-button>
+            </a-col>
+          </a-row>
+          <canvas ref="canvas" style="display: none" />
+        </div>
+        <div v-else-if="photoType == 0">
+          <a-upload
+            :file-list="file ? [file] : []"
+            :show-file-list="false"
+            @change="onChange"
+            @progress="onProgress"
+            style="margin-bottom: 32px"
+          >
+            <template #upload-button>
+              <div
+                style="
+                  background-color: var(--color-fill-2);
+                  color: var(--color-text-1);
+                  border: 1px dashed var(--color-fill-4);
+                  height: 300px;
+                  width: 900px;
+                  border-radius: 2;
+                  line-height: 158px;
+                  text-align: center;
+                "
+              >
+                <div>
+                  Drag the file here or
+                  <span style="color: #3370ff"> Click to upload</span>
+                </div>
+              </div>
+            </template>
+          </a-upload>
+          <a-row justify="space-around">
+            <a-col :span="4">
+              <a-button long @click="retakePhoto">拍照</a-button>
+            </a-col>
+            <a-col :span="4">
+              <a-button long>上传照片</a-button>
+            </a-col>
+          </a-row>
         </div>
         <div v-else>
-          <canvas ref="canvas">abc</canvas>
-        </div> -->
-        <div
+          <a-col>
+            <a-row>
+              <img
+                id="photo"
+                :src="photo"
+                style="
+                  height: 450px;
+                  width: 600px;
+                  object-fit: fill;
+                  margin-bottom: 32px;
+                "
+              />
+            </a-row>
+            <a-row justify="space-around">
+              <a-col :span="4">
+                <a-button long @click="photoType = 0">重新选择</a-button>
+              </a-col>
+              <a-col :span="4">
+                <a-button long>上传照片</a-button>
+              </a-col>
+            </a-row>
+          </a-col>
+        </div>
+        <!-- <div
           style="
             display: flex;
             justify-content: center;
             align-items: center;
-            /* height: 100%; */
             height: 300px;
             width: 900px;
             border: 1px solid #000; /* 添加边框样式 */
           "
         >
-          <a-col :flex="1">
-            <a-upload
+          <a-col :flex="1"> -->
+        <!-- <a-upload
               action="/"
               :file-list="file ? [file] : []"
               :show-file-list="false"
@@ -77,9 +155,9 @@
                   </div>
                 </div>
               </template>
-            </a-upload>
+            </a-upload> -->
 
-            <!-- <a-upload action="/">
+        <!-- <a-upload action="/">
               <template #upload-button>
                 <div
                   style="
@@ -101,7 +179,7 @@
               </template>
             </a-upload> -->
 
-            <a-space :size="16" direction="vertical" />
+        <!-- <a-space :size="16" direction="vertical" />
             <a-row justify="space-around">
               <a-col :span="4">
                 <a-button long> abc </a-button>
@@ -111,17 +189,17 @@
               </a-col>
             </a-row>
           </a-col>
-        </div>
-        <!-- <div v-if="!photoTaken">
-          <div class="video-wrapper">
-            <video id="video" ref="video" autoplay></video>
-          </div>
-          <canvas ref="canvas" style="display: none" />
-          <button @click="capture">Capture</button>
-        </div>
-        <div v-else>
-          <img id="photo" :src="photo" />
-          <a-button @click="retakePhoto">重新拍照</a-button>
+        </div> -->
+
+        <!-- <div
+          style="
+            height: 900px;
+            width: 900px;
+            border-radius: 2;
+            line-height: 158px;
+            text-align: center;
+          "
+        >
         </div> -->
       </div>
     </a-card>
@@ -131,11 +209,11 @@
 <script lang="ts" setup>
   import { ref, onMounted, onBeforeUnmount } from 'vue';
   import { IconEdit, IconPlus } from '@arco-design/web-vue/es/icon';
-  import { FileItem } from '@arco-design/web-vue';
+  import { FileItem, RequestOption } from '@arco-design/web-vue';
 
   const video = ref();
   const canvas = ref();
-  const photoTaken = ref(false);
+  const photoType = ref<number>(0);
   let stream: MediaStream | null = null;
   const photo = ref<string>('');
 
@@ -174,7 +252,7 @@
 
       stopStream();
 
-      photoTaken.value = true;
+      photoType.value = 2;
     }
   };
 
@@ -189,7 +267,7 @@
 
   const retakePhoto = () => {
     setupCamara();
-    photoTaken.value = false;
+    photoType.value = 1;
     photo.value = '';
   };
 
@@ -207,9 +285,13 @@
       ...currentFile,
       // url: URL.createObjectURL(currentFile.file),
     };
+    photo.value = file.value.url;
+    photoType.value = 2;
   };
   const onProgress = (currentFile: any) => {
     file.value = currentFile;
+    photo.value = file.value.url;
+    photoType.value = 2;
   };
 </script>
 
@@ -240,8 +322,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 64px 0;
-    min-height: 600px;
+    padding: 16px 0;
+    min-height: 900px;
     background-color: var(--color-bg-2);
     :deep(.arco-form) {
       .arco-form-item {
