@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <Breadcrumb :items="['menu.form', 'menu.form.group']" />
-    <a-card class="general-card" :title="$t('department.create.form.title')">
+    <Breadcrumb :items="['menu.detect', 'menu.detect.upload']" />
+    <a-card class="general-card" :title="$t('emotion.detect.upload.title')">
       <div class="wrapper">
         <div v-if="photoType == 1">
           <div>
@@ -23,47 +23,83 @@
               <a-button long @click="photoType = 0">退出拍照</a-button>
             </a-col>
             <a-col :span="4">
-              <a-button long @click="capture">Capture</a-button>
+              <a-button long type="primary" @click="capture">拍照</a-button>
             </a-col>
           </a-row>
           <canvas ref="canvas" style="display: none" />
         </div>
         <div v-else-if="photoType == 0">
-          <a-upload
-            :file-list="file ? [file] : []"
-            :show-file-list="false"
-            @change="onChange"
-            @progress="onProgress"
-            style="margin-bottom: 32px"
-          >
-            <template #upload-button>
-              <div
-                style="
-                  background-color: var(--color-fill-2);
-                  color: var(--color-text-1);
-                  border: 1px dashed var(--color-fill-4);
-                  height: 300px;
-                  width: 900px;
-                  border-radius: 2;
-                  line-height: 158px;
-                  text-align: center;
-                "
-              >
-                <div>
-                  Drag the file here or
-                  <span style="color: #3370ff"> Click to upload</span>
+          <a-col>
+            <a-row justify="space-around">
+              <a-col :span="4">
+                <a-button long @click="$router.push('/emotion-history')"
+                  >查看历史记录</a-button
+                >
+              </a-col>
+              <a-col :span="10">
+                <div
+                  >上传格式为jpg，png，bmp，pbm，pgm，ppm，sr，ras，ipeg，jpe，jp2，tiff文件</div
+                >
+              </a-col>
+              <a-col :span="4">
+                <a-button long type="primary" @click="retakePhoto"
+                  >拍照</a-button
+                >
+              </a-col>
+            </a-row>
+            <a-upload
+              :file-list="file ? [file] : []"
+              :show-file-list="false"
+              style="margin-top: 32px"
+              @change="onChange"
+              @progress="onProgress"
+            >
+              <template #upload-button>
+                <div
+                  style="
+                    background-color: var(--color-fill-2);
+                    color: var(--color-text-1);
+                    border: 1px dashed var(--color-fill-4);
+                    height: 300px;
+                    width: 900px;
+                    border-radius: 2;
+                    line-height: 158px;
+                    text-align: center;
+                  "
+                >
+                  <div>
+                    拖动照片到此处
+                    <span style="color: #3370ff"> 点击此处上传</span>
+                  </div>
                 </div>
-              </div>
-            </template>
-          </a-upload>
-          <a-row justify="space-around">
+              </template>
+            </a-upload>
+          </a-col>
+          <!-- <a-row justify="space-around">
             <a-col :span="4">
               <a-button long @click="retakePhoto">拍照</a-button>
             </a-col>
             <a-col :span="4">
               <a-button long>上传照片</a-button>
             </a-col>
-          </a-row>
+          </a-row> -->
+        </div>
+        <div v-else-if="photoType == 3">
+          <div class="success-wrap">
+            <a-result
+              status="success"
+              :title="$t('emotion.detect.upload.success.title')"
+              :subtitle="$t('emotion.detect.upload.success.subTitle')"
+            />
+            <a-space :size="16">
+              <a-button key="view" type="primary">
+                {{ $t('emotion.detect.upload.view') }}
+              </a-button>
+              <a-button key="again" type="secondary" @click="photoType = 0">
+                {{ $t('stepForm.button.again') }}
+              </a-button>
+            </a-space>
+          </div>
         </div>
         <div v-else>
           <a-col>
@@ -84,7 +120,9 @@
                 <a-button long @click="photoType = 0">重新选择</a-button>
               </a-col>
               <a-col :span="4">
-                <a-button long>上传照片</a-button>
+                <a-button long type="primary" @click="photoType = 3"
+                  >上传照片</a-button
+                >
               </a-col>
             </a-row>
           </a-col>
@@ -322,7 +360,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 16px 0;
+    padding: 64px 0;
     min-height: 900px;
     background-color: var(--color-bg-2);
     :deep(.arco-form) {
@@ -349,5 +387,21 @@
     //   width: 55vw;
     //   height: 55vw;
     // }
+  }
+  .success-wrap {
+    text-align: center;
+    font-size: 24px;
+    padding: 20px;
+    transform: scale(1.2);
+  }
+  :deep(.arco-result) {
+    padding-top: 0;
+  }
+  .details-wrapper {
+    width: 895px;
+    margin-top: 54px;
+    padding: 20px;
+    text-align: left;
+    background-color: var(--color-fill-2);
   }
 </style>

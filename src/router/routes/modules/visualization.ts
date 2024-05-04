@@ -36,7 +36,7 @@ const VISUALIZATION: AppRouteRecordRaw = {
     {
       path: 'check',
       name: 'check',
-      component: () => import('@/views/blank/upload/index.vue'),
+      component: () => import('@/views/emotion/upload/index.vue'),
       meta: {
         locale: 'menu.visualization.multiDimensionDataAnalysis',
         requiresAuth: true,

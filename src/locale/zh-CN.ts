@@ -3,6 +3,9 @@ import localeLogin from '@/views/login/locale/zh-CN';
 import localregister from '@/views/register/locale/zh-CN';
 import localeBlank from '@/views/blank/test/locale/zh-CN';
 import localeDepartment from '@/views/blank/department/locale/zh-CN';
+import localeUpload from '@/views/emotion/upload/locale/zh-CN';
+import localeHistory from '@/views/emotion/history/locale/zh-CN';
+
 
 import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
 
@@ -56,6 +59,8 @@ export default {
   ...localeSettings,
   ...localeBlank,
   ...localeDepartment,
+  ...localeUpload,
+  ...localeHistory,
   ...localeMessageBox,
   ...localeLogin,
   ...localregister,
