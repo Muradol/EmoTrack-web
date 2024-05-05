@@ -75,14 +75,6 @@
               </template>
             </a-upload>
           </a-col>
-          <!-- <a-row justify="space-around">
-            <a-col :span="4">
-              <a-button long @click="retakePhoto">拍照</a-button>
-            </a-col>
-            <a-col :span="4">
-              <a-button long>上传照片</a-button>
-            </a-col>
-          </a-row> -->
         </div>
         <div v-else-if="photoType == 3">
           <div class="success-wrap">
@@ -96,7 +88,7 @@
                 {{ $t('emotion.detect.upload.view') }}
               </a-button>
               <a-button key="again" type="secondary" @click="photoType = 0">
-                {{ $t('stepForm.button.again') }}
+                {{ $t('emotion.detect.upload.button.again') }}
               </a-button>
             </a-space>
           </div>
@@ -127,118 +119,6 @@
             </a-row>
           </a-col>
         </div>
-        <!-- <div
-          style="
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 300px;
-            width: 900px;
-            border: 1px solid #000; /* 添加边框样式 */
-          "
-        >
-          <a-col :flex="1"> -->
-        <!-- <a-upload
-              action="/"
-              :file-list="file ? [file] : []"
-              :show-file-list="false"
-              style="
-                flex: 1;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 500px;
-                width: 900px;
-                transform: scale(3);
-              "
-              @change="onChange"
-              @progress="onProgress"
-            >
-              <template #upload-button>
-                <div
-                  :class="`arco-upload-list-item${
-                    file && file.status === 'error'
-                      ? ' arco-upload-list-item-error'
-                      : ''
-                  }`"
-                >
-                  <div
-                    v-if="file && file.url"
-                    class="arco-upload-list-picture custom-upload-avatar"
-                  >
-                    <img :src="file.url" />
-                    <div class="arco-upload-list-picture-mask">
-                      <IconEdit />
-                    </div>
-                    <a-progress
-                      v-if="file.status === 'uploading' && file.percent < 100"
-                      :percent="file.percent"
-                      type="circle"
-                      size="mini"
-                      :style="{
-                        position: 'absolute',
-                        left: '50%',
-                        top: '50%',
-                        transform: 'translateX(-50%) translateY(-50%)',
-                      }"
-                    />
-                  </div>
-                  <div v-else class="arco-upload-picture-card">
-                    <div class="arco-upload-picture-card-text">
-                      <IconPlus />
-                      <div style="margin-top: 10px; font-weight: 600"
-                        >Upload</div
-                      >
-                    </div>
-                  </div>
-                </div>
-              </template>
-            </a-upload> -->
-
-        <!-- <a-upload action="/">
-              <template #upload-button>
-                <div
-                  style="
-                    background-color: var(--color-fill-2);
-                    color: var(--color-text-1);
-                    border: 1px dashed var(--color-fill-4);
-                    height: 300px;
-                    width: 900px;
-                    border-radius: 2;
-                    line-height: 158px;
-                    text-align: center;
-                  "
-                >
-                  <div>
-                    Drag the file here or
-                    <span style="color: #3370ff"> Click to upload</span>
-                  </div>
-                </div>
-              </template>
-            </a-upload> -->
-
-        <!-- <a-space :size="16" direction="vertical" />
-            <a-row justify="space-around">
-              <a-col :span="4">
-                <a-button long> abc </a-button>
-              </a-col>
-              <a-col :span="4">
-                <a-button long> efg </a-button>
-              </a-col>
-            </a-row>
-          </a-col>
-        </div> -->
-
-        <!-- <div
-          style="
-            height: 900px;
-            width: 900px;
-            border-radius: 2;
-            line-height: 158px;
-            text-align: center;
-          "
-        >
-        </div> -->
       </div>
     </a-card>
   </div>
