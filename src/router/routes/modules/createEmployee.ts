@@ -12,26 +12,26 @@ const FORM: AppRouteRecordRaw = {
     order: 3,
   },
   children: [
-    {
-      path: 'step',
-      name: 'Step',
-      component: () => import('@/views/form/employeeCreate/index.vue'),
-      meta: {
-        locale: 'menu.form.step',
-        requiresAuth: true,
-        roles: ['admin'],
-      },
-    },
-    {
-      path: 'group',
-      name: 'Group',
-      component: () => import('@/views/form/departmentCreate/index.vue'),
-      meta: {
-        locale: 'menu.form.group',
-        requiresAuth: true,
-        roles: ['admin'],
-      },
-    },
+    // {
+    //   path: 'step',
+    //   name: 'Step',
+    //   component: () => import('@/views/form/employeeCreate/index.vue'),
+    //   meta: {
+    //     locale: 'menu.form.step',
+    //     requiresAuth: true,
+    //     roles: ['admin'],
+    //   },
+    // },
+    // {
+    //   path: 'group',
+    //   name: 'Group',
+    //   component: () => import('@/views/form/departmentCreate/index.vue'),
+    //   meta: {
+    //     locale: 'menu.form.group',
+    //     requiresAuth: true,
+    //     roles: ['admin'],
+    //   },
+    // },
   ],
 };
 

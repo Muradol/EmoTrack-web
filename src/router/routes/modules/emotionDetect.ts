@@ -19,7 +19,7 @@ const FORM: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.detect.upload',
         requiresAuth: true,
-        roles: ['admin'],
+        roles: ['*'],
       },
     },
     {
@@ -29,7 +29,7 @@ const FORM: AppRouteRecordRaw = {
       meta: {
         locale: 'menu.detect.history',
         requiresAuth: true,
-        roles: ['admin'],
+        roles: ['*'],
       },
     },
   ],
