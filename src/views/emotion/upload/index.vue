@@ -31,17 +31,17 @@
         <div v-else-if="photoType == 0">
           <a-col>
             <a-row justify="space-around">
-              <a-col :span="4">
+              <a-col :span="3">
                 <a-button long @click="$router.push('/emotion-history')"
                   >查看历史记录</a-button
                 >
               </a-col>
-              <a-col :span="10">
-                <div
-                  >上传格式为jpg，png，bmp，pbm，pgm，ppm，sr，ras，ipeg，jpe，jp2，tiff文件</div
-                >
+              <a-col :span="16" style="font-size: 0.9em;">
+                <div style="text-align: center; user-select: none">
+                  上传格式为jpg，png，bmp，pbm，pgm，ppm，sr，ras，ipeg，jpe，jp2，tiff文件
+                </div>
               </a-col>
-              <a-col :span="4">
+              <a-col :span="3">
                 <a-button long type="primary" @click="retakePhoto"
                   >拍照</a-button
                 >
@@ -67,7 +67,7 @@
                     text-align: center;
                   "
                 >
-                  <div>
+                  <div style="user-select: none">
                     拖动照片到此处
                     <span style="color: #3370ff"> 点击此处上传</span>
                   </div>
@@ -94,7 +94,7 @@
           </div>
         </div>
         <div v-else>
-          <a-col>
+          <a-col >
             <a-row>
               <img
                 id="photo"
