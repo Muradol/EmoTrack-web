@@ -73,6 +73,7 @@
           >
             {{ $t('emotion.detect.history.columns.show.button') }}
           </a-button>
+
         </template>
       </a-table>
     </a-card>
@@ -80,7 +81,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { computed, ref, reactive, watch, nextTick } from 'vue';
+  import { computed, ref, reactive, watch, h } from 'vue';
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { Pagination } from '@/types/global';
@@ -91,6 +92,8 @@
   import dayjs from 'dayjs';
   import { ReportParams, queryReportList, Report } from '@/api/report';
   import { ShortcutType } from '@arco-design/web-vue';
+  import { Modal } from '@arco-design/web-vue';
+  import EmotionCard from '../components/emotionCard.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -108,6 +111,8 @@
   const showColumns = ref<Column[]>([]);
 
   const size = ref<SizeProps>('medium');
+
+  const visible = ref(false);
 
   const basePagination: Pagination = {
     current: 1,
@@ -185,7 +190,13 @@
   const reports = ref<Report[]>();
 
   // Todo: 未完成修改表单与删除表单，未完成api的编写
-  const showReport = async (a: any) => {};
+  // Todo: 未完成情绪卡片数据跨页面
+  const showReport = async (a: any) => {
+    Modal.info({
+      title: '情绪报告',
+      content: () => h(EmotionCard,{style: 'width:100%'})
+    });
+  };
 
   const rangeShortcuts: ShortcutType[] = [
     {
