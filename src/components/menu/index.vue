@@ -135,7 +135,7 @@
           selected-keys={selectedKey.value}
           auto-open-selected={true}
           level-indent={34}
-          style="height: 100%;width:100%;"
+          style="height: 100%;width:100%;user-select: none;"
           onCollapse={setCollapse}
         >
           {renderSubMenu()}
