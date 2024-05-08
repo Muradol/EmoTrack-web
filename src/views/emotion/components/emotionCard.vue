@@ -1,7 +1,15 @@
 <template>
   <a-card>
     <template #cover>
-      <div style="display: flex;width: 800px;margin-top: 20px;padding: 16px;text-align: center">
+      <div
+        style="
+          display: flex;
+          width: 800px;
+          margin-top: 20px;
+          padding: 16px;
+          text-align: center;
+        "
+      >
         <a-image
           width="40%"
           style="align-content: center; justify-content: center"
@@ -117,17 +125,4 @@
   ];
 </script>
 
-<style scoped>
-  .icon-hover {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    transition: all 0.1s;
-  }
-  .icon-hover:hover {
-    background-color: rgb(var(--gray-2));
-  }
-</style>
+<style scoped></style>
