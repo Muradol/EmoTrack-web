@@ -1,17 +1,19 @@
 <template>
   <a-card>
     <template #cover>
-      <div style="display: flex;width: 800px;margin-top: 20px;text-align: center">
+      <div style="display: flex;width: 800px;margin-top: 20px;padding: 16px;text-align: center">
         <a-image
-            width="40%"
-            style="align-content: center;justify-content: center;"
-            :src="src"
+          width="40%"
+          style="align-content: center; justify-content: center"
+          :src="src"
         />
         <a-descriptions
-            align="center"
-            :data="data"
-            :size="size"
-            column="1"
+          style="flex-grow: 1"
+          align="left"
+          :data="data"
+          :size="size"
+          column="2"
+          bordered
         />
       </div>
     </template>
@@ -24,7 +26,7 @@
 </template>
 
 <script setup>
-  import { ref } from "vue";
+  import { ref } from 'vue';
 
   const testData = {
     anger: 0.02,
@@ -34,7 +36,7 @@
     happy: 80.94,
     neutral: 13.22,
     sad: 2.27,
-    surprise: 0.81
+    surprise: 0.81,
   };
   const size = ref('large');
   const src =
