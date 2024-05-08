@@ -193,8 +193,12 @@
   // Todo: 未完成情绪卡片数据跨页面
   const showReport = async (a: any) => {
     Modal.info({
+      onBeforeOpen() {
+        // Todo: 完成api请求报告
+      },
       title: '情绪报告',
-      content: () => h(EmotionCard,{style: 'width:100%'})
+      content: () => h(EmotionCard),
+      width: 'auto'
     });
   };
 

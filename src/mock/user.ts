@@ -229,7 +229,6 @@ setupMock({
     Mock.mock(new RegExp('/api/employee/info'), (params: MockParams) => {
       const { phone } = qs.parseUrl(params.url).query;
       console.log(params.url);
-    
       if (phone === '12345678910') {
         return successResponseWrap({
           id: '1',

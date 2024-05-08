@@ -1,67 +1,120 @@
 <template>
-  <a-card :style="{ width: '360px' }">
-    <template #actions>
-      <span class="icon-hover"> <IconMore /> </span>
-    </template>
+  <a-card>
     <template #cover>
-      <div
-          :style="{
-          height: '204px',
-          overflow: 'hidden',
-        }"
-      >
-<!--        <img-->
-<!--            :style="{ width: '50%',height: '80%', transform: 'translate(50%,15%)' }"-->
-<!--            alt="dessert"-->
-<!--            src="https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a20012a2d4d5b9db43dfc6a01fe508c0.png~tplv-uwbnlip3yd-webp.webp"-->
-<!--        />-->
-        <Chart style="width: 100%; height: 300px" :option="chartOption" />
+      <div style="display: flex;width: 800px;margin-top: 20px;text-align: center">
+        <a-image
+            width="40%"
+            style="align-content: center;justify-content: center;"
+            :src="src"
+        />
+        <a-descriptions
+            align="center"
+            :data="data"
+            :size="size"
+            column="1"
+        />
       </div>
     </template>
-    <a-card-meta title="2024年5月7日">
+    <a-card-meta>
       <template #description>
-        愤怒 87.5%<br>
-        <br>
-        <b>可能会导致：</b> <br>
-        极端和危险的行为，如严重的暴力或破坏行为，需要立即的专业干预。<br>
-      </template>
-      <template #avatar>
-        <div
-            :style="{ display: 'flex', alignItems: 'center', color: '#1D2129' }"
-        >
-          <a-avatar :size="24" :style="{ marginRight: '8px'}">
-            A
-          </a-avatar>
-          <a-typography-text style="user-select: none">Username</a-typography-text>
-        </div>
+        <a-table :columns="columns" :data="emotionData" :pagination="false" />
       </template>
     </a-card-meta>
   </a-card>
 </template>
 
-<script>
-  import {
-    IconMore,
-  } from '@arco-design/web-vue/es/icon';
-  import useChartOption from '@/hooks/chart-option';
-  // Todo: 仪表盘
-  const { chartOption } = useChartOption((isDark) => {
-    const graphicElementStyle = {
-      textAlign: 'center',
-      fill: isDark ? 'rgba(255,255,255,0.7)' : '#4E5969',
-      fontSize: 14,
-      lineWidth: 10,
-      fontWeight: 'bold',
-    };
-    return {
+<script setup>
+  import { ref } from "vue";
 
+  const testData = {
+    anger: 0.02,
+    contempt: 2.68,
+    disgust: 0.01,
+    fear: 0.06,
+    happy: 80.94,
+    neutral: 13.22,
+    sad: 2.27,
+    surprise: 0.81
   };
-});
-
-  export default {
-    components: { IconMore },
-  };
+  const size = ref('large');
+  const src =
+    'https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp';
+  const columns = [
+    {
+      title: '情绪',
+      dataIndex: 'emotion',
+    },
+    {
+      title: '测试值',
+      dataIndex: 'value',
+    },
+  ];
+  const emotionData = [
+    {
+      key: '1',
+      emotion: '愤怒',
+      value: testData.anger,
+    },
+    {
+      key: '2',
+      emotion: '冷漠',
+      value: testData.contempt,
+    },
+    {
+      key: '3',
+      emotion: '厌恶',
+      value: testData.disgust,
+    },
+    {
+      key: '4',
+      emotion: '担忧',
+      value: testData.fear,
+    },
+    {
+      key: '5',
+      emotion: '愉悦',
+      value: testData.happy,
+    },
+    {
+      key: '6',
+      emotion: '中立',
+      value: testData.neutral,
+    },
+    {
+      key: '7',
+      emotion: '忧伤',
+      value: testData.sad,
+    },
+    {
+      key: '8',
+      emotion: '惊喜',
+      value: testData.surprise,
+    },
+  ];
+  const data = [
+    {
+      label: '姓名',
+      value: '李四',
+    },
+    {
+      label: '年龄',
+      value: '24',
+    },
+    {
+      label: '性别',
+      value: '女',
+    },
+    {
+      label: '部门',
+      value: '策划部',
+    },
+    {
+      label: '职位',
+      value: '策划设计师',
+    },
+  ];
 </script>
+
 <style scoped>
   .icon-hover {
     display: flex;
