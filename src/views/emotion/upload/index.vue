@@ -36,7 +36,7 @@
                   >查看历史记录</a-button
                 >
               </a-col>
-              <a-col :span="16" style="font-size: 0.9em;">
+              <a-col :span="16" style="font-size: 0.9em">
                 <div style="text-align: center; user-select: none">
                   上传格式为jpg，png，bmp，pbm，pgm，ppm，sr，ras，ipeg，jpe，jp2，tiff文件
                 </div>
@@ -84,7 +84,7 @@
               :subtitle="$t('emotion.detect.upload.success.subTitle')"
             />
             <a-space :size="16">
-              <a-button key="view" type="primary">
+              <a-button key="view" type="primary" @click="showReport">
                 {{ $t('emotion.detect.upload.view') }}
               </a-button>
               <a-button key="again" type="secondary" @click="photoType = 0">
@@ -94,7 +94,7 @@
           </div>
         </div>
         <div v-else>
-          <a-col >
+          <a-col>
             <a-row>
               <img
                 id="photo"
@@ -125,9 +125,11 @@
 </template>
 
 <script lang="ts" setup>
-  import { ref, onMounted, onBeforeUnmount } from 'vue';
+  import { ref, onMounted, onBeforeUnmount, h } from 'vue';
   import { IconEdit, IconPlus } from '@arco-design/web-vue/es/icon';
-  import { FileItem, RequestOption } from '@arco-design/web-vue';
+  import { FileItem, Modal, RequestOption } from '@arco-design/web-vue';
+  import { uploadPhoto } from "@/api/upload";
+  import EmotionCard from '../components/emotionCard.vue';
 
   const video = ref();
   const canvas = ref();
@@ -167,13 +169,27 @@
 
       photo.value = canvas.value.toDataURL('image/jpeg', 0.4);
       const fileName = dataURItoBlob(photo.value);
-
+      // Todo: 上传文件再次验证
+      uploadPhoto(dataURLtoFile(photo.value,'fileName'));
       stopStream();
 
       photoType.value = 2;
     }
   };
 
+  const dataURLtoFile = function (url:string, filename:string) {
+    const arr = url.split(',');
+    const mime = arr[0].match(/:(.*?);/)[1];
+    const bstr = atob(arr[1]);
+    let i = bstr.length;
+    const u8arr = new Uint8Array(i);
+    while(i - 1 > 0){
+      i -= 1;
+      u8arr[i] = bstr.charCodeAt(i);
+    }
+    return new File([u8arr], filename, {type:mime});
+  }
+  
   const setupCamara = async () => {
     try {
       stream = await navigator.mediaDevices.getUserMedia({ video: true });
@@ -196,6 +212,18 @@
   onBeforeUnmount(() => {
     stopStream();
   });
+
+  // Todo: 未完成情绪卡片数据跨页面
+  const showReport = async (a: any) => {
+    Modal.info({
+      onBeforeOpen() {
+        // Todo: 完成api请求报告
+      },
+      title: '情绪报告',
+      content: () => h(EmotionCard),
+      width: 'auto',
+    });
+  };
 
   const file = ref();
   const onChange = (_: FileItem[], currentFile: FileItem) => {
