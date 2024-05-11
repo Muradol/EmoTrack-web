@@ -7,7 +7,7 @@
 5. 创建部门界面，通过名字找到部门管理员
 6. 在部门界面查看员工所有信息
 7. 小程序端(不急)
-8. CORS跨域
+8. CORS跨域(已初步解决，需要在src/api/upload.ts中细化。已经更改env.development相关设置，详情请看vite.config.dev.ts)
 9. 批量导入
 
 ## 已完成内容

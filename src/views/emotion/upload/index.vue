@@ -154,7 +154,7 @@
     stream?.getTracks().forEach((track) => track.stop());
   };
 
-  const capture = () => {
+  const capture = async () => {
     if (video.value) {
       canvas.value.width = video.value.videoWidth;
       canvas.value.height = video.value.videoHeight;
@@ -170,7 +170,12 @@
       photo.value = canvas.value.toDataURL('image/jpeg', 0.4);
       const fileName = dataURItoBlob(photo.value);
       // Todo: 上传文件再次验证
-      uploadPhoto(dataURLtoFile(photo.value,'fileName'));
+      try {
+        const response = uploadPhoto(dataURLtoFile(photo.value, 'fileName'));
+        console.log(response);
+      } catch (error) {
+        console.log(error);
+      }
       stopStream();
 
       photoType.value = 2;

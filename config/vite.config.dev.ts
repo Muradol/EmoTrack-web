@@ -9,8 +9,14 @@ export default mergeConfig(
       open: true,
       port: 3000,
       host: '0.0.0.0',
-      fs: {
-        strict: true,
+      proxy: {
+        '/api': {
+          target: 'http://47.120.44.17:8080',
+          changeOrigin: true,
+          // ws: true, // 允许websocket代理
+          // 重写路径 --> 作用与vue配置pathRewrite作用相同
+          rewrite: (path) => path.replace(/^\/api/, ''),
+        },
       },
     },
     plugins: [
