@@ -11,9 +11,9 @@ export interface HttpResponse<T = unknown> {
   data: T;
 }
 
-if (import.meta.env.VITE_API_BASE_URL) {
-  axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
-}
+// if (import.meta.env.VITE_API_BASE_URL) {
+//   axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL;
+// }
 
 axios.interceptors.request.use(
   (config: AxiosRequestConfig) => {
@@ -26,7 +26,7 @@ axios.interceptors.request.use(
       if (!config.headers) {
         config.headers = {};
       }
-      config.headers.Authorization = `Bearer ${token}`;
+      config.headers.Authorization = `${token}`;
     }
     return config;
   },

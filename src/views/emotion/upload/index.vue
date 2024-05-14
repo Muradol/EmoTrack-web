@@ -169,12 +169,13 @@
 
       photo.value = canvas.value.toDataURL('image/jpeg', 0.4);
       const fileName = dataURItoBlob(photo.value);
-      // Todo: 上传文件再次验证
       try {
-        const response = uploadPhoto(dataURLtoFile(photo.value, 'fileName'));
-        console.log(response);
+        const response = await uploadPhoto(dataURLtoFile(photo.value, 'fileName'));
+        console.log(response.config.url);
       } catch (error) {
-        console.log(error);
+        // Todo: baseUrl 未被成功代理
+        console.log(error.config.url)
+        console.log(error.config.baseUrl);
       }
       stopStream();
 
