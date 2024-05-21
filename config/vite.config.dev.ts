@@ -12,13 +12,6 @@ export default mergeConfig(
       fs: {
         strict: true,
       },
-      proxy: {
-        '/api': {
-          target: 'http://47.120.44.17:8080',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ''),
-        },
-      },
     },
     plugins: [
       eslint({

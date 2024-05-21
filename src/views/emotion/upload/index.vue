@@ -174,8 +174,7 @@
         console.log(response.config.url);
       } catch (error) {
         // Todo: baseUrl 未被成功代理
-        console.log(error.config.url)
-        console.log(error.config.baseUrl);
+        console.log(error);
       }
       stopStream();
 
