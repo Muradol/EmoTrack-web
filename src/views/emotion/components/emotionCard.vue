@@ -36,17 +36,7 @@
 <script setup>
   import { ref } from 'vue';
 
-  // const testData = {
-  //   anger: 0.02,
-  //   contempt: 2.68,
-  //   disgust: 0.01,
-  //   fear: 0.06,
-  //   happy: 80.94,
-  //   neutral: 13.22,
-  //   sad: 2.27,
-  //   surprise: 0.81,
-  // };
-  const EMOTIONDATA_KEY = 'emotions-data';
+  const EMOTIONDATA_KEY = 'emotions-testdata';
   const testDataString = localStorage.getItem(EMOTIONDATA_KEY);
   const testData = testDataString ? JSON.parse(testDataString) : null;
   const size = ref('large');
