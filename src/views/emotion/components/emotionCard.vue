@@ -36,16 +36,19 @@
 <script setup>
   import { ref } from 'vue';
 
-  const testData = {
-    anger: 0.02,
-    contempt: 2.68,
-    disgust: 0.01,
-    fear: 0.06,
-    happy: 80.94,
-    neutral: 13.22,
-    sad: 2.27,
-    surprise: 0.81,
-  };
+  // const testData = {
+  //   anger: 0.02,
+  //   contempt: 2.68,
+  //   disgust: 0.01,
+  //   fear: 0.06,
+  //   happy: 80.94,
+  //   neutral: 13.22,
+  //   sad: 2.27,
+  //   surprise: 0.81,
+  // };
+  const EMOTIONDATA_KEY = 'emotions-data';
+  const testDataString = localStorage.getItem(EMOTIONDATA_KEY);
+  const testData = testDataString ? JSON.parse(testDataString) : null;
   const size = ref('large');
   const src =
     'https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp';

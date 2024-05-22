@@ -3,6 +3,7 @@ import type { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Message, Modal } from '@arco-design/web-vue';
 import { useUserStore } from '@/store';
 import { getToken } from '@/utils/auth';
+import router from '@/router';
 
 export interface HttpResponse<T = unknown> {
   status: number;
@@ -66,6 +67,8 @@ axios.interceptors.response.use(
             window.location.reload();
           },
         });
+      }else if (res.code === 50000) { // 解决token过期
+        router.push('/login');
       }
       return Promise.reject(new Error(res.msg || 'Error'));
     }

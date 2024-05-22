@@ -1,7 +1,13 @@
 const TOKEN_KEY = 'token';
 
 const isLogin = () => {
-  return !!localStorage.getItem(TOKEN_KEY);
+  // Todo: 保持登录
+  const loginConfigString = localStorage.getItem('login-config');
+  let isLoggedIn = false;
+  if (loginConfigString !== null) {
+    isLoggedIn = JSON.parse(loginConfigString).rememberPassword;
+  }
+  return !!loginConfigString || isLoggedIn;
 };
 
 const getToken = () => {

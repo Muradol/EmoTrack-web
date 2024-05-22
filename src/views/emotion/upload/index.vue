@@ -128,6 +128,7 @@
   import { ref, onMounted, onBeforeUnmount, h } from 'vue';
   import { FileItem, Modal } from '@arco-design/web-vue';
   import { uploadPhoto } from '@/api/upload';
+  import { useStorage } from '@vueuse/core';
   import EmotionCard from '../components/emotionCard.vue';
 
   const video = ref();
@@ -195,7 +196,29 @@
       }
       // 然后上传文件
       const response = await uploadPhoto(file);
-      console.log(response.config);
+      const regex = /emotion_response\((.*?)\)/;
+      const match = response.data.emotionData.match(regex);
+
+      if (match && match[1]) {
+        // 提取匹配到的内容，并根据逗号和等号进行分割
+        const parts = match[1].split(/,\s*/);
+
+        // 定义一个类型，描述每个情绪和对应值的键值对
+        interface EmotionValuePair {
+          [key: string]: number;
+        }
+        // 创建一个空对象，用于存储情绪数据
+        const emotions: EmotionValuePair = {};
+
+        // 遍历分割后的部分，将每个情绪和对应值存储到对象中
+        parts.forEach((part: string) => {
+          const [key, value] = part.split('=');
+          emotions[key] = parseFloat(value); // 将字符串值转换为浮点数
+        });
+        useStorage('emotions-data', emotions);
+      } else {
+        console.log('No emotion data found'); // 如果匹配失败，则输出错误信息
+      }
     } catch (error) {
       console.log(error);
     } finally {
