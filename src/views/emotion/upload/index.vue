@@ -112,7 +112,7 @@
                 <a-button long @click="photoType = 0">重新选择</a-button>
               </a-col>
               <a-col :span="4">
-                <a-button long type="primary" @click="photoType = 3"
+                <a-button long type="primary" @click="uploadFile"
                   >上传照片</a-button
                 >
               </a-col>
@@ -126,9 +126,8 @@
 
 <script lang="ts" setup>
   import { ref, onMounted, onBeforeUnmount, h } from 'vue';
-  import { IconEdit, IconPlus } from '@arco-design/web-vue/es/icon';
-  import { FileItem, Modal, RequestOption } from '@arco-design/web-vue';
-  import { uploadPhoto } from "@/api/upload";
+  import { FileItem, Modal } from '@arco-design/web-vue';
+  import { uploadPhoto } from '@/api/upload';
   import EmotionCard from '../components/emotionCard.vue';
 
   const video = ref();
@@ -154,7 +153,7 @@
     stream?.getTracks().forEach((track) => track.stop());
   };
 
-  const capture = async () => {
+  const capture = () => {
     if (video.value) {
       canvas.value.width = video.value.videoWidth;
       canvas.value.height = video.value.videoHeight;
@@ -168,33 +167,42 @@
       );
 
       photo.value = canvas.value.toDataURL('image/jpeg', 0.4);
-      const fileName = dataURItoBlob(photo.value);
-      try {
-        const response = await uploadPhoto(dataURLtoFile(photo.value, 'fileName'));
-        console.log(response.config.url);
-      } catch (error) {
-        // Todo: baseUrl 未被成功代理
-        console.log(error);
-      }
       stopStream();
 
       photoType.value = 2;
     }
   };
 
-  const dataURLtoFile = function (url:string, filename:string) {
-    const arr = url.split(',');
-    const mime = arr[0].match(/:(.*?);/)[1];
-    const bstr = atob(arr[1]);
-    let i = bstr.length;
-    const u8arr = new Uint8Array(i);
-    while(i - 1 > 0){
-      i -= 1;
-      u8arr[i] = bstr.charCodeAt(i);
+  const uploadFile = async () => {
+    try {
+      let file;
+      if (photo.value.startsWith('blob:')) {
+        // 直接上传会得到blob，而拍照会得到data
+        // 如果photo.value是Blob URL，则将其转换为Blob对象
+        const blob = await fetch(photo.value).then((response) =>
+          response.blob()
+        );
+        // 创建一个File对象，为文件指定一个名字和类型
+        file = new File([blob], 'fileName.jpg', { type: 'image/jpeg' });
+      } else if (photo.value.startsWith('data:')) {
+        // 如果photo.value是data URI字符串，则直接使用dataURItoBlob函数将其转换为Blob对象
+        const blob = dataURItoBlob(photo.value);
+        // 创建一个File对象，为文件指定一个名字和类型
+        file = new File([blob], 'fileName.jpg', { type: 'image/jpeg' });
+      } else {
+        console.error('Unsupported photo format');
+        return;
+      }
+      // 然后上传文件
+      const response = await uploadPhoto(file);
+      console.log(response.config);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      photoType.value = 3;
     }
-    return new File([u8arr], filename, {type:mime});
-  }
-  
+  };
+
   const setupCamara = async () => {
     try {
       stream = await navigator.mediaDevices.getUserMedia({ video: true });

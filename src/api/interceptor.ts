@@ -22,6 +22,7 @@ axios.interceptors.request.use(
     // Authorization is a custom headers key
     // please modify it according to the actual situation
     const token = getToken();
+    // console.log(config)
     if (token) {
       if (!config.headers) {
         config.headers = {};
@@ -40,6 +41,8 @@ axios.interceptors.response.use(
   (response: AxiosResponse<HttpResponse>) => {
     const res = response.data;
     // Todo: change the custom code
+    // 调试用
+    // console.log(`reponse: ${JSON.stringify(res)}`);
     // if the custom code is not 20000, it is judged as an error.
     if (res.code !== 20000) {
       Message.error({
