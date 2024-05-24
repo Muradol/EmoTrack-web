@@ -2,10 +2,13 @@ import axios from 'axios';
 import qs from 'query-string';
 
 export interface Report {
-  reportNo: number;
-  reportDate: string;
-  // Todo: reportVal should be changed to the actual report content
-  reportVal: string;
+  reportId: number;
+  recordTime: string;
+  warningType: number;
+  emotionData: string;
+  employeeName: string;
+  employeePhoneNumber: string;
+  suggestion: string;
 }
 
 export function getReportList() {
@@ -18,17 +21,18 @@ export interface ReportInfo {
 }
 
 export interface ReportParams extends Partial<ReportInfo> {
-  current: number;
+  pageNum: number;
   pageSize: number;
+  employeeId: number;
 }
 
 export interface ReporttListRes {
-  list: Report[];
+  items: Report[];
   total: number;
 }
 
 export function queryReportList(params: ReportParams) {
-  return axios.get<ReporttListRes>('/api/list/report', {
+  return axios.get<ReporttListRes>('/emotion/emo_list', {
     params,
     paramsSerializer: (obj) => {
       return qs.stringify(obj);

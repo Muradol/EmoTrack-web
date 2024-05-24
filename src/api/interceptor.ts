@@ -67,7 +67,8 @@ axios.interceptors.response.use(
             window.location.reload();
           },
         });
-      }else if (res.code === 50000) { // 解决token过期
+      }
+      if (res.code === 50000) { // 解决token过期
         router.push('/login');
       }
       return Promise.reject(new Error(res.msg || 'Error'));

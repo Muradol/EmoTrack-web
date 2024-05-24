@@ -59,11 +59,10 @@
         @page-change="onPageChange"
       >
         <template #index="{ rowIndex }">
-          {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
+          {{ rowIndex + 1 + (pagination.pageNum - 1) * pagination.pageSize }}
         </template>
 
         <template #operations="{ record }">
-          <!-- Todo: should change the @click funtion -->
           <a-button
             v-permission="['admin']"
             type="text"
@@ -85,6 +84,7 @@
   import { useI18n } from 'vue-i18n';
   import useLoading from '@/hooks/loading';
   import { Pagination } from '@/types/global';
+  import { useStorage } from '@vueuse/core';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
   import cloneDeep from 'lodash/cloneDeep';
@@ -115,8 +115,9 @@
   const visible = ref(false);
 
   const basePagination: Pagination = {
-    current: 1,
+    pageNum: 1,
     pageSize: 20,
+    employeeId: 6,
   };
   const pagination = reactive({
     ...basePagination,
@@ -132,7 +133,7 @@
 
     {
       title: t('emotion.detect.history.columns.detect.time'),
-      dataIndex: 'reportDate',
+      dataIndex: 'recordTime',
       align: 'center',
     },
     {
@@ -144,14 +145,14 @@
   ]);
 
   const fetchData = async (
-    // Todo: should be changed
-    params: ReportParams = { current: 1, pageSize: 20 }
+    // Todo: employeeId should be changed
+    params: ReportParams = { pageNum: 1, pageSize: 20, employeeId: 6 }
   ) => {
     setLoading(true);
     try {
       const { data } = await queryReportList(params);
-      renderData.value = data.list;
-      pagination.current = params.current;
+      renderData.value = data.items;
+      pagination.pageNum = params.pageNum;
       pagination.total = data.total;
     } catch (err) {
       // you can report use errorHandler or other
@@ -166,8 +167,8 @@
       ...formModel.value,
     } as unknown as ReportParams);
   };
-  const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, current });
+  const onPageChange = (pageNum: number) => {
+    fetchData({ ...basePagination, pageNum });
   };
 
   fetchData();
@@ -189,16 +190,36 @@
 
   const reports = ref<Report[]>();
 
-  // Todo: 未完成修改表单与删除表单，未完成api的编写
-  // Todo: 未完成情绪卡片数据跨页面
-  const showReport = async (a: any) => {
+  const showReport = async (item: any) => {
+    const { emotionData } = item;
+    const regex = /emotion_response\((.*?)\)/;
+    const match = emotionData.match(regex);
+
+    if (match && match[1]) {
+      // 提取匹配到的内容，并根据逗号和等号进行分割
+      const parts = match[1].split(/,\s*/);
+
+      // 定义一个类型，描述每个情绪和对应值的键值对
+      interface EmotionValuePair {
+        [key: string]: number;
+      }
+      // 创建一个空对象，用于存储情绪数据
+      const emotions: EmotionValuePair = {};
+
+      // 遍历分割后的部分，将每个情绪和对应值存储到对象中
+      parts.forEach((part: string) => {
+        const [key, value] = part.split('=');
+        emotions[key] = parseFloat(value); // 将字符串值转换为浮点数
+      });
+      localStorage.removeItem('emotions-testdata');
+      useStorage('emotions-testdata', emotions);
+    } else {
+      console.log('No emotion data found'); // 如果匹配失败，则输出错误信息
+    }
     Modal.info({
-      onBeforeOpen() {
-        // Todo: 完成api请求报告
-      },
       title: '情绪报告',
       content: () => h(EmotionCard),
-      width: 'auto'
+      width: 'auto',
     });
   };
 

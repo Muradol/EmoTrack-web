@@ -215,7 +215,6 @@
           const [key, value] = part.split('=');
           emotions[key] = parseFloat(value); // 将字符串值转换为浮点数
         });
-        console.log(emotions);
         localStorage.removeItem('emotions-testdata');
         useStorage('emotions-testdata', emotions);
       } else {
