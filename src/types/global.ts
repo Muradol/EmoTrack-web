@@ -26,7 +26,7 @@ export interface PostData {
 export interface Pagination {
   pageNum: number;
   pageSize: number;
-  employeeId: number;
+  employeeId?: number;
   total?: number;
 }
 

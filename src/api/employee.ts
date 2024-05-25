@@ -21,7 +21,7 @@ export interface EmployeeFilter {
 }
 
 export interface PolicyParams extends Partial<EmployeeFilter> {
-  current: number;
+  pageNum: number;
   pageSize: number;
 }
 

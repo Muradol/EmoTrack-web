@@ -225,7 +225,7 @@
         @page-change="onPageChange"
       >
         <template #index="{ rowIndex }">
-          {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
+          {{ rowIndex + 1 + (pagination.pageNum - 1) * pagination.pageSize }}
         </template>
 
         <template #gender="{ record }">
@@ -416,6 +416,7 @@
     queryDepartmentList,
   } from '@/api/department';
   import { set } from 'nprogress';
+  import { useUserStore } from '@/store';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
   type Column = TableColumnData & { checked?: true };
@@ -433,12 +434,13 @@
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
-
+  const userStore = useUserStore();
   const size = ref<SizeProps>('medium');
 
   const basePagination: Pagination = {
-    current: 1,
+    pageNum: 1,
     pageSize: 20,
+    employeeId: userStore.employeeId,
   };
   const pagination = reactive({
     ...basePagination,
@@ -501,13 +503,13 @@
   ]);
 
   const fetchData = async (
-    params: PolicyParams = { current: 1, pageSize: 20 }
+    params: PolicyParams = { pageNum: 1, pageSize: 20 }
   ) => {
     setLoading(true);
     try {
       const { data } = await queryDepartmentList(params);
       renderData.value = data.list;
-      pagination.current = params.current;
+      pagination.pageNum = params.pageNum;
       pagination.total = data.total;
     } catch (err) {
       // you can report use errorHandler or other
@@ -522,8 +524,8 @@
       ...formModel.value,
     } as unknown as PolicyParams);
   };
-  const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, current });
+  const onPageChange = (pageNum: number) => {
+    fetchData({ ...basePagination, pageNum });
   };
 
   fetchData();

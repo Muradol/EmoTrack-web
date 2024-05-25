@@ -194,7 +194,7 @@
         @page-change="onPageChange"
       >
         <template #index="{ rowIndex }">
-          {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
+          {{ rowIndex + 1 + (pagination.pageNum - 1) * pagination.pageSize }}
         </template>
         <template #contentType="{ record }">
           <a-space>
@@ -253,6 +253,7 @@
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
   import type { TableColumnData } from '@arco-design/web-vue/es/table/interface';
+  import { useUserStore } from '@/store';
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
 
@@ -275,12 +276,14 @@
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
+  const userStore = useUserStore();
 
   const size = ref<SizeProps>('medium');
 
   const basePagination: Pagination = {
-    current: 1,
+    pageNum: 1,
     pageSize: 20,
+    employeeId: userStore.employeeId,
   };
   const pagination = reactive({
     ...basePagination,
@@ -380,13 +383,13 @@
     },
   ]);
   const fetchData = async (
-    params: PolicyParams = { current: 1, pageSize: 20 }
+    params: PolicyParams = { pageNum: 1, pageSize: 20 }
   ) => {
     setLoading(true);
     try {
       const { data } = await queryPolicyList(params);
       renderData.value = data.list;
-      pagination.current = params.current;
+      pagination.pageNum = params.pageNum;
       pagination.total = data.total;
     } catch (err) {
       // you can report use errorHandler or other
@@ -401,8 +404,8 @@
       ...formModel.value,
     } as unknown as PolicyParams);
   };
-  const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, current });
+  const onPageChange = (pageNum: number) => {
+    fetchData({ ...basePagination, pageNum });
   };
 
   fetchData();

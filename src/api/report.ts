@@ -23,7 +23,7 @@ export interface ReportInfo {
 export interface ReportParams extends Partial<ReportInfo> {
   pageNum: number;
   pageSize: number;
-  employeeId: number;
+  employeeId?: number;
 }
 
 export interface ReporttListRes {

@@ -215,8 +215,8 @@
           const [key, value] = part.split('=');
           emotions[key] = parseFloat(value); // 将字符串值转换为浮点数
         });
-        localStorage.removeItem('emotions-testdata');
-        useStorage('emotions-testdata', emotions);
+        localStorage.removeItem('emotions-data');
+        useStorage('emotions-data', emotions);
       } else {
         console.log('No emotion data found'); // 如果匹配失败，则输出错误信息
       }

@@ -35,13 +35,14 @@
 
 <script setup>
   import { ref } from 'vue';
+  import { useUserStore } from '@/store';
 
-  const EMOTIONDATA_KEY = 'emotions-testdata';
+  const userStore = useUserStore();
+  const EMOTIONDATA_KEY = 'emotions-data';
   const testDataString = localStorage.getItem(EMOTIONDATA_KEY);
   const testData = testDataString ? JSON.parse(testDataString) : null;
   const size = ref('large');
-  const src =
-    'https://p1-arco.byteimg.com/tos-cn-i-uwbnlip3yd/a8c8cdb109cb051163646151a4a5083b.png~tplv-uwbnlip3yd-webp.webp';
+  const src = userStore.employeeAvatar;
   const columns = [
     {
       title: '情绪',
@@ -94,26 +95,27 @@
       value: testData.surprise,
     },
   ];
+  // Todo: employeeGender's type is string
   const data = [
     {
       label: '姓名',
-      value: '李四',
+      value: userStore.employeeName,
     },
     {
-      label: '年龄',
-      value: '24',
+      label: '工号',
+      value: userStore.employeeId,
     },
     {
       label: '性别',
-      value: '女',
+      value: userStore.employeeGender === '1' ? '男' : '女',
     },
     {
       label: '部门',
-      value: '策划部',
+      value: userStore.employeeJob,
     },
     {
       label: '职位',
-      value: '策划设计师',
+      value: userStore.employeeJob,
     },
   ];
 </script>

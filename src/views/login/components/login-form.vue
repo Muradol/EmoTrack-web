@@ -109,6 +109,7 @@
           employeePhoneNumber: values.username,
           employeePassword: values.password,
         });
+        // await userStore.info();
         const { redirect, ...othersQuery } = router.currentRoute.value.query;
         router.push({
           name: (redirect as string) || 'Test',

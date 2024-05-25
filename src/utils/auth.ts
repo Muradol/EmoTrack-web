@@ -1,7 +1,7 @@
 const TOKEN_KEY = 'token';
+const USERINFO_KEY = 'userinfo';
 
 const isLogin = () => {
-  // Todo: 保持登录
   const loginConfigString = localStorage.getItem('login-config');
   let isLoggedIn = false;
   if (loginConfigString !== null) {
@@ -22,4 +22,8 @@ const clearToken = () => {
   localStorage.removeItem(TOKEN_KEY);
 };
 
-export { isLogin, getToken, setToken, clearToken };
+const clearUserInfo = () => {
+  localStorage.removeItem(USERINFO_KEY);
+};
+
+export { isLogin, getToken, setToken, clearToken, clearUserInfo };

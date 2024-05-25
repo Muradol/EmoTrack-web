@@ -19,7 +19,7 @@ export interface DepartmentInfo {
 }
 
 export interface DepartmentParams extends Partial<DepartmentInfo> {
-  current: number;
+  pageNum: number;
   pageSize: number;
 }
 

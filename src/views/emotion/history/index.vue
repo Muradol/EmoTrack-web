@@ -93,6 +93,7 @@
   import { ReportParams, queryReportList, Report } from '@/api/report';
   import { ShortcutType } from '@arco-design/web-vue';
   import { Modal } from '@arco-design/web-vue';
+  import { useUserStore } from '@/store';
   import EmotionCard from '../components/emotionCard.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
@@ -109,6 +110,7 @@
   const formModel = ref(generateFormModel());
   const cloneColumns = ref<Column[]>([]);
   const showColumns = ref<Column[]>([]);
+  const userStore = useUserStore();
 
   const size = ref<SizeProps>('medium');
 
@@ -117,7 +119,7 @@
   const basePagination: Pagination = {
     pageNum: 1,
     pageSize: 20,
-    employeeId: 6,
+    employeeId: userStore.employeeId,
   };
   const pagination = reactive({
     ...basePagination,
@@ -146,7 +148,7 @@
 
   const fetchData = async (
     // Todo: employeeId should be changed
-    params: ReportParams = { pageNum: 1, pageSize: 20, employeeId: 6 }
+    params: ReportParams = { pageNum: 1, pageSize: 20, employeeId: userStore.employeeId, }
   ) => {
     setLoading(true);
     try {
@@ -211,8 +213,8 @@
         const [key, value] = part.split('=');
         emotions[key] = parseFloat(value); // 将字符串值转换为浮点数
       });
-      localStorage.removeItem('emotions-testdata');
-      useStorage('emotions-testdata', emotions);
+      localStorage.removeItem('emotions-data');
+      useStorage('emotions-data', emotions);
     } else {
       console.log('No emotion data found'); // 如果匹配失败，则输出错误信息
     }

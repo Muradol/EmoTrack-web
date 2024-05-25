@@ -68,16 +68,27 @@ axios.interceptors.response.use(
           },
         });
       }
-      if (res.code === 50000) { // 解决token过期
-        router.push('/login');
-      }
       return Promise.reject(new Error(res.msg || 'Error'));
     }
     return res;
   },
   (error) => {
+    if (error.response.status === 401) {
+      // 如果返回状态码为401，并且请求没有重试过，则进行重定向到登录页面
+      Modal.error({
+        title: '状态过期',
+        content: '请重新登录',
+        okText: '确认',
+        async onOk() {
+          const userStore = useUserStore();
+          await userStore.logout();
+          window.location.reload();
+        },
+      });
+      // router.push('/login');
+    }
     Message.error({
-      content: error.msg || 'Request Error',
+      content: error.msg || '网络错误',
       duration: 5 * 1000,
     });
     return Promise.reject(error);

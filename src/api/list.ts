@@ -14,7 +14,7 @@ export interface PolicyRecord {
 }
 
 export interface PolicyParams extends Partial<PolicyRecord> {
-  current: number;
+  pageNum: number;
   pageSize: number;
 }
 

@@ -54,20 +54,20 @@
   const file = {
     uid: '-2',
     name: 'avatar.png',
-    url: userStore.avatar,
+    url: userStore.employeeAvatar,
   };
   const renderData = [
     {
       label: 'userSetting.label.name',
-      value: userStore.name,
+      value: userStore.employeeName,
     },
     {
       label: 'userSetting.label.accountId',
-      value: userStore.accountId,
+      value: userStore.employeeId,
     },
     {
       label: 'userSetting.label.phone',
-      value: userStore.phone,
+      value: userStore.employeePhoneNumber,
     },
   ] as DescData[];
   const fileList = ref<FileItem[]>([file]);

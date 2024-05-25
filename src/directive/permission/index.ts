@@ -4,8 +4,15 @@ import { useUserStore } from '@/store';
 function checkPermission(el: HTMLElement, binding: DirectiveBinding) {
   const { value } = binding;
   const userStore = useUserStore();
-  const { role } = userStore;
-
+  const { employeeRole } = userStore;
+  const RoleTypeToRole: { [key: string]: string } = {
+    'none': '',
+    '0': '*',
+    '1': 'admin',
+    '2': 'user',
+    '3': 'manager',
+  };
+  const role = RoleTypeToRole[String(employeeRole ?? 'none')]
   if (Array.isArray(value)) {
     if (value.length > 0) {
       const permissionValues = value;

@@ -6,7 +6,7 @@ export interface LoginData {
   employeePhoneNumber: string;
   employeePassword: string;
 }
-
+// Todo change
 export interface RegisterData {
   username: string;
   password: string;
@@ -29,7 +29,7 @@ export function logout() {
 }
 
 export function getUserInfo() {
-  return axios.post<UserState>('/api/user/info');
+  return axios.get<UserState>('/employeeBasic/info_bytoken');
 }
 
 export function getMenuList() {

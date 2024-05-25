@@ -1,19 +1,12 @@
-export type RoleType = '' | '*' | 'admin' | 'user' | 'manager';
+export type RoleType = undefined | 0 | 1 | 2 | 3;
+// export type RoleType = '' | '*' | 'admin' | 'user' | 'manager';
 export interface UserState {
-  name?: string;
-  avatar?: string;
-  job?: string;
-  organization?: string;
-  location?: string;
-  email?: string;
-  introduction?: string;
-  personalWebsite?: string;
-  jobName?: string;
-  organizationName?: string;
-  locationName?: string;
-  phone?: string;
-  registrationDate?: string;
-  accountId?: string;
-  certification?: number;
-  role: RoleType;
+  employeeName?: string;
+  employeePhoneNumber?: string;
+  employeeAvatar?: string;
+  employeeBirthday?: string;
+  employeeGender?: number;
+  employeeId?: number;
+  employeeRole?: RoleType;
+  employeeJob?: string;
 }
