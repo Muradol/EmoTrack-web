@@ -6,7 +6,6 @@ import localeDepartment from '@/views/blank/department/locale/zh-CN';
 import localeUpload from '@/views/emotion/upload/locale/zh-CN';
 import localeHistory from '@/views/emotion/history/locale/zh-CN';
 
-
 import localeWorkplace from '@/views/dashboard/workplace/locale/zh-CN';
 
 import localeMonitor from '@/views/dashboard/monitor/locale/zh-CN';

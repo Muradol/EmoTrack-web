@@ -8,6 +8,7 @@
         :show-upload-button="true"
         :show-file-list="false"
         @change="uploadChange"
+        @before-upload="beforeUpload"
       >
         <template #upload-button>
           <a-avatar :size="100" class="info-avatar">
@@ -48,6 +49,8 @@
   } from '@arco-design/web-vue/es/upload/interfaces';
   import { useUserStore } from '@/store';
   import { userUploadApi } from '@/api/user-center';
+  import { Modal } from '@arco-design/web-vue';
+  import { uploadAvatar } from '@/api/upload';
   import type { DescData } from '@arco-design/web-vue/es/descriptions/interface';
 
   const userStore = useUserStore();
@@ -73,6 +76,16 @@
   const fileList = ref<FileItem[]>([file]);
   const uploadChange = (fileItemList: FileItem[], fileItem: FileItem) => {
     fileList.value = [fileItem];
+  };
+  const beforeUpload = (fileItem: File) => {
+    return new Promise((resolve, reject) => {
+      Modal.confirm({
+        title: 'beforeUpload',
+        content: `确认上传 ${fileItem.name}`,
+        onOk: () => resolve(uploadAvatar(fileItem)),
+        onCancel: () => reject(new Error('cancel')),
+      });
+    });
   };
   const customRequest = (options: RequestOption) => {
     // docs: https://axios-http.com/docs/cancellation

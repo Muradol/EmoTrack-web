@@ -37,6 +37,17 @@ export function uploadPhoto(photo: File) {
   });
 }
 
+// 两个图像处理接口不一致
+export function uploadAvatar(photo: File) {
+  const formData = new FormData();
+  formData.append('file', photo);
+  return axios.post('/employeeBasic/upload_Avatar', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+}
+
 export function login(data: LoginData) {
   return axios.post<LoginRes>('/api/user/login', data);
 }

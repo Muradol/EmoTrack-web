@@ -72,7 +72,6 @@
           >
             {{ $t('emotion.detect.history.columns.show.button') }}
           </a-button>
-
         </template>
       </a-table>
     </a-card>
@@ -148,7 +147,11 @@
 
   const fetchData = async (
     // Todo: employeeId should be changed
-    params: ReportParams = { pageNum: 1, pageSize: 20, employeeId: userStore.employeeId, }
+    params: ReportParams = {
+      pageNum: 1,
+      pageSize: 20,
+      employeeId: userStore.employeeId,
+    }
   ) => {
     setLoading(true);
     try {

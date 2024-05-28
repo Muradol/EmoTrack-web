@@ -12,7 +12,7 @@ function checkPermission(el: HTMLElement, binding: DirectiveBinding) {
     '2': 'user',
     '3': 'manager',
   };
-  const role = RoleTypeToRole[String(employeeRole ?? 'none')]
+  const role = RoleTypeToRole[String(employeeRole ?? 'none')];
   if (Array.isArray(value)) {
     if (value.length > 0) {
       const permissionValues = value;
