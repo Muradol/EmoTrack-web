@@ -17,6 +17,11 @@ export interface RegisterData {
   departmentNo: number;
 }
 
+export interface Password {
+  old_password: string;
+  new_password: string;
+}
+
 export interface LoginRes {
   token: string;
 }
@@ -34,6 +39,14 @@ export function getUserInfo() {
 
 export function getMenuList() {
   return axios.post<RouteRecordNormalized[]>('/api/user/menu');
+}
+export function updatePassword(data: Password) {
+  return axios.put<Password>('/employeeBasic/change_password', data, {
+    params: {
+      old_password: data.old_password,
+      new_password: data.new_password,
+    },
+  });
 }
 
 export function register(data: RegisterData) {

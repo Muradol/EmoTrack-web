@@ -131,14 +131,21 @@
 <script lang="ts" setup>
   import { ref, reactive } from 'vue';
   import { useI18n } from 'vue-i18n';
+  import { FormInstance } from '@arco-design/web-vue/es/form';
+  import { useUserStore } from '@/store';
+  import { Modal } from '@arco-design/web-vue';
+  import { Password, updatePassword } from '@/api/user';
   import useLoading from '@/hooks/loading';
 
+  const userStore = useUserStore();
+  const userConfig = localStorage.getItem('login-config');
+  let userPassword = '';
   const { t } = useI18n();
   const changePassword = reactive({
     password: '',
     password1: '',
   });
-
+  const loginForm = ref<FormInstance>();
   const rules = {
     password: [
       {
@@ -153,24 +160,57 @@
       },
       {
         validator: (value: string, cb: (error?: string) => void) => {
-          if (value !== changePassword.password) {
-            cb('two passwords do not match');
-          } else {
-            cb();
-          }
+          return new Promise<string>((resolve) => {
+            window.setTimeout(() => {
+              if (value !== changePassword.password) {
+                cb('两次密码不同');
+              }
+              cb('修改密码');
+              resolve(value);
+            }, 2000);
+          });
         },
       },
     ],
   };
 
   const createVisible = ref(false);
-
   const handleCreateClick = () => {
     createVisible.value = true;
   };
 
-  const handleCreateBeforeOk = () => {
-    return true;
+  const handleCreateBeforeOk = async () => {
+    const res = await loginForm.value?.validate();
+    if (res !== undefined && res !== null) {
+      if (res.password1.message === '两次密码不同') {
+        Modal.error({
+          title: '修改失败',
+          content: res.password1.message,
+          okText: '确认',
+        });
+        return false;
+      }
+      if (userConfig !== null) {
+        userPassword = JSON.parse(userConfig).password;
+      }
+      const result = await updatePassword({
+        old_password: userPassword,
+        new_password: res.password1.value,
+      });
+      if (result.code === 20000) {
+        Modal.success({
+          title: '修改成功',
+          content: `您新的密码是: ${res.password1.value}`,
+          okText: '我已知晓',
+        });
+        if (userConfig !== null) {
+          JSON.parse(JSON.parse(userConfig)).password = res.password1.value;
+          localStorage.setItem('login-config', JSON.stringify(userConfig));
+        }
+      }
+      return true;
+    }
+    return false;
   };
 
   const handleCreateCancel = () => {

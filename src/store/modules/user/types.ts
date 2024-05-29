@@ -7,6 +7,7 @@ export interface UserState {
   employeeBirthday?: string;
   employeeGender?: number;
   employeeId?: number;
+  employeeDepartmentNo?: number;
   employeeRole?: RoleType;
   employeeJob?: string;
 }

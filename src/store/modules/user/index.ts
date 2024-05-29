@@ -20,6 +20,7 @@ const useUserStore = defineStore('user', {
     employeeId: undefined,
     employeeRole: undefined,
     employeeJob: undefined,
+    employeeDepartmentNo: undefined,
   }),
 
   getters: {
