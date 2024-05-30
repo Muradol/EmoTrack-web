@@ -39,6 +39,16 @@ export function queryPolicyList(params: PolicyParams) {
   });
 }
 
+export function uploadEmployees(File: File) {
+  const formData = new FormData();
+  formData.append('file', File);
+  return axios.post('/employeeBasic/import_emp', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+}
+
 export function queryPolicyList1(params: PolicyParams) {
   return axios.get<PolicyListRes>('/api/list/mock', {
     params,

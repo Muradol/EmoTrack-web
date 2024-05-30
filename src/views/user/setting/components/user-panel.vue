@@ -80,7 +80,7 @@
   const beforeUpload = (fileItem: File) => {
     return new Promise((resolve, reject) => {
       Modal.confirm({
-        title: 'beforeUpload',
+        title: '上传之前',
         content: `确认上传 ${fileItem.name}`,
         onOk: () => resolve(uploadAvatar(fileItem)),
         onCancel: () => reject(new Error('cancel')),

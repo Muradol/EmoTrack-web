@@ -227,11 +227,26 @@
                 </a-form-item>
               </a-form> -->
             </a-modal>
-            <a-upload action="/">
+            <a-upload
+              action="/"
+              :auto-upload="false"
+              :limit="1"
+              accept="application/vnd.ms-excel,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+              @change="onChange"
+            >
               <template #upload-button>
                 <a-button v-permission="['admin', 'manager']">
-                  {{ $t('employeeList.operation.import') }}
-                </a-button>
+                  {{ $t('employeeList.operation.import') }}</a-button
+                >
+                <a-modal
+                  :visible="isSubmit"
+                  @ok="submit"
+                  @cancel="handleCancel"
+                  v-permission="['admin', 'manager']"
+                >
+                  <template #title> 消息通知 </template>
+                  <div>确认上传</div>
+                </a-modal>
               </template>
             </a-upload>
           </a-space>
@@ -313,7 +328,7 @@
         @page-change="onPageChange"
       >
         <template #index="{ rowIndex }">
-          {{ rowIndex + 1 + (pagination.current - 1) * pagination.pageSize }}
+          {{ rowIndex + 1 + (pagination.pageNum - 1) * pagination.pageSize }}
         </template>
 
         <template #gender="{ record }">
@@ -521,6 +536,7 @@
     PolicyParams,
     EmployeeRecord,
     queryPolicyList1,
+    uploadEmployees,
   } from '@/api/employee';
   import { Pagination } from '@/types/global';
   import type { SelectOptionData } from '@arco-design/web-vue/es/select/interface';
@@ -529,8 +545,8 @@
   import cloneDeep from 'lodash/cloneDeep';
   import Sortable from 'sortablejs';
   import { Department, getDepartmentList } from '@/api/department';
-
   import { UnitEmployeeModel, submitEmployeeForm } from '@/api/form';
+  import { FileItem } from '@arco-design/web-vue';
   import CreateEmployeeForm from '../../form/employeeCreate/index.vue';
 
   type SizeProps = 'mini' | 'small' | 'medium' | 'large';
@@ -556,9 +572,35 @@
   const size = ref<SizeProps>('medium');
 
   const userStore = useUserStore();
+  const baseUrl = ref();
+  const isSubmit = ref(false);
+  if (import.meta.env.VITE_API_BASE_URL) {
+    baseUrl.value = import.meta.env.VITE_API_BASE_URL;
+    baseUrl.value += '/employeeBasic/import_emp';
+  }
+  const file = ref();
+
+  const onChange = (_: FileItem[], currentFile: FileItem) => {
+    file.value = {
+      ...currentFile,
+      // url: URL.createObjectURL(currentFile.file),
+    };
+    isSubmit.value = true;
+  };
+  const submit = (e: Event) => {
+    e.stopPropagation();
+    // console.log(file.value.file);
+    uploadEmployees(file.value.file);
+    file.value = {};
+    isSubmit.value = false;
+  };
+
+  const handleCancel = () => {
+    isSubmit.value = false;
+  };
 
   const basePagination: Pagination = {
-    current: 1,
+    pageNum: 1,
     pageSize: 20,
   };
   const pagination = reactive({
@@ -642,13 +684,13 @@
     // },
   ]);
   const fetchData = async (
-    params: PolicyParams = { current: 1, pageSize: 20 }
+    params: PolicyParams = { pageNum: 1, pageSize: 20 }
   ) => {
     setLoading(true);
-    if (userStore.role === 'manager') {
+    if (userStore.employeeRole === 3) {
       const { data } = await queryPolicyList1(params);
       renderData.value = data.list;
-      pagination.current = params.current;
+      pagination.pageNum = params.pageNum;
       pagination.total = data.total;
       setLoading(false);
       return;
@@ -657,7 +699,7 @@
     try {
       const { data } = await queryPolicyList(params);
       renderData.value = data.list;
-      pagination.current = params.current;
+      pagination.pageNum = params.pageNum;
       pagination.total = data.total;
     } catch (err) {
       // you can report use errorHandler or other
@@ -672,8 +714,8 @@
       ...formModel.value,
     } as unknown as PolicyParams);
   };
-  const onPageChange = (current: number) => {
-    fetchData({ ...basePagination, current });
+  const onPageChange = (pageNum: number) => {
+    fetchData({ ...basePagination, pageNum });
   };
 
   fetchData();
