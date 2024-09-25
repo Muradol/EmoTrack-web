@@ -6,7 +6,7 @@ export interface LoginData {
   employeePhoneNumber: string;
   employeePassword: string;
 }
-// Todo change
+
 export interface RegisterData {
   username: string;
   password: string;
@@ -25,8 +25,25 @@ export interface Password {
 export interface LoginRes {
   token: string;
 }
-export function login(data: LoginData) {
-  return axios.post<LoginRes>('/employeeBasic/login', data);
+
+// 修改 login 函数，模拟前端静态登录
+export function login(data: LoginData): Promise<LoginRes> {
+  return new Promise((resolve, reject) => {
+    // 默认账号和密码
+    const defaultUsername = 'admin';
+    const defaultPassword = '123456';
+
+    // 检查输入的账号和密码是否与默认值匹配
+    if (data.employeePhoneNumber === defaultUsername && data.employeePassword === defaultPassword) {
+      // 模拟登录成功，返回一个 token
+      resolve({
+        token: 'fake-token', // 静态登录返回的假 token
+      });
+    } else {
+      // 模拟登录失败
+      reject(new Error('账号或密码错误'));
+    }
+  });
 }
 
 export function logout() {
@@ -40,6 +57,7 @@ export function getUserInfo() {
 export function getMenuList() {
   return axios.post<RouteRecordNormalized[]>('/api/user/menu');
 }
+
 export function updatePassword(data: Password) {
   return axios.put<Password>('/employeeBasic/change_password', data, {
     params: {

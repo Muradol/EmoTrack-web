@@ -55,14 +55,6 @@
         <a-button type="primary" html-type="submit" long :loading="loading">
           {{ $t('login.form.login') }}
         </a-button>
-        <!-- <a-button
-          type="text"
-          long
-          class="login-form-register-btn"
-          @click="redirectToRegister"
-        >
-          {{ $t('login.form.register') }}
-        </a-button> -->
       </a-space>
     </a-form>
   </div>
@@ -72,44 +64,63 @@
   import { ref, reactive } from 'vue';
   import { useRouter } from 'vue-router';
   import { Message } from '@arco-design/web-vue';
-  import { ValidatedError } from '@arco-design/web-vue/es/form/interface';
   import { useI18n } from 'vue-i18n';
   import { useStorage } from '@vueuse/core';
-  import { useUserStore } from '@/store';
   import useLoading from '@/hooks/loading';
 
   const router = useRouter();
   const { t } = useI18n();
   const errorMessage = ref('');
   const { loading, setLoading } = useLoading();
-  const userStore = useUserStore();
 
+  // 使用本地存储保存登录配置信息
   const loginConfig = useStorage('login-config', {
     rememberPassword: true,
-    username: 'admin', // 演示默认值
-    password: 'admin', // demo default value
+    username: 'admin', // 默认账号
+    password: '123456', // 默认密码
   });
   const userInfo = reactive({
     username: loginConfig.value.username,
     password: loginConfig.value.password,
   });
 
+  // 模拟登录函数
+  const mockLogin = ({
+    username,
+    password,
+  }: {
+    username: string;
+    password: string;
+  }): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      const defaultUsername = 'admin';
+      const defaultPassword = '123456';
+
+      if (username === defaultUsername && password === defaultPassword) {
+        resolve(); // 登录成功
+      } else {
+        reject(new Error(t('login.form.errorMessage'))); // 登录失败
+      }
+    });
+  };
+
+  // 处理表单提交
   const handleSubmit = async ({
     errors,
     values,
   }: {
-    errors: Record<string, ValidatedError> | undefined;
+    errors: Record<string, any> | undefined;
     values: Record<string, any>;
   }) => {
     if (loading.value) return;
     if (!errors) {
       setLoading(true);
       try {
-        await userStore.login({
-          employeePhoneNumber: values.username,
-          employeePassword: values.password,
+        await mockLogin({
+          username: values.username,
+          password: values.password,
         });
-        // await userStore.info();
+        // 登录成功后跳转到指定路由
         const { redirect, ...othersQuery } = router.currentRoute.value.query;
         router.push({
           name: (redirect as string) || 'Test',
@@ -118,10 +129,11 @@
           },
         });
         Message.success(t('login.form.login.success'));
+
         const { rememberPassword } = loginConfig.value;
         const { username, password } = values;
-        // 实际生产环境需要进行加密存储。
-        // The actual production environment requires encrypted storage.
+
+        // 将账号和密码存入本地存储
         loginConfig.value.username = rememberPassword ? username : '';
         loginConfig.value.password = rememberPassword ? password : '';
       } catch (err) {
@@ -131,14 +143,9 @@
       }
     }
   };
+
   const setRememberPassword = (value: boolean) => {
     loginConfig.value.rememberPassword = value;
-  };
-
-  const redirectToRegister = () => {
-    router.push({
-      name: 'register',
-    });
   };
 </script>
 
@@ -170,10 +177,6 @@
     &-password-actions {
       display: flex;
       justify-content: space-between;
-    }
-
-    &-register-btn {
-      color: var(--color-text-3) !important;
     }
   }
 </style>
